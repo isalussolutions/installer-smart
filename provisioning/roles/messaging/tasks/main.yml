@@ -1,0 +1,43 @@
+---
+- name: checkout repository messaging_project
+  become_user: "{{hosting_username}}"
+  git: repo="{{hspc_repo_base}}/{{messaging_project}}"
+       version="{{messaging_branch}}"
+       dest="{{hosting_user_home_hspc}}/{{messaging_project}}"
+       update={{update_repositories}}
+       force=yes
+       depth=1
+
+- name: build hspc messaging server
+  become_user: "{{hosting_username}}"
+  shell: chdir={{hosting_user_home_hspc}}
+       mvn clean install -e -U -f reference-messaging/pom.xml
+
+- name: configure messaging server service
+  template: src=messaging-server.service.j2
+            dest=/etc/systemd/system/messaging-server.service
+            owner=root group=root mode=0644
+
+- name: enable messaging server service
+  shell: systemctl enable messaging-server.service
+
+- name: reload systemd daemon
+  shell: systemctl daemon-reload
+
+- name: stop messaging server
+  service: name=messaging-server state=stopped
+
+- name: restart messaging server
+  service: name=messaging-server enabled=yes state=restarted
+
+- name: configure nginx (messaging server)
+  template: src=nginx_messaging.j2 dest=/etc/nginx/sites-enabled/messaging owner=root group=root mode=0644
+  notify:
+    - restart nginx
+
+- meta: flush_handlers
+
+- name: verify messaging-server is available
+  wait_for: host={{messaging_server_internal_host}} port={{messaging_server_internal_port}}
+
+- meta: flush_handlers

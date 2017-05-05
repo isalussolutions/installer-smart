@@ -1,0 +1,40 @@
+---
+keystore_password: "changeme"
+
+installer_user: "vagrant"
+#installer_user: "ubuntu"
+
+services_host: "localhost"
+
+hosting_username: "fhir"
+# Note: If you want to be able to authenticate into the account with a password
+#       replace `nopass` with a valid SHA-512 hash of your preferred password.
+#       You can generate the has with the `mkpasswd --method=sha-512` command,
+#       for example. Alternatively, you can use `sudo passwd [username]` to
+#       enable password authentication on the account.
+hosting_userpass: "nopass"
+mysql_root_pass: "password"
+mysql_user: "fhir"
+mysql_pass: "password"
+
+app_server_host: "{{services_host}}"
+app_server_port: "9093"
+
+api_server_host: "{{services_host}}"
+api_server_port: "9070"
+api_server_name: "HSPC FHIR DSTU2 Server"
+
+sandbox_manager_server_host: "{{services_host}}"
+sandbox_manager_server_port: "9080"
+
+auth_server_host: "{{services_host}}"
+auth_server_port: "9060"
+auth_server_password: "secret"
+auth_server_newUserUrl: ""
+
+persona_auth_server_host: "{{services_host}}"
+persona_auth_server_port: "9061"
+persona_auth_server_newUserUrl: ""
+
+messaging_server_host: "{{services_host}}"
+messaging_server_port: "9091"

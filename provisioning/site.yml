@@ -1,0 +1,17 @@
+---
+- include: playbook-linux.yml
+
+- include: playbook-apacheds.yml
+
+- include: playbook-pwm.yml
+
+- include: playbook-auth.yml
+
+- include: playbook-api.yml
+
+- include: playbook-messaging.yml
+
+- include: playbook-apps.yml
+
+- include: playbook-sandbox-manager.yml
+
