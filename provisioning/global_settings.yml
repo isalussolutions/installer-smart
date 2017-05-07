@@ -44,8 +44,8 @@ mysql_host: "{{services_host}}"
 mysql_connect_host: "%"
 mysql_endpoint: "{{mysql_host}}:3306"
 mysql_root_pass: "password"
-mysql_user: "fhir"
-mysql_pass: "password"
+mysql_username: "fhir"
+mysql_password: "password"
 #mysql_privilage: "{{auth_server_database}}.*:ALL/{{sandbox_manager_database}}.*:ALL/*.*:ALL,GRANT"
 mysql_privilage: "*.*:ALL,GRANT"
 mysql_bind_address: "0.0.0.0"
@@ -153,55 +153,22 @@ app_server_base: "{{
 # Additional parameters for the sample patient generator
 sample_patients_generator_params: ""
 
-# ApacheDS server configuration
-apacheds_server_host: "{{services_host}}"
-apacheds_server_port: "10389"
-apacheds_server_base: "dc={{second_level_domain}},dc={{top_level_domain}}"
-apacheds_server_url: "ldap://{{apacheds_server_host}}:{{apacheds_server_port}}"
-apacheds_server_system_admin: "admin"
-apacheds_server_system_admin_dn: "uid={{apacheds_server_system_admin}},ou=system"
-# note, this does not change the password in the apache_ds system
-# the apacheds admin password is already set in the apacheds-2.0.0-M23-configured.tar
-# if you would like a different password, change it in ApacheDS after deploy
-# then change it here for other services to use
-apacheds_server_system_admin_initial_password: "secret"
-# if you are changing the ldap password after install, set this to the future password
-# so the services can be configured to use it correctly
-apacheds_server_system_admin_password: "secret"
-# test user
-apacheds_server_sandbox_test_cn: "cn=test"
-apacheds_server_sandbox_test_dn: "{{apacheds_server_sandbox_test_cn}},{{apacheds_server_sandbox_users_context}}"
-# users account
-apacheds_server_sandbox_users_ou: "ou=users"
-apacheds_server_sandbox_users_context: "{{apacheds_server_sandbox_users_ou}},{{apacheds_server_base}}"
-# admin account
-apacheds_server_sandbox_admin: "admin"
-apacheds_server_sandbox_admins_ou: "ou=admins"
-apacheds_server_sandbox_admins_context: "{{apacheds_server_sandbox_admins_ou}},{{apacheds_server_base}}"
-apacheds_server_sandbox_admin_cn: "cn={{apacheds_server_sandbox_admin}}"
-apacheds_server_sandbox_admin_dn: "{{apacheds_server_sandbox_admin_cn}},{{apacheds_server_sandbox_admins_context}}"
-apacheds_server_sandbox_admin_password: "password"
-# demo account
-apacheds_server_sandbox_demo: "demo"
-apacheds_server_sandbox_demo_cn: "cn={{apacheds_server_sandbox_demo}}"
-apacheds_server_sandbox_demo_dn: "{{apacheds_server_sandbox_demo_cn}},{{apacheds_server_sandbox_admins_context}}"
-apacheds_server_sandbox_demo_password: "demo"
-
 # API Server client
-api_server_oauth2_clientId: "hspc_resource_server"
-api_server_oauth2_clientSecret: "secret"
+api_stu3_server_oauth2_clientId: "hspc_resource_server"
+api_stu3_server_oauth2_clientSecret: "secret"
 
-# API Database
-api_schema_version: 4
-api_server_sandbox: "hspc{{api_schema_version}}"
-api_server_database: "hspc_{{api_schema_version}}_{{api_server_sandbox}}"
+# API_STU3 Database
+api_stu3_schema_version: 4
+api_stu3_server_sandbox: "hspc{{api_stu3_schema_version}}"
+api_stu3_server_database: "hspc_{{api_stu3_schema_version}}_{{api_stu3_server_sandbox}}"
 
-# API Server
-api_server_host: "{{services_host}}"
-api_server_port: "8070"
-api_server_url: "http://{{api_server_host}}:{{api_server_port}}/"
-api_server_default_sandbox_url: "{{api_server_url}}/{{api_server_sandbox}}"
-api_server_default_sandbox_fhir_root_url: "{{api_server_default_sandbox_url}}/data"
+# API_STU3 Server
+api_stu3_server_host: "{{services_host}}"
+api_stu3_server_external_port: "443"
+api_stu3_server_port: "8070"
+api_stu3_server_url: "http://{{api_stu3_server_host}}:{{api_stu3_server_port}}/"
+api_stu3_server_default_sandbox_url: "{{api_stu3_server_url}}/{{api_stu3_server_sandbox}}"
+api_stu3_server_default_sandbox_fhir_root_url: "{{api_stu3_server_default_sandbox_url}}/data"
 
 # SandboxManager Server
 sandbox_manager_server_host: "{{services_host}}"
@@ -217,10 +184,8 @@ sandbox_manager_server_url: "{{sandbox_manager_server_base_url}}{{sandbox_manage
 
 # Auth Server
 auth_server_host: "{{services_host}}"
-auth_server_port: "9060"
-auth_server_internal_host: "{{services_host}}"
-auth_server_internal_port: "8060"
-# for local install with /auth and /persona from the same host
+auth_server_external_port: "9060"
+auth_server_port: "8060"
 # requiring two deployments of the auth server
 auth_server_context: "/"
 auth_server_name: "Authorization Server"
@@ -232,45 +197,16 @@ auth_server_client: "client"
 auth_server_password: "secret"
 auth_server_enable_mock_endpoints: true
 
-# Persona-Auth Server
-persona_auth_server_host: "{{services_host}}"
-persona_auth_server_port: "9061"
-persona_auth_server_internal_host: "{{services_host}}"
-persona_auth_server_internal_port: "8061"
-persona_auth_server_context: "/"
-persona_auth_server_name: "Persona Authorization Server"
-persona_auth_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
-persona_auth_server_inferred_port: "{{(':'+persona_auth_server_port|string) if persona_auth_server_port|int not in (80,443) else ''}}"
-persona_auth_server_base_url: "{{persona_auth_server_inferred_protocol}}://{{persona_auth_server_host}}{{persona_auth_server_inferred_port}}"
-persona_auth_server_url: "{{persona_auth_server_base_url}}{{persona_auth_server_context}}"
-persona_auth_server_enable_mock_endpoints: false
-
 # Messaging Server
 messaging_server_host: "{{services_host}}"
-messaging_server_port: "9091"
-messaging_server_internal_host: "{{services_host}}"
-messaging_server_internal_port: "8091"
+messaging_server_external_port: "9091"
+messaging_server_port: "8091"
 messaging_server_context: "/"
 messaging_server_name: "Messaging Server"
 messaging_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
 messaging_server_inferred_port: "{{(':'+messaging_server_port|string) if messaging_server_port|int not in (80,443) else ''}}"
 messaging_server_base_url: "{{messaging_server_inferred_protocol}}://{{messaging_server_host}}{{messaging_server_inferred_port}}"
 messaging_server_url: "{{messaging_server_base_url}}{{messaging_server_context}}"
-
-# PWM Server
-pwm_server_host: "{{services_host}}"
-#pwm_server_host: "service.smarthealthit.org"
-pwm_server_port: "9092"
-pwm_server_internal_host: "{{services_host}}"
-pwm_server_internal_port: "8092"
-pwm_server_context: "/"
-pwm_server_name: "PWM Server"
-pwm_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
-#pwm_server_inferred_protocol: "https"
-pwm_server_inferred_port: "{{(':'+pwm_server_port|string) if pwm_server_port|int not in (80,443) else ''}}"
-#pwm_server_inferred_port: ""
-pwm_server_base_url: "{{pwm_server_inferred_protocol}}://{{pwm_server_host}}{{pwm_server_inferred_port}}"
-pwm_server_url: "{{pwm_server_base_url}}{{pwm_server_context}}"
 
 nginx_home: "/etc/nginx"
 fhir_home: "/home/fhir"

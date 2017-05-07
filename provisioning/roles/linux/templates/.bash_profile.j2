@@ -1,0 +1,39 @@
+export NGINX_HOME={{nginx_home}}
+export NGINX_SITES=$NGINX_HOME/sites-enabled
+export SERVICE_HOME=/etc/systemd/system
+export FHIR_HOME={{fhir_home}}
+export INSTALLER_HOME={{installer_home}}
+export PROVISIONING_HOME=$INSTALLER_HOME/provisioning
+export EDITOR=vi
+
+alias n='cd $NGINX_SITES'
+alias s='cd $SERVICE_HOME'
+
+# tail services
+alias tapistu3='sudo journalctl -f -u api_stu3.service'
+alias tauth='sudo journalctl -f -u auth.service'
+alias tmsg='sudo journalctl -f -u messaging.service'
+alias tsand='sudo journalctl -f -u sandbox-manager.service'
+alias tnginx='sudo journalctl -f -u nginx.service'
+
+# view services
+alias vapistu3='sudo journalctl -u api_stu3.service'
+alias vauth='sudo journalctl -u auth.service'
+alias vmsg='sudo journalctl -u messaging.service'
+alias vsand='sudo journalctl -u sandbox-manager.service'
+alias vnginx='sudo journalctl -u nginx.service'
+
+alias f='cd $FHIR_HOME'
+
+alias stopn='sudo service nginx stop'
+alias startn='sudo service nginx start'
+alias build='~/build.sh'
+alias p='cd $PROVISIONING_HOME'
+alias i='cd $INSTALLER_HOME'
+alias m='mysql -h {{mysql_host}} -u {{mysql_username}} -p{{mysql_password}}'
+
+alias pull='cd $INSTALLER_HOME; git pull'
+alias b='sudo ansible-playbook  -c local -i 'localhost,' -vvvv site.yml'
+alias echob='echo sudo ansible-playbook  -c local -i 'localhost,' -vvvv site.yml'
+alias v='sudo ansible-playbook  -c local -i 'localhost,' -vvvv site.yml'
+alias echov='echo sudo ansible-playbook  -c local -i 'localhost,' -vvvv site.yml'

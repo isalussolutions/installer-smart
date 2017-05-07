@@ -77,6 +77,6 @@
 - meta: flush_handlers
 
 # not working for some reason, getting a 403, but the apps are hosted
-#- name: verify app-server is available
+#- name: verify app is available
 #  wait_for: host={{app_server_host}} port={{app_server_port}}
 #

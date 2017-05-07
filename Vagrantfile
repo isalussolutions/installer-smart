@@ -32,12 +32,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 # Messaging Server
   config.vm.network :forwarded_port, guest: 9091, host: 9091
-# PWM Server
-  config.vm.network :forwarded_port, guest: 9092, host: 9092
 # Apps Server
   config.vm.network :forwarded_port, guest: 9093, host: 9093
-# ApacheDS
-  config.vm.network :forwarded_port, guest: 10389, host: 10389
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "HSPC Reference Platform"

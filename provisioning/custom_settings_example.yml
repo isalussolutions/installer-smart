@@ -14,15 +14,15 @@ hosting_username: "fhir"
 #       enable password authentication on the account.
 hosting_userpass: "nopass"
 mysql_root_pass: "password"
-mysql_user: "fhir"
-mysql_pass: "password"
+mysql_username: "fhir"
+mysql_password: "password"
 
 app_server_host: "{{services_host}}"
 app_server_port: "9093"
 
-api_server_host: "{{services_host}}"
-api_server_port: "9070"
-api_server_name: "HSPC FHIR DSTU2 Server"
+api_stu3_server_host: "{{services_host}}"
+api_stu3_server_port: "9070"
+api_stu3_server_name: "HSPC FHIR DSTU2 Server"
 
 sandbox_manager_server_host: "{{services_host}}"
 sandbox_manager_server_port: "9080"

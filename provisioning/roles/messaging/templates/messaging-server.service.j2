@@ -11,7 +11,7 @@ ExecStart={{java_home}}/bin/java \
  -Xmx{{messaging_server_max_memory}} \
  -Djetty.port={{messaging_server_internal_port}} \
  -Djetty.host={{messaging_server_internal_host}} \
- -Dhspc.reference.api.url={{api_server_default_sandbox_fhir_root_url}} \
+ -Dhspc.reference.api.url={{api_stu3_server_default_sandbox_fhir_root_url}} \
  -Dldap.url={{apacheds_server_url}} \
  -Dldap.server={{apacheds_server_url}}/{{apacheds_server_base}} \
  -Dldap.password={{apacheds_server_system_admin_password}} \
@@ -31,7 +31,7 @@ ExecStart={{java_home}}/bin/java \
  -Xmx{{messaging_server_max_memory}} \
  -Djetty.port={{messaging_server_internal_port}} \
  -Djetty.host={{messaging_server_internal_host}} \
- -Dhspc.reference.api.url={{api_server_default_sandbox_fhir_root_url}} \
+ -Dhspc.reference.api.url={{api_stu3_server_default_sandbox_fhir_root_url}} \
  -Dldap.url={{apacheds_server_url}} \
  -Dldap.server={{apacheds_server_url}}/{{apacheds_server_base}} \
  -Dldap.password={{apacheds_server_system_admin_password}} \
