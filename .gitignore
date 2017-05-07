@@ -30,3 +30,6 @@ custom_settings_test.yml
 
 inventory-*
 .vagrant/
+
+provisioning/inventory_prod
+provisioning/inventory_test
