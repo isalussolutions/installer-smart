@@ -9,11 +9,7 @@ WorkingDirectory={{hosting_user_home}}/messaging
 ExecStart={{java_home}}/bin/java \
  -Xms{{messaging_server_initial_memory}} \
  -Xmx{{messaging_server_max_memory}} \
- -Dhspc.platform.api.fhir.db.host={{mysql_host}} \
- -Dhspc.platform.api.fhir.db.username={{mysql_username}} \
- -Dhspc.platform.api.fhir.db.password={{mysql_password}} \
- -Dhspc.platform.authorization.url={{auth_server_url}} \
- -Dhspc.platform.messaging.url={{messaging_server_url}} \
+ -Dhspc.reference.api.url={{api_default_sandbox_url}} \
 {% if use_secure_http %}
  -Dserver.ssl.key-store={{hosting_user_home}}/keystore \
  -Dserver.ssl.key-store-password={{keystore_password}} \
