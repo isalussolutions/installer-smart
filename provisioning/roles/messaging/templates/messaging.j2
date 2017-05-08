@@ -1,5 +1,5 @@
 upstream messaging {
-    server 127.0.0.1:{{messaging_server_internal_port}};
+    server 127.0.0.1:{{messaging_server_port}};
 }
 
 # the nginx server instance
@@ -8,9 +8,9 @@ server {
     server_name {{messaging_server_host}};
 {% endif %}
 
-    listen {{messaging_server_port}};
+    listen {{messaging_server_external_port}};
 
-    location {{messaging_server_context}} {
+    location / {
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
@@ -18,7 +18,11 @@ server {
       proxy_set_header X-NginX-Proxy true;
 
       access_log /var/log/nginx/messaging_access.log;
-      proxy_pass http://messaging{{messaging_server_context}};
+{% if use_secure_http %}
+      proxy_pass https://messaging;
+{% else %}
+      proxy_pass http://messaging;
+{% endif %}
       proxy_redirect off;
     }
 
@@ -29,7 +33,7 @@ server {
 {% endif %}
 }
 
-{% if messaging_server_port != 80 and http_redirect %}
+{% if messaging_server_external_port != 80 and http_redirect %}
 server {
     server_name {{messaging_server_host}};
     listen 80;

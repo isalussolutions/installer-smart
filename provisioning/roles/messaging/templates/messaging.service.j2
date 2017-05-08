@@ -1,14 +1,14 @@
 [Unit]
-Description=HSPC API STU3 Server
+Description=HSPC Messaging Server
 
 [Service]
 User={{hosting_username}}
 TimeoutStartSec=infinity
-WorkingDirectory={{hosting_user_home}}/api_stu3
+WorkingDirectory={{hosting_user_home}}/messaging
 
 ExecStart={{java_home}}/bin/java \
- -Xms{{api_stu3_server_initial_memory}} \
- -Xmx{{api_stu3_server_max_memory}} \
+ -Xms{{messaging_server_initial_memory}} \
+ -Xmx{{messaging_server_max_memory}} \
  -Dhspc.platform.api.fhir.db.host={{mysql_host}} \
  -Dhspc.platform.api.fhir.db.username={{mysql_username}} \
  -Dhspc.platform.api.fhir.db.password={{mysql_password}} \
@@ -19,7 +19,7 @@ ExecStart={{java_home}}/bin/java \
  -Dserver.ssl.key-store-password={{keystore_password}} \
  -Dserver.ssl.keyStoreType=JKS \
 {% endif %}
- -jar {{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}
+ -jar {{messaging_server_artifact_artifact_id}}-{{messaging_server_artifact_version}}.{{messaging_server_artifact_packaging}}
 Restart=always
 
 [Install]

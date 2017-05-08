@@ -27,8 +27,8 @@
   become_user: "{{hosting_username}}"
   shell: |
     mkdir -p {{hosting_user_home_apps}}/static/apps/patient-picker
-    cp -r {{patient_picker_project_info.target.folder}}/src/main/webapp/static {{hosting_user_home_apps}}/static/apps/patient-picker
-    cp -r {{patient_picker_project_info.target.folder}}/src/main/webapp/index.html {{hosting_user_home_apps}}/static/apps/patient-picker
+    cp -r {{patient_picker_project_target.folder}}/src/main/webapp/static {{hosting_user_home_apps}}/static/apps/patient-picker
+    cp -r {{patient_picker_project_target.folder}}/src/main/webapp/index.html {{hosting_user_home_apps}}/static/apps/patient-picker
 
 - name: patch patient_picker_app branding
   become_user: "{{hosting_username}}"

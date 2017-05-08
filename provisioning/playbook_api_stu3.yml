@@ -6,7 +6,6 @@
     - custom_settings.yml
   roles:
     - common
-    - linux
     - api_stu3
 
 - hosts: REMOTEHOST
@@ -20,5 +19,4 @@
     - custom_settings.yml
   roles:
     - common
-    - linux
     - api_stu3

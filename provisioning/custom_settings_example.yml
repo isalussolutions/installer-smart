@@ -22,7 +22,6 @@ app_server_port: "9093"
 
 api_stu3_server_host: "{{services_host}}"
 api_stu3_server_port: "9070"
-api_stu3_server_name: "HSPC FHIR DSTU2 Server"
 
 sandbox_manager_server_host: "{{services_host}}"
 sandbox_manager_server_port: "9080"

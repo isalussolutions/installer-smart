@@ -3,10 +3,10 @@
   become_user: "{{hosting_username}}"
   include: "roles/common/tasks/download-maven-artifact.yml"
   vars:
-    group_id: "{{api_stu3_server_artifact_info.group_id}}"
-    artifact_id: "{{api_stu3_server_artifact_info.artifact_id}}"
-    version: "{{api_stu3_server_artifact_info.version}}"
-    packaging: "{{api_stu3_server_artifact_info.packaging}}"
+    group_id: "{{api_stu3_server_artifact_group_id}}"
+    artifact_id: "{{api_stu3_server_artifact_artifact_id}}"
+    version: "{{api_stu3_server_artifact_version}}"
+    packaging: "{{api_stu3_server_artifact_packaging}}"
 
 - name: "create the service directory"
   become_user: "{{hosting_username}}"

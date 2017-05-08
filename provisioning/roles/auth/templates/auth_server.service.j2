@@ -4,7 +4,7 @@ Description=Authorization Service
 [Service]
 User={{hosting_username}}
 TimeoutStartSec=infinity
-WorkingDirectory={{auth_server_project_info.target.folder}}/target
+WorkingDirectory={{auth_server_project_target.folder}}/target
 
 ExecStart={{java_home}}/bin/java \
  -Xms{{auth_server_initial_memory}} \

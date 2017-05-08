@@ -163,12 +163,18 @@ api_stu3_server_sandbox: "hspc{{api_stu3_schema_version}}"
 api_stu3_server_database: "hspc_{{api_stu3_schema_version}}_{{api_stu3_server_sandbox}}"
 
 # API_STU3 Server
-api_stu3_server_host: "{{services_host}}"
 api_stu3_server_external_port: "443"
 api_stu3_server_port: "8070"
-api_stu3_server_url: "http://{{api_stu3_server_host}}:{{api_stu3_server_port}}/"
+api_stu3_server_url: "http://{{services_host}}/"
 api_stu3_server_default_sandbox_url: "{{api_stu3_server_url}}/{{api_stu3_server_sandbox}}"
 api_stu3_server_default_sandbox_fhir_root_url: "{{api_stu3_server_default_sandbox_url}}/data"
+api_stu3_server_initial_memory: 256M
+api_stu3_server_max_memory: 512M
+api_stu3_server_artifact_group_id: "org.hspconsortium.reference"
+api_stu3_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
+api_stu3_server_artifact_version: "1.5.1"
+api_stu3_server_artifact_packaging: "jar"
+api_stu3_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{api_stu3_server_artifact_artifact_id}}/{{api_stu3_server_artifact_version}}/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
 
 # SandboxManager Server
 sandbox_manager_server_host: "{{services_host}}"
@@ -199,14 +205,9 @@ auth_server_enable_mock_endpoints: true
 
 # Messaging Server
 messaging_server_host: "{{services_host}}"
-messaging_server_external_port: "9091"
+messaging_server_external_port: "443"
 messaging_server_port: "8091"
-messaging_server_context: "/"
-messaging_server_name: "Messaging Server"
-messaging_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
-messaging_server_inferred_port: "{{(':'+messaging_server_port|string) if messaging_server_port|int not in (80,443) else ''}}"
-messaging_server_base_url: "{{messaging_server_inferred_protocol}}://{{messaging_server_host}}{{messaging_server_inferred_port}}"
-messaging_server_url: "{{messaging_server_base_url}}{{messaging_server_context}}"
+messaging_server_url: "http://{{messaging_server_host}}:{{messaging_server_port}}/"
 
 nginx_home: "/etc/nginx"
 fhir_home: "/home/fhir"

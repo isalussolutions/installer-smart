@@ -1,43 +1,51 @@
 ---
-- name: checkout repository messaging_project
+- name: "download the messaging webapp"
   become_user: "{{hosting_username}}"
-  git: repo="{{hspc_repo_base}}/{{messaging_project}}"
-       version="{{messaging_branch}}"
-       dest="{{hosting_user_home_hspc}}/{{messaging_project}}"
-       update={{update_repositories}}
-       force=yes
-       depth=1
+  include: "roles/common/tasks/download-maven-artifact.yml"
+  vars:
+    group_id: "{{messaging_server_artifact_group_id}}"
+    artifact_id: "{{messaging_server_artifact_artifact_id}}"
+    version: "{{messaging_server_artifact_version}}"
+    packaging: "{{messaging_server_artifact_packaging}}"
 
-- name: build hspc messaging server
+- name: "create the service directory"
   become_user: "{{hosting_username}}"
-  shell: chdir={{hosting_user_home_hspc}}
-       mvn clean install -e -U -f reference-messaging/pom.xml
+  file: "path={{item}} state=directory"
+  with_items:
+    - "{{hosting_user_home}}/messaging"
 
-- name: configure messaging server service
+- name: "copy to the service directory"
+  become_user: "{{hosting_username}}"
+  copy:
+    src: "{{messaging_server_artifact_location}}"
+    dest: "{{hosting_user_home}}/messaging"
+    remote_src: True
+
+# configure nginx
+- name: "configure nginx (messaging)"
+  template: src=messaging.j2 dest=/etc/nginx/sites-enabled/messaging owner=root group=root mode=0644
+  notify:
+    - restart nginx
+
+# configure the messaging service
+- name: "configure messaging service"
   template: src=messaging.service.j2
             dest=/etc/systemd/system/messaging.service
             owner=root group=root mode=0644
 
-- name: enable messaging server service
+- name: "enable messaging service"
   shell: systemctl enable messaging.service
 
-- name: reload systemd daemon
+- name: "reload systemd daemon"
   shell: systemctl daemon-reload
 
-- name: stop messaging server
-  service: name=messaging state=stopped
-
-- name: restart messaging server
-  service: name=messaging enabled=yes state=restarted
-
-- name: configure nginx (messaging server)
-  template: src=nginx_messaging.j2 dest=/etc/nginx/sites-enabled/messaging owner=root group=root mode=0644
-  notify:
-    - restart nginx
+- name: "restart messaging"
+  service: name=messaging state=restarted
 
 - meta: flush_handlers
 
-- name: verify messaging is available
-  wait_for: host={{messaging_server_internal_host}} port={{messaging_server_internal_port}}
+- name: "verify messaging is available"
+  become_user: "{{hosting_username}}"
+  wait_for: host={{messaging_server_host}} port={{messaging_server_external_port}}
 
 - meta: flush_handlers
