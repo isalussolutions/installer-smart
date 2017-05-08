@@ -129,7 +129,7 @@
   become_user: "{{hosting_username}}"
   when: use_secure_http
   shell: /bin/echo -e "{{keystore_password}}\n{{keystore_password}}\n\n\n\n\n\n\nyes\n" | keytool
-           -genkey -alias smart
+           -genkey -alias {{certificate_truststore_alias}}
            -keystore {{hosting_user_home}}/keystore
 
 - name: configure nginx (default)
