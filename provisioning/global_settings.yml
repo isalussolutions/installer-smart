@@ -243,6 +243,21 @@ apps_server_artifact_version: "1.1-SNAPSHOT"
 apps_server_artifact_packaging: "war"
 apps_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{apps_server_artifact_artifact_id}}/{{apps_server_artifact_version}}/{{apps_server_artifact_artifact_id}}-{{apps_server_artifact_version}}.{{apps_server_artifact_packaging}}"
 
+# Patient Picker
+patient_picker_server_host: "localhost"
+patient_picker_server_port: "8094"
+patient_picker_server_url: "http://{{patient_picker_server_host}}:{{patient_picker_server_port}}"
+patient_picker_server_external_host: "localhost"
+patient_picker_server_external_port: "9094"
+patient_picker_server_external_url: "http://{{patient_picker_server_external_host}}:{{patient_picker_server_external_port}}"
+patient_picker_server_initial_memory: 128M
+patient_picker_server_max_memory: 256M
+patient_picker_server_artifact_group_id: "org.hspconsortium.sandbox"
+patient_picker_server_artifact_artifact_id: "hspc-patient-picker"
+patient_picker_server_artifact_version: "1.1-SNAPSHOT"
+patient_picker_server_artifact_packaging: "war"
+patient_picker_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/sandbox/{{patient_picker_server_artifact_artifact_id}}/{{patient_picker_server_artifact_version}}/{{patient_picker_server_artifact_artifact_id}}-{{patient_picker_server_artifact_version}}.{{patient_picker_server_artifact_packaging}}"
+
 # SandboxManager Server
 sandbox_manager_server_host: "localhost"
 sandbox_manager_server_port: "8080"

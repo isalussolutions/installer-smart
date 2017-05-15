@@ -1,17 +1,15 @@
 ---
-- include: playbook-linux.yml
+- include: playbook_linux.yml
 
-- include: playbook-apacheds.yml
+- include: playbook_auth.yml
 
-- include: playbook-pwm.yml
+- include: playbook_api_stu3.yml
 
-- include: playbook-auth.yml
+- include: playbook_messaging.yml
 
-- include: playbook-api.yml
+- include: playbook_apps.yml
 
-- include: playbook-messaging.yml
+- include: playbook_patient_picker.yml
 
-- include: playbook-apps.yml
-
-- include: playbook-sandbox-manager.yml
+- include: playbook_sandbox-manager.yml
 
