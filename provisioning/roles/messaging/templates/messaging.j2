@@ -4,9 +4,7 @@ upstream messaging {
 
 # the nginx server instance
 server {
-{% if messaging_server_host %}
-    server_name {{messaging_server_host}};
-{% endif %}
+    server_name {{messaging_server_external_host}};
 
     listen {{messaging_server_external_port}};
 

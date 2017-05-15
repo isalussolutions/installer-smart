@@ -21,31 +21,53 @@
     dest: "{{hosting_user_home}}/messaging"
     remote_src: True
 
-# configure nginx
+- name: "stop messaging"
+  service:
+    name: "messaging"
+    state: "stopped"
+  ignore_errors: yes
+
+- name: "configure messaging service"
+  template:
+    src: "messaging.service.j2"
+    dest: "/etc/systemd/system/messaging.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "enable messaging service"
+  shell: "systemctl enable messaging.service"
+
+- name: "reload systemd daemon"
+  shell: "systemctl daemon-reload"
+
+- name: "start messaging"
+  service:
+    name: "messaging"
+    state: "started"
+
+- name: "verify messaging is available internally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "localhost"
+    port: "{{messaging_server_port}}"
+
 - name: "configure nginx (messaging)"
-  template: src=messaging.j2 dest=/etc/nginx/sites-enabled/messaging owner=root group=root mode=0644
+  template:
+    src: "messaging.j2"
+    dest: "/etc/nginx/sites-enabled/messaging"
+    owner: "root"
+    group: "root"
+    mode: "0644"
   notify:
     - restart nginx
 
-# configure the messaging service
-- name: "configure messaging service"
-  template: src=messaging.service.j2
-            dest=/etc/systemd/system/messaging.service
-            owner=root group=root mode=0644
-
-- name: "enable messaging service"
-  shell: systemctl enable messaging.service
-
-- name: "reload systemd daemon"
-  shell: systemctl daemon-reload
-
-- name: "restart messaging"
-  service: name=messaging state=restarted
-
 - meta: flush_handlers
 
-- name: "verify messaging is available"
+- name: "verify messaging is available externally"
   become_user: "{{hosting_username}}"
-  wait_for: host={{messaging_server_host}} port={{messaging_server_external_port}}
+  wait_for:
+    host: "{{messaging_server_host}}"
+    port: "{{messaging_server_external_port}}"
 
 - meta: flush_handlers
