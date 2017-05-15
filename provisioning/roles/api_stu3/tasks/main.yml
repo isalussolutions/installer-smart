@@ -21,7 +21,7 @@
     dest: "{{hosting_user_home}}/api_stu3"
     remote_src: true
 
-- name: "restart api_stu3"
+- name: "stop api_stu3"
   service:
     name: "api_stu3"
     state: "stopped"
