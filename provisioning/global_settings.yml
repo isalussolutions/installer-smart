@@ -146,12 +146,47 @@ sample_patients_project_info:
 include_custom_patients: false
 api_dstu2_sample_patients_generator_params: "--id-prefix SMART"
 
-app_server_base: "{{
-    'https' if use_secure_http else 'http'}}://{{app_server_host}}{{
-    (':'+app_server_port|string) if app_server_port|int not in (80,443) else ''}}"
-
 # Additional parameters for the sample patient generator
 sample_patients_generator_params: ""
+
+# Platform
+hspc_platform_jwt_key: "aZzGERZNzPP2fjEsiNY9mjEcK6dNTB7fML8zzgPTRVrMxWivKsvavM8KnCYH4Ke6"
+hspc_platform_persona_cookie_domain: "localhost"
+
+# Account
+account_firebase_projectName: "hspc"
+account_firebase_databaseUrl: "https://hspc-3f7ad.firebaseio.com"
+account_accountLoginPage: "https://account.hspconsortium.org"
+account_accountLogoutPage: "{{account_accountLoginPage}}/account/logout"
+
+# Auth Server
+auth_server_host: "localhost"
+auth_server_port: "8060"
+auth_server_url: "http://{{auth_server_host}}:{{auth_server_port}}"
+auth_server_external_host: "localhost"
+auth_server_external_port: "9060"
+auth_server_external_url: "http://{{auth_server_external_host}}:{{auth_server_external_port}}"
+auth_server_initial_memory: 128M
+auth_server_max_memory: 256M
+auth_server_artifact_group_id: "org.hspconsortium.reference"
+auth_server_artifact_artifact_id: "hspc-reference-auth-server-firebase-webapp"
+auth_server_artifact_version: "1.6-SNAPSHOT"
+auth_server_artifact_packaging: "war"
+auth_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{auth_server_artifact_artifact_id}}/{{auth_server_artifact_version}}/{{auth_server_artifact_artifact_id}}-{{auth_server_artifact_version}}.{{auth_server_artifact_packaging}}"
+auth_server_database: "oic"
+auth_server_enable_mock_endpoints: true
+
+
+
+
+# requiring two deployments of the auth server
+#auth_server_context: "/"
+#auth_server_name: "Authorization Server"
+#auth_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
+#auth_server_inferred_port: "{{(':'+auth_server_port|string) if auth_server_port|int not in (80,443) else ''}}"
+#auth_server_base_url: "{{auth_server_inferred_protocol}}://{{auth_server_host}}{{auth_server_inferred_port}}"
+#auth_server_client: "client"
+#auth_server_password: "secret"
 
 # API Server client
 api_server_oauth2_clientId: "hspc_resource_server"
@@ -171,13 +206,13 @@ api_stu3_server_external_port: "9074"
 api_stu3_server_external_url: "http://{{api_stu3_server_external_host}}:{{api_stu3_server_external_port}}"
 api_stu3_server_initial_memory: 128M
 api_stu3_server_max_memory: 256M
-#api_stu3_server_default_sandbox_url: "{{api_stu3_server_url}}/{{api_stu3_server_sandbox}}"
-#api_stu3_server_default_sandbox_fhir_root_url: "{{api_stu3_server_default_sandbox_url}}/data"
 api_stu3_server_artifact_group_id: "org.hspconsortium.reference"
 api_stu3_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
 api_stu3_server_artifact_version: "1.5.2-SNAPSHOT"
 api_stu3_server_artifact_packaging: "jar"
 api_stu3_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{api_stu3_server_artifact_artifact_id}}/{{api_stu3_server_artifact_version}}/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
+api_stu3_server_default_sandbox_url: "{{api_stu3_server_url}}/{{api_stu3_server_sandbox}}"
+api_stu3_server_default_sandbox_fhir_root_url: "{{api_stu3_server_default_sandbox_url}}/data"
 
 # Default API Server
 api_default_sandbox_url: "{{api_stu3_server_url}}/{{api_stu3_server_sandbox}}/data"
@@ -197,34 +232,37 @@ messaging_server_artifact_version: "1.3.0-SNAPSHOT"
 messaging_server_artifact_packaging: "jar"
 messaging_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{messaging_server_artifact_artifact_id}}/{{messaging_server_artifact_version}}/{{messaging_server_artifact_artifact_id}}-{{messaging_server_artifact_version}}.{{messaging_server_artifact_packaging}}"
 
-# SandboxManager Server
-sandbox_manager_server_host: "{{services_host}}"
-sandbox_manager_server_port: "9080"
-sandbox_manager_server_internal_host: "{{services_host}}"
-sandbox_manager_server_internal_port: "8080"
-sandbox_manager_server_context: "/"
-sandbox_manager_server_name: "Sandbox Manager server"
-sandbox_manager_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
-sandbox_manager_server_inferred_port: "{{(':'+sandbox_manager_server_port|string) if sandbox_manager_server_port|int not in (80,443) else ''}}"
-sandbox_manager_server_base_url: "{{sandbox_manager_server_inferred_protocol}}://{{sandbox_manager_server_host}}{{sandbox_manager_server_inferred_port}}"
-sandbox_manager_server_url: "{{sandbox_manager_server_base_url}}{{sandbox_manager_server_context}}"
+# Apps Server
+apps_server_host: "localhost"
+apps_server_port: "8093"
+apps_server_url: "http://{{apps_server_host}}:{{apps_server_port}}"
+apps_server_external_host: "localhost"
+apps_server_external_port: "9093"
+apps_server_external_url: "http://{{apps_server_external_host}}:{{apps_server_external_port}}"
+apps_server_initial_memory: 128M
+apps_server_max_memory: 256M
 
-# Auth Server
-auth_server_host: "localhost"
-auth_server_port: "8060"
-auth_server_url: "http://{{auth_server_host}}:{{auth_server_port}}"
-auth_server_external_host: "localhost"
-auth_server_external_port: "9060"
-auth_server_external_url: "http://{{auth_server_external_host}}:{{auth_server_external_port}}"
-# requiring two deployments of the auth server
-#auth_server_context: "/"
-#auth_server_name: "Authorization Server"
-#auth_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
-#auth_server_inferred_port: "{{(':'+auth_server_port|string) if auth_server_port|int not in (80,443) else ''}}"
-#auth_server_base_url: "{{auth_server_inferred_protocol}}://{{auth_server_host}}{{auth_server_inferred_port}}"
-auth_server_client: "client"
-auth_server_password: "secret"
-auth_server_enable_mock_endpoints: true
+app_server_base: "{{
+    'https' if use_secure_http else 'http'}}://{{app_server_host}}{{
+    (':'+app_server_port|string) if app_server_port|int not in (80,443) else ''}}"
+
+
+# SandboxManager Server
+sandbox_manager_server_host: "localhost"
+sandbox_manager_server_port: "8080"
+sandbox_manager_server_url: "http://{{sandbox_manager_server_host}}:{{sandbox_manager_server_port}}"
+sandbox_manager_server_external_host: "localhost"
+sandbox_manager_server_external_port: "9080"
+sandbox_manager_server_external_url: "http://{{sandbox_manager_server_external_host}}:{{sandbox_manager_server_external_port}}"
+sandbox_manager_server_initial_memory: 128M
+sandbox_manager_server_max_memory: 256M
+
+#sandbox_manager_server_context: "/"
+#sandbox_manager_server_name: "Sandbox Manager server"
+#sandbox_manager_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
+#sandbox_manager_server_inferred_port: "{{(':'+sandbox_manager_server_port|string) if sandbox_manager_server_port|int not in (80,443) else ''}}"
+#sandbox_manager_server_base_url: "{{sandbox_manager_server_inferred_protocol}}://{{sandbox_manager_server_host}}{{sandbox_manager_server_inferred_port}}"
+#sandbox_manager_server_url: "{{sandbox_manager_server_base_url}}{{sandbox_manager_server_context}}"
 
 nginx_home: "/etc/nginx"
 fhir_home: "/home/fhir"
