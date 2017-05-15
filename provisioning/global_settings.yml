@@ -12,7 +12,7 @@
 
 services_host: "localhost"
 
-hosting_username: "fhir"
+hosting_username: "hspc"
 hosting_userpass: "nopass"
 hosting_user_home: "/home/{{hosting_username}}"
 hosting_user_home_projects: "{{hosting_user_home}}/projects"
@@ -154,8 +154,8 @@ app_server_base: "{{
 sample_patients_generator_params: ""
 
 # API Server client
-api_stu3_server_oauth2_clientId: "hspc_resource_server"
-api_stu3_server_oauth2_clientSecret: "secret"
+api_server_oauth2_clientId: "hspc_resource_server"
+api_server_oauth2_clientSecret: "secret"
 
 # API_STU3 Database
 api_stu3_schema_version: 4
@@ -163,29 +163,33 @@ api_stu3_server_sandbox: "hspc{{api_stu3_schema_version}}"
 api_stu3_server_database: "hspc_{{api_stu3_schema_version}}_{{api_stu3_server_sandbox}}"
 
 # API_STU3 Server
-api_stu3_server_host: "{{services_host}}"
-api_stu3_server_external_port: "443"
-api_stu3_server_port: "8070"
-api_stu3_server_url: "http://{{api_stu3_server_host}}/"
+api_stu3_server_host: "localhost"
+api_stu3_server_port: "8074"
+api_stu3_server_url: "http://{{api_stu3_server_host}}:{{api_stu3_server_port}}"
+api_stu3_server_external_host: "localhost"
+api_stu3_server_external_port: "9074"
+api_stu3_server_external_url: "http://{{api_stu3_server_external_host}}:{{api_stu3_server_external_port}}"
 api_stu3_server_default_sandbox_url: "{{api_stu3_server_url}}/{{api_stu3_server_sandbox}}"
 api_stu3_server_default_sandbox_fhir_root_url: "{{api_stu3_server_default_sandbox_url}}/data"
-api_stu3_server_initial_memory: 256M
-api_stu3_server_max_memory: 512M
+api_stu3_server_initial_memory: 128M
+api_stu3_server_max_memory: 256M
 api_stu3_server_artifact_group_id: "org.hspconsortium.reference"
 api_stu3_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
-api_stu3_server_artifact_version: "1.5.1"
+api_stu3_server_artifact_version: "1.5.2-SNAPSHOT"
 api_stu3_server_artifact_packaging: "jar"
 api_stu3_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{api_stu3_server_artifact_artifact_id}}/{{api_stu3_server_artifact_version}}/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
 
 # Default API Server
 api_default_server_url: "{{api_stu3_server_url}}"
-api_default_sandbox_url: "{{api_stu3_server_url}}/hspc4/data"
+api_default_sandbox_url: "{{api_stu3_server_url}}/{{api_stu3_server_sandbox}}/data"
 
 # Messaging Server
-messaging_server_host: "{{services_host}}"
-messaging_server_external_port: "443"
+messaging_server_host: "localhost"
 messaging_server_port: "8091"
-messaging_server_url: "http://{{messaging_server_host}}/"
+messaging_server_url: "http://{{messaging_server_host}}:{{messaging_server_port}}"
+messaging_server_external_host: "localhost"
+messaging_server_external_port: "9091"
+messaging_server_external_url: "http://{{messaging_server_external_host}}:{{messaging_server_external_port}}"
 messaging_server_initial_memory: 128M
 messaging_server_max_memory: 256M
 messaging_server_artifact_group_id: "org.hspconsortium.reference"
@@ -207,20 +211,21 @@ sandbox_manager_server_base_url: "{{sandbox_manager_server_inferred_protocol}}:/
 sandbox_manager_server_url: "{{sandbox_manager_server_base_url}}{{sandbox_manager_server_context}}"
 
 # Auth Server
-auth_server_host: "{{services_host}}"
-auth_server_external_port: "9060"
+auth_server_host: "localhost"
 auth_server_port: "8060"
+auth_server_url: "http://{{auth_server_host}}:{{auth_server_port}}"
+auth_server_external_host: "localhost"
+auth_server_external_port: "9060"
+auth_server_external_url: "http://{{auth_server_external_host}}:{{auth_server_external_port}}"
 # requiring two deployments of the auth server
-auth_server_context: "/"
-auth_server_name: "Authorization Server"
-auth_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
-auth_server_inferred_port: "{{(':'+auth_server_port|string) if auth_server_port|int not in (80,443) else ''}}"
-auth_server_base_url: "{{auth_server_inferred_protocol}}://{{auth_server_host}}{{auth_server_inferred_port}}"
-auth_server_url: "{{auth_server_base_url}}{{auth_server_context}}"
+#auth_server_context: "/"
+#auth_server_name: "Authorization Server"
+#auth_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
+#auth_server_inferred_port: "{{(':'+auth_server_port|string) if auth_server_port|int not in (80,443) else ''}}"
+#auth_server_base_url: "{{auth_server_inferred_protocol}}://{{auth_server_host}}{{auth_server_inferred_port}}"
 auth_server_client: "client"
 auth_server_password: "secret"
 auth_server_enable_mock_endpoints: true
-
 
 nginx_home: "/etc/nginx"
 fhir_home: "/home/fhir"
@@ -241,33 +246,6 @@ aws_ec2_volume_id: "changeme"
 
 # Maximu size of sample patient data files
 max_upload_size: "5M"
-
-#delete below
-
-# Self-signed SSL certificates settings (if generating self-signed certificates)
-default_ssl_country: "US"
-default_ssl_province: "MA"
-default_ssl_locality: "Boston"
-default_ssl_organization: "Example Company"
-default_ssl_division: "support"
-default_ssl_email: "support@{{domain_name}}"
-app_server_ssl_country: "{{default_ssl_country}}"
-app_server_ssl_province: "{{default_ssl_province}}"
-app_server_ssl_locality: "{{default_ssl_locality}}"
-app_server_ssl_organization: "{{default_ssl_organization}}"
-app_server_ssl_division: "{{default_ssl_division}}"
-app_server_ssl_email: "{{default_ssl_email}}"
-
-# LDAP server configuration
-ldap_server_organization: "SMART Heathcare IT"
-ldap_server_domain: "{{domain_name}}"
-ldap_server_host: "{{services_host}}"
-ldap_server_port: "10389"
-ldap_server_base: "dc={{second_level_domain}},dc={{top_level_domain}}"
-ldap_server_uri: "ldap://{{ldap_server_host}}:{{ldap_server_port}}"
-ldap_server_admin_password: "sample-password"
-ldap_server_account_admin_password: "password"
-ldap_server_account_demo_password: "demo"
 
 # Email server account
 email_account_description: "Example Account Services"

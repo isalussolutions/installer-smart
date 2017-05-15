@@ -1,12 +1,10 @@
-upstream api-stu3 {
+upstream api_stu3 {
     server 127.0.0.1:{{api_stu3_server_port}};
 }
 
 # the nginx server instance
 server {
-{% if api_stu3_server_host %}
-    server_name {{api_stu3_server_host}};
-{% endif %}
+    server_name {{api_stu3_server_external_host}};
 
     listen {{api_stu3_server_external_port}};
 
@@ -19,9 +17,9 @@ server {
 
       access_log /var/log/nginx/api_stu3_access.log;
 {% if use_secure_http %}
-      proxy_pass https://api-stu3;
+      proxy_pass https://api_stu3;
 {% else %}
-      proxy_pass http://api-stu3;
+      proxy_pass http://api_stu3;
 {% endif %}
       proxy_redirect off;
     }
