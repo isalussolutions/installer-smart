@@ -1,5 +1,6 @@
 ---
 - name: installer profile
+  become_user: "{{installer_user}}"
   template: src=.bash_profile.j2 dest={{installer_user_home}}/.bash_profile
 
 - name: check custom certificate preconditions

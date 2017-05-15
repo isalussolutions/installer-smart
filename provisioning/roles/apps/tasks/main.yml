@@ -1,82 +1,73 @@
 ---
-- name: checkout cardiac_risk_app
+- name: "download the apps webapp"
   become_user: "{{hosting_username}}"
-  include: "roles/common/tasks/project-clone-system.yml"
+  include: "roles/common/tasks/download-maven-artifact.yml"
   vars:
-    project: "{{cardiac_risk_project_info}}"
+    group_id: "{{apps_server_artifact_group_id}}"
+    artifact_id: "{{apps_server_artifact_artifact_id}}"
+    version: "{{apps_server_artifact_version}}"
+    packaging: "{{apps_server_artifact_packaging}}"
 
-- name: checkout bp_centiles_app
+- name: "create the service directory"
   become_user: "{{hosting_username}}"
-  include: "roles/common/tasks/project-clone-system.yml"
-  vars:
-    project: "{{bp_centiles_project_info}}"
-
-- name: checkout growth_chart_app
-  become_user: "{{hosting_username}}"
-  include: "roles/common/tasks/project-clone-system.yml"
-  vars:
-    project: "{{growth_chart_project_info}}"
-
-- name: checkout patient_picker_app
-  become_user: "{{hosting_username}}"
-  include: "roles/common/tasks/project-clone-system.yml"
-  vars:
-    project: "{{patient_picker_project_info}}"
-
-- name: copy patient_picker_app
-  become_user: "{{hosting_username}}"
-  shell: |
-    mkdir -p {{hosting_user_home_apps}}/static/apps/patient-picker
-    cp -r {{patient_picker_project_target.folder}}/src/main/webapp/static {{hosting_user_home_apps}}/static/apps/patient-picker
-    cp -r {{patient_picker_project_target.folder}}/src/main/webapp/index.html {{hosting_user_home_apps}}/static/apps/patient-picker
-
-- name: patch patient_picker_app branding
-  become_user: "{{hosting_username}}"
-  template: src=branded_text.js.j2
-            dest={{hosting_user_home_apps}}/static/apps/patient-picker/static/js/branding/branded_text.js
-
-- name: branding rights
-  file: path={{hosting_user_home_apps}}/static/apps/patient-picker/static/js/branding/branded_text.js state=file owner=root group=root mode=0644
-
-- name: configure sample apps to use a common fhir-client
-  become_user: "{{hosting_username}}"
-  shell: sed -i -e 's/node_modules\/fhirclient\/fhir-client\.js/\.\.\/\.\.\/js\/fhir-client\.js/' {{hosting_user_home_apps}}/static/apps/{{item}}
+  file: "path={{item}} state=directory"
   with_items:
-        - bp-centiles/index.html
-        - bp-centiles/launch.html
-        - cardiac-risk/index.html
-        - cardiac-risk/launch.html
-        - growth-chart/index.html
-        - growth-chart/launch.html
+    - "{{hosting_user_home}}/apps"
 
-- name: extract images used in registration
+- name: "copy to the service directory"
   become_user: "{{hosting_username}}"
-  unarchive: src="images.tar" dest="{{hosting_user_home_apps}}/static/"
+  copy:
+    src: "{{apps_server_artifact_location}}"
+    dest: "{{hosting_user_home}}/apps"
+    remote_src: True
 
-- name: extract common javascript
+- name: "stop apps"
+  service:
+    name: "apps"
+    state: "stopped"
+  ignore_errors: yes
+
+- name: "configure apps service"
+  template:
+    src: "apps.service.j2"
+    dest: "/etc/systemd/system/apps.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "enable apps service"
+  shell: "systemctl enable apps.service"
+
+- name: "reload systemd daemon"
+  shell: "systemctl daemon-reload"
+
+- name: "start apps"
+  service:
+    name: "apps"
+    state: "started"
+
+- name: "verify apps is available internally"
   become_user: "{{hosting_username}}"
-  unarchive: src="js.tar" dest="{{hosting_user_home_apps}}/static/"
+  wait_for:
+    host: "localhost"
+    port: "{{apps_server_port}}"
 
-- name: extract common angular
-  become_user: "{{hosting_username}}"
-  unarchive: src="angular.tar" dest="{{hosting_user_home_apps}}/static/"
-
-- name: extract common bootstrap
-  become_user: "{{hosting_username}}"
-  unarchive: src="bootstrap.tar" dest="{{hosting_user_home_apps}}/static/"
-
-- name: extract common stylesheets
-  become_user: "{{hosting_username}}"
-  unarchive: src="stylesheets.tar" dest="{{hosting_user_home_apps}}/static/"
-
-- name: configure nginx (sample apps)
-  template: src=nginx_apps.j2 dest=/etc/nginx/sites-enabled/apps owner=root group=root mode=0644
+- name: "configure nginx (apps)"
+  template:
+    src: "apps.j2"
+    dest: "/etc/nginx/sites-enabled/apps"
+    owner: "root"
+    group: "root"
+    mode: "0644"
   notify:
     - restart nginx
 
 - meta: flush_handlers
 
-# not working for some reason, getting a 403, but the apps are hosted
-#- name: verify app is available
-#  wait_for: host={{app_server_host}} port={{app_server_port}}
-#
+- name: "verify apps is available externally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{apps_server_host}}"
+    port: "{{apps_server_external_port}}"
+
+- meta: flush_handlers

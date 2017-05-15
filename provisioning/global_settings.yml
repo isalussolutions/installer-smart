@@ -175,10 +175,6 @@ auth_server_artifact_packaging: "war"
 auth_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{auth_server_artifact_artifact_id}}/{{auth_server_artifact_version}}/{{auth_server_artifact_artifact_id}}-{{auth_server_artifact_version}}.{{auth_server_artifact_packaging}}"
 auth_server_database: "oic"
 auth_server_enable_mock_endpoints: true
-
-
-
-
 # requiring two deployments of the auth server
 #auth_server_context: "/"
 #auth_server_name: "Authorization Server"
@@ -241,11 +237,11 @@ apps_server_external_port: "9093"
 apps_server_external_url: "http://{{apps_server_external_host}}:{{apps_server_external_port}}"
 apps_server_initial_memory: 128M
 apps_server_max_memory: 256M
-
-app_server_base: "{{
-    'https' if use_secure_http else 'http'}}://{{app_server_host}}{{
-    (':'+app_server_port|string) if app_server_port|int not in (80,443) else ''}}"
-
+apps_server_artifact_group_id: "org.hspconsortium.reference"
+apps_server_artifact_artifact_id: "hspc-reference-apps"
+apps_server_artifact_version: "1.1-SNAPSHOT"
+apps_server_artifact_packaging: "war"
+apps_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{apps_server_artifact_artifact_id}}/{{apps_server_artifact_version}}/{{apps_server_artifact_artifact_id}}-{{apps_server_artifact_version}}.{{apps_server_artifact_packaging}}"
 
 # SandboxManager Server
 sandbox_manager_server_host: "localhost"

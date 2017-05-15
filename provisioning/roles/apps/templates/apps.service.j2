@@ -1,0 +1,24 @@
+[Unit]
+Description=HSPC Apps Service
+
+[Service]
+User={{hosting_username}}
+TimeoutStartSec=infinity
+WorkingDirectory={{hosting_user_home}}/apps
+
+ExecStart={{java_home}}/bin/java \
+ -Xms{{apps_server_initial_memory}} \
+ -Xmx{{apps_server_max_memory}} \
+ -Djetty.port={{apps_server_port}} \
+ -Djetty.host={{apps_server_host}} \
+{% if use_secure_http and not use_custom_ssl_certificates %}
+ -Djavax.net.ssl.trustStore={{hosting_user_home}}/keystore \
+ -Djavax.net.ssl.trustStorePassword={{keystore_password}} \
+{% endif %}
+ -jar {{hosting_user_home}}/jetty-runner.jar \
+ --config {{hosting_user_home}}/jetty.xml \
+ {{apps_server_artifact_artifact_id}}-{{apps_server_artifact_version}}.war
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
