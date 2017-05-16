@@ -43,10 +43,11 @@ jetty_download_url: "http://central.maven.org/maven2/org/eclipse/jetty/jetty-run
 mysql_host: "{{services_host}}"
 mysql_connect_host: "%"
 mysql_endpoint: "{{mysql_host}}:3306"
+mysql_url: "jdbc:mysql://{{mysql_endpoint}}"
 mysql_root_pass: "password"
 mysql_username: "fhir"
 mysql_password: "password"
-#mysql_privilage: "{{auth_server_database}}.*:ALL/{{sandbox_manager_database}}.*:ALL/*.*:ALL,GRANT"
+#mysql_privilage: "{{auth_server_database}}.*:ALL/{{sandman_database}}.*:ALL/*.*:ALL,GRANT"
 mysql_privilage: "*.*:ALL,GRANT"
 mysql_bind_address: "0.0.0.0"
 
@@ -151,13 +152,13 @@ sample_patients_generator_params: ""
 
 # Platform
 hspc_platform_jwt_key: "aZzGERZNzPP2fjEsiNY9mjEcK6dNTB7fML8zzgPTRVrMxWivKsvavM8KnCYH4Ke6"
-hspc_platform_persona_cookie_domain: "localhost"
 
 # Account
 account_firebase_projectName: "hspc"
 account_firebase_databaseUrl: "https://hspc-3f7ad.firebaseio.com"
 account_accountLoginPage: "https://account.hspconsortium.org"
 account_accountLogoutPage: "{{account_accountLoginPage}}/account/logout"
+account_url: "https://account.hspconsortium.org"
 
 # Auth Server
 auth_server_host: "localhost"
@@ -175,6 +176,7 @@ auth_server_artifact_packaging: "war"
 auth_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{auth_server_artifact_artifact_id}}/{{auth_server_artifact_version}}/{{auth_server_artifact_artifact_id}}-{{auth_server_artifact_version}}.{{auth_server_artifact_packaging}}"
 auth_server_database: "oic"
 auth_server_enable_mock_endpoints: true
+auth_server_persona_cookie_domain: "localhost"
 # requiring two deployments of the auth server
 #auth_server_context: "/"
 #auth_server_name: "Authorization Server"
@@ -207,11 +209,8 @@ api_stu3_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
 api_stu3_server_artifact_version: "1.5.2-SNAPSHOT"
 api_stu3_server_artifact_packaging: "jar"
 api_stu3_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{api_stu3_server_artifact_artifact_id}}/{{api_stu3_server_artifact_version}}/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
-api_stu3_server_default_sandbox_url: "{{api_stu3_server_url}}/{{api_stu3_server_sandbox}}"
-api_stu3_server_default_sandbox_fhir_root_url: "{{api_stu3_server_default_sandbox_url}}/data"
-
-# Default API Server
-api_default_sandbox_url: "{{api_stu3_server_url}}/{{api_stu3_server_sandbox}}/data"
+#api_stu3_server_default_sandbox_url: "{{api_stu3_server_external_url}}/{{api_stu3_server_sandbox}}"
+#api_stu3_server_default_sandbox_fhir_root_url: "{{api_stu3_server_default_sandbox_url}}/data"
 
 # Messaging Server
 messaging_server_host: "localhost"
@@ -259,21 +258,37 @@ patient_picker_server_artifact_packaging: "war"
 patient_picker_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/sandbox/{{patient_picker_server_artifact_artifact_id}}/{{patient_picker_server_artifact_version}}/{{patient_picker_server_artifact_artifact_id}}-{{patient_picker_server_artifact_version}}.{{patient_picker_server_artifact_packaging}}"
 
 # SandboxManager Server
-sandbox_manager_server_host: "localhost"
-sandbox_manager_server_port: "8080"
-sandbox_manager_server_url: "http://{{sandbox_manager_server_host}}:{{sandbox_manager_server_port}}"
-sandbox_manager_server_external_host: "localhost"
-sandbox_manager_server_external_port: "9080"
-sandbox_manager_server_external_url: "http://{{sandbox_manager_server_external_host}}:{{sandbox_manager_server_external_port}}"
-sandbox_manager_server_initial_memory: 128M
-sandbox_manager_server_max_memory: 256M
+sandman_server_host: "localhost"
+sandman_server_port: "8080"
+sandman_server_url: "http://{{sandman_server_host}}:{{sandman_server_port}}"
+sandman_server_external_host: "localhost"
+sandman_server_external_port: "9080"
+sandman_server_external_url: "http://{{sandman_server_external_host}}:{{sandman_server_external_port}}"
+sandman_server_initial_memory: 128M
+sandman_server_max_memory: 256M
+sandman_server_artifact_group_id: "org.hspconsortium.sandbox"
+sandman_server_artifact_artifact_id: "hspc-sandbox-manager"
+sandman_server_artifact_version: "1.6-SNAPSHOT"
+sandman_server_artifact_packaging: "war"
+sandman_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/sandbox/{{sandman_server_artifact_artifact_id}}/{{sandman_server_artifact_version}}/{{sandman_server_artifact_artifact_id}}-{{sandman_server_artifact_version}}.{{sandman_server_artifact_packaging}}"
+sandman_server_database: "sandman"
+sandman_server_ddl_auto: "update"
+sandman_server_defaultSystemRoles: "USER,CREATE_SANDBOX"
+sandman_server_defaultSandboxCreatorRoles: "ADMIN,MANAGE_USERS,MANAGE_DATA"
+sandman_server_defaultPrivateSandboxRoles: "USER,MANAGE_USERS,MANAGE_DATA"
+sandman_server_defaultSandboxVisibility: "PUBLIC"
+sandman_server_defaultPublicSandboxRoles: "PUBLIC"
+sandman_server_default_sandbox_url: "{{api_stu3_server_external_url}}/{{api_stu3_server_sandbox}}/data"
+sandman_server_send_email: "false"
+sandman_server_oauth_admin_access_client_id: "sandman_admin"
+sandman_server_oauth_admin_access_client_secret: "secret"
 
-#sandbox_manager_server_context: "/"
-#sandbox_manager_server_name: "Sandbox Manager server"
-#sandbox_manager_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
-#sandbox_manager_server_inferred_port: "{{(':'+sandbox_manager_server_port|string) if sandbox_manager_server_port|int not in (80,443) else ''}}"
-#sandbox_manager_server_base_url: "{{sandbox_manager_server_inferred_protocol}}://{{sandbox_manager_server_host}}{{sandbox_manager_server_inferred_port}}"
-#sandbox_manager_server_url: "{{sandbox_manager_server_base_url}}{{sandbox_manager_server_context}}"
+#sandman_server_context: "/"
+#sandman_server_name: "Sandbox Manager server"
+#sandman_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
+#sandman_server_inferred_port: "{{(':'+sandman_server_port|string) if sandman_server_port|int not in (80,443) else ''}}"
+#sandman_server_base_url: "{{sandman_server_inferred_protocol}}://{{sandman_server_host}}{{sandman_server_inferred_port}}"
+#sandman_server_url: "{{sandman_server_base_url}}{{sandman_server_context}}"
 
 nginx_home: "/etc/nginx"
 fhir_home: "/home/fhir"

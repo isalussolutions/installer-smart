@@ -23,8 +23,8 @@ app_server_port: "9093"
 api_stu3_server_host: "{{services_host}}"
 api_stu3_server_port: "9070"
 
-sandbox_manager_server_host: "{{services_host}}"
-sandbox_manager_server_port: "9080"
+sandman_server_host: "{{services_host}}"
+sandman_server_port: "9080"
 
 auth_server_host: "{{services_host}}"
 auth_server_port: "9060"
