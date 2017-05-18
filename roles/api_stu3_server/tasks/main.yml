@@ -1,25 +1,34 @@
 ---
-- name: "download the api_stu3 webapp"
-  become_user: "{{hosting_username}}"
-  include: "roles/common/tasks/download-maven-artifact.yml"
-  vars:
-    group_id: "{{api_stu3_server_artifact_group_id}}"
-    artifact_id: "{{api_stu3_server_artifact_artifact_id}}"
-    version: "{{api_stu3_server_artifact_version}}"
-    packaging: "{{api_stu3_server_artifact_packaging}}"
-
 - name: "create the service directory"
   become_user: "{{hosting_username}}"
   file: "path={{item}} state=directory"
   with_items:
     - "{{hosting_user_home}}/api_stu3"
 
-- name: "copy to the service directory"
-  become_user: "{{hosting_username}}"
-  copy:
-    src: "{{api_stu3_server_artifact_location}}"
-    dest: "{{hosting_user_home}}/api_stu3"
-    remote_src: true
+#- name: "download the api_stu3 webapp"
+#  become_user: "{{hosting_username}}"
+#  include: "roles/common/tasks/download-maven-artifact.yml"
+#  vars:
+#    group_id: "{{api_stu3_server_artifact_group_id}}"
+#    artifact_id: "{{api_stu3_server_artifact_artifact_id}}"
+#    version: "{{api_stu3_server_artifact_version}}"
+#    packaging: "{{api_stu3_server_artifact_packaging}}"
+
+- name: "download the api_stu3 webapp"
+  maven_artifact:
+    group_id: "{{api_stu3_server_artifact_group_id}}"
+    artifact_id: "{{api_stu3_server_artifact_artifact_id}}"
+    version: "{{api_stu3_server_artifact_version}}"
+    extension: "{{api_stu3_server_artifact_packaging}}"
+    repository_url: "https://oss.sonatype.org/content/repositories/snapshots"
+    dest: "{{hosting_user_home}}/api_stu3/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
+
+#- name: "copy to the service directory"
+#  become_user: "{{hosting_username}}"
+#  copy:
+#    src: "{{api_stu3_server_artifact_location}}"
+#    dest: "{{hosting_user_home}}/api_stu3"
+#    remote_src: true
 
 - name: "stop api_stu3"
   service:
