@@ -24,7 +24,7 @@ hs_err_pid*
 ops/
 ansible/lucenefiles/
 
-custom_settings.yml
+#custom_settings.yml
 custom_settings_prod.yml
 custom_settings_test.yml
 
