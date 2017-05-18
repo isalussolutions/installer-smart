@@ -1,0 +1,4 @@
+---
+- include: playbook_linux.yml
+
+- include: playbook_api_stu3.yml
