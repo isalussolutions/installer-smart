@@ -13,19 +13,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 # Auth Server
   config.vm.network :forwarded_port, guest: 9060, host: 9060
-# Persona-Auth Server
-  config.vm.network :forwarded_port, guest: 9061, host: 9061
+# Account Server
+  config.vm.network :forwarded_port, guest: 9065, host: 9065
 
 # API_DSTU2 Server
-  config.vm.network :forwarded_port, guest: 9070, host: 9070
-# Persona-API_DSTU2 Server
-  config.vm.network :forwarded_port, guest: 9171, host: 9171
-# Mock-API_DSTU2 Server
-  config.vm.network :forwarded_port, guest: 9271, host: 9271
+  config.vm.network :forwarded_port, guest: 9071, host: 9071
 # API_STU3 Server
   config.vm.network :forwarded_port, guest: 9074, host: 9074
-# Persona-API_STU3 Server
-  config.vm.network :forwarded_port, guest: 9174, host: 9174
 
 # Sandbox Manager
   config.vm.network :forwarded_port, guest: 9080, host: 9080

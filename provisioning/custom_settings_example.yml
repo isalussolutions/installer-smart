@@ -21,7 +21,7 @@ app_server_host: "{{services_host}}"
 app_server_port: "9093"
 
 api_stu3_server_host: "{{services_host}}"
-api_stu3_server_port: "9070"
+api_stu3_server_port: "9074"
 
 sandman_server_host: "{{services_host}}"
 sandman_server_port: "9080"
@@ -30,10 +30,6 @@ auth_server_host: "{{services_host}}"
 auth_server_port: "9060"
 #auth_server_password: "secret"
 auth_server_newUserUrl: ""
-
-persona_auth_server_host: "{{services_host}}"
-persona_auth_server_port: "9061"
-persona_auth_server_newUserUrl: ""
 
 messaging_server_host: "{{services_host}}"
 messaging_server_port: "9091"

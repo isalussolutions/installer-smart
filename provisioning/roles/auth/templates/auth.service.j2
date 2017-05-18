@@ -23,8 +23,8 @@ ExecStart={{java_home}}/bin/java \
  -Dhspc.platform.persona.cookieDomain={{auth_server_persona_cookie_domain}} \
  -Dhspc.platform.firebase.projectName=hspc \
  -Dhspc.platform.firebase.databaseUrl=https://hspc-3f7ad.firebaseio.com \
- -Dhspc.platform.accountLoginPage=https://account.hspconsortium.org \
- -Dhspc.platform.accountLogoutPage=https://account.hspconsortium.org/account/logout \
+ -Dhspc.platform.accountLoginPage={{account_accountLoginPage}} \
+ -Dhspc.platform.accountLogoutPage={{account_accountLogoutPage}} \
 {% if use_secure_http and not use_custom_ssl_certificates %}
  -Djavax.net.ssl.trustStore={{hosting_user_home}}/keystore \
  -Djavax.net.ssl.trustStorePassword={{keystore_password}} \

@@ -1,0 +1,12 @@
+[Unit]
+Description=HSPC Account Server
+
+[Service]
+User={{hosting_username}}
+TimeoutStartSec=infinity
+WorkingDirectory={{hosting_user_home}}/account
+ExecStart=npm start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

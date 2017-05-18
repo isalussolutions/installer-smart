@@ -1,5 +1,4 @@
 ---
-
 # *** Main configuration file for the HSPC Reference Platform Installer ***
 
 # To customize the HSPC stack, you can either edit the settings directly in
@@ -93,72 +92,23 @@ hspc_repo_base: "https://bitbucket.org/hspconsortium"
 app_server_host: "{{services_host}}"
 app_server_port: "9093"
 
-cardiac_risk_project_info:
-  repo:
-    base_url: "{{smart_repo_base}}"
-    name: "cardiac-risk-app"
-    tag: "v0.1.1"
-  target:
-    base_folder: "{{hosting_user_home_apps}}/static/apps"
-    name: "cardiac-risk"
-    folder: "{{hosting_user_home_apps}}/static/apps/cardiac-risk"
-
-bp_centiles_project_info:
-  repo:
-    base_url: "{{smart_repo_base}}"
-    name: "bp-centiles-app"
-    tag: "v0.1.2"
-  target:
-    base_folder: "{{hosting_user_home_apps}}/static/apps"
-    name: "bp-centiles"
-    folder: "{{hosting_user_home_apps}}/static/apps/bp-centiles"
-
-growth_chart_project_info:
-  repo:
-    base_url: "{{smart_repo_base}}"
-    name: "growth-chart-app"
-    tag: "v0.1.2"
-  target:
-    base_folder: "{{hosting_user_home_apps}}/static/apps"
-    name: "growth-chart"
-    folder: "{{hosting_user_home_apps}}/static/apps/growth-chart"
-
-# todo get this from a maven release
-patient_picker_project_info:
-  repo:
-    base_url: "{{hspc_repo_base}}"
-    name: "patient-picker"
-    tag: "1.0"
-  target:
-    base_folder: "{{hosting_user_home_hspc}}"
-    name: "patient-picker"
-    folder: "{{hosting_user_home_hspc}}/patient-picker"
-
-sample_patients_project_info:
-  repo:
-    base_url: "{{smart_repo_base}}"
-    name: "sample-patients"
-  target:
-    base_folder: "{{hosting_user_home_apps}}/static/apps"
-    name: "growth-chart"
-    folder: "{{hosting_user_home_apps}}/static/apps/growth-chart"
-
-# choose how many sample patients to load in the server or set to 9999 for all of them
-include_custom_patients: false
-api_dstu2_sample_patients_generator_params: "--id-prefix SMART"
-
-# Additional parameters for the sample patient generator
-sample_patients_generator_params: ""
-
 # Platform
 hspc_platform_jwt_key: "aZzGERZNzPP2fjEsiNY9mjEcK6dNTB7fML8zzgPTRVrMxWivKsvavM8KnCYH4Ke6"
 
 # Account
-account_firebase_projectName: "hspc"
-account_firebase_databaseUrl: "https://hspc-3f7ad.firebaseio.com"
-account_accountLoginPage: "https://account.hspconsortium.org"
-account_accountLogoutPage: "{{account_accountLoginPage}}/account/logout"
-account_url: "https://account.hspconsortium.org"
+account_server_host: "localhost"
+account_server_port: "8065"
+account_server_url: "http://{{account_server_host}}:{{account_server_port}}"
+account_server_external_host: "localhost"
+account_server_external_port: "9065"
+account_server_external_url: "http://{{account_server_external_host}}:{{account_server_external_port}}"
+account_server_project_repo_name: "account"
+account_server_project_repo_branch: "master"
+account_server_project_folder: "{{hosting_user_home}}/{{account_server_project_repo_name}}"
+account_firebase_projectName: "hspc-tst"
+account_firebase_databaseUrl: "https://hspc-tst.firebaseio.com"
+account_accountLoginPage: "{{account_server_external_url}}"
+account_accountLogoutPage: "{{account_server_external_url}}/logout"
 
 # Auth Server
 auth_server_host: "localhost"
@@ -177,14 +127,6 @@ auth_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{
 auth_server_database: "oic"
 auth_server_enable_mock_endpoints: true
 auth_server_persona_cookie_domain: "localhost"
-# requiring two deployments of the auth server
-#auth_server_context: "/"
-#auth_server_name: "Authorization Server"
-#auth_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
-#auth_server_inferred_port: "{{(':'+auth_server_port|string) if auth_server_port|int not in (80,443) else ''}}"
-#auth_server_base_url: "{{auth_server_inferred_protocol}}://{{auth_server_host}}{{auth_server_inferred_port}}"
-#auth_server_client: "client"
-#auth_server_password: "secret"
 
 # API Server client
 api_server_oauth2_clientId: "hspc_resource_server"
@@ -209,8 +151,8 @@ api_stu3_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
 api_stu3_server_artifact_version: "1.5.2-SNAPSHOT"
 api_stu3_server_artifact_packaging: "jar"
 api_stu3_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{api_stu3_server_artifact_artifact_id}}/{{api_stu3_server_artifact_version}}/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
-#api_stu3_server_default_sandbox_url: "{{api_stu3_server_external_url}}/{{api_stu3_server_sandbox}}"
-#api_stu3_server_default_sandbox_fhir_root_url: "{{api_stu3_server_default_sandbox_url}}/data"
+
+api_server_default_sandbox_url: "{{api_stu3_server_external_url}}/{{api_stu3_server_sandbox}}/data"
 
 # Messaging Server
 messaging_server_host: "localhost"
@@ -278,17 +220,9 @@ sandman_server_defaultSandboxCreatorRoles: "ADMIN,MANAGE_USERS,MANAGE_DATA"
 sandman_server_defaultPrivateSandboxRoles: "USER,MANAGE_USERS,MANAGE_DATA"
 sandman_server_defaultSandboxVisibility: "PUBLIC"
 sandman_server_defaultPublicSandboxRoles: "PUBLIC"
-sandman_server_default_sandbox_url: "{{api_stu3_server_external_url}}/{{api_stu3_server_sandbox}}/data"
 sandman_server_send_email: "false"
 sandman_server_oauth_admin_access_client_id: "sandman_admin"
 sandman_server_oauth_admin_access_client_secret: "secret"
-
-#sandman_server_context: "/"
-#sandman_server_name: "Sandbox Manager server"
-#sandman_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
-#sandman_server_inferred_port: "{{(':'+sandman_server_port|string) if sandman_server_port|int not in (80,443) else ''}}"
-#sandman_server_base_url: "{{sandman_server_inferred_protocol}}://{{sandman_server_host}}{{sandman_server_inferred_port}}"
-#sandman_server_url: "{{sandman_server_base_url}}{{sandman_server_context}}"
 
 nginx_home: "/etc/nginx"
 fhir_home: "/home/fhir"

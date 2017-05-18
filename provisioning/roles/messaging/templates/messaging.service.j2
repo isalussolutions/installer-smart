@@ -9,7 +9,7 @@ WorkingDirectory={{hosting_user_home}}/messaging
 ExecStart={{java_home}}/bin/java \
  -Xms{{messaging_server_initial_memory}} \
  -Xmx{{messaging_server_max_memory}} \
- -Dhspc.reference.api.url={{api_default_sandbox_url}} \
+ -Dhspc.reference.api.url={{api_server_default_sandbox_url}} \
 {% if use_secure_http %}
  -Dserver.ssl.key-store={{hosting_user_home}}/keystore \
  -Dserver.ssl.key-store-password={{keystore_password}} \

@@ -60,7 +60,7 @@
 - name: "verify api_stu3 is available internally"
   become_user: "{{hosting_username}}"
   wait_for:
-    host: "localhost"
+    host: "{{api_stu3_server_host}}"
     port: "{{api_stu3_server_port}}"
 
 - name: "configure nginx (api_stu3)"
