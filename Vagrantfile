@@ -44,10 +44,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
   end
 
-  config.vm.provision "ansible" do |ansible|
+#  config.vm.provision "ansible" do |ansible|
 #    ansible.verbose="vvvv"
-    ansible.playbook = "provisioning/site.yml"
-  end
+#    ansible.playbook = "provisioning/site.yml"
+#  end
 
   # If you are running the build on a Windows host, please comment out the
   # "ansible" provisioner above and use this "shell" provisioner:

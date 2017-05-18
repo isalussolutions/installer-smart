@@ -1,0 +1,14 @@
+---
+- hosts: databases
+  become: yes
+  vars_files:
+    - settings.yml
+  roles:
+    - api_stu3_database
+
+- hosts: appservers
+  become: yes
+  vars_files:
+    - settings.yml
+  roles:
+    - api_stu3_server

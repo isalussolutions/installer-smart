@@ -241,7 +241,7 @@ aws_access_key_id: "changeme"
 aws_secret_access_key: "changeme"
 aws_ec2_volume_id: "changeme"
 
-# Maximu size of sample patient data files
+# Maximum size of sample patient data files
 max_upload_size: "5M"
 
 # Email server account

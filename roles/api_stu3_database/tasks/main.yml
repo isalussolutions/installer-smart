@@ -1,0 +1,12 @@
+---
+- name: "drop the api_stu3 database"
+  mysql_db:
+    name: "{{api_stu3_server_database}}"
+    state: absent
+  ignore_errors: yes
+
+- name: "create the {{api_stu3_server_database}} database"
+  mysql_db:
+    name: "{{api_stu3_server_database}}"
+    state: present
+

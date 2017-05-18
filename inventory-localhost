@@ -1,0 +1,9 @@
+[databases]
+localhost mysql_host=localhost mysql_username=fhir mysql_password=password
+
+[databases:vars]
+
+[appservers]
+localhost
+
+[appservers:vars]
