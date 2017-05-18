@@ -7,7 +7,14 @@ test.hspconsortium.org
 test.hspconsortium.org
 
 [appservers:vars]
-auth_server_url=https://test.hspconsortium.org:9060
-api_dstu2_server_url=https://test.hspconsortium.org:9071
-api_stu3_server_url=https://test.hspconsortium.org:9074
-messaging_server_url=https://test.hspconsortium.org:9091
+api_stu3_server_external_host=api4-test.hspconsortium.org
+api_stu3_server_url=https://api4-test.hspconsortium.org
+api_stu3_server_external_port=443
+
+auth_server_external_host=auth-test.hspconsortium.org
+auth_server_url=https://auth-test.hspconsortium.org
+auth_server_external_port=443
+
+messaging_server_external_host=messaging-test.hspconsortium.org
+messaging_server_url=https://messaging-test.hspconsortium.org
+messaging_server_external_port=443
