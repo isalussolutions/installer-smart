@@ -44,7 +44,7 @@
          - ssl-cert
          - cron
          - jq
-         - lxml
+         - python-lxml
 
 - name: upgrade server packages
   apt: upgrade=full
