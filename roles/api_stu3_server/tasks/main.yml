@@ -15,6 +15,7 @@
 #    packaging: "{{api_stu3_server_artifact_packaging}}"
 
 - name: "download the api_stu3 webapp"
+  become_user: "{{hosting_username}}"
   maven_artifact:
     group_id: "{{api_stu3_server_artifact_group_id}}"
     artifact_id: "{{api_stu3_server_artifact_artifact_id}}"
