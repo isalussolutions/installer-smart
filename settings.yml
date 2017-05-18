@@ -18,6 +18,7 @@ certificate_key_filename: "self-signed-certificate.key"
 
 # Database configuration
 #mysql_host: "{{services_host}}"
+mysql_host: "localhost"
 mysql_username: "fhir"
 mysql_password: "password"
 mysql_privilage: "*.*:ALL,GRANT"

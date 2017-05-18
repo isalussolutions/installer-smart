@@ -28,7 +28,6 @@ ansible/lucenefiles/
 custom_settings_prod.yml
 custom_settings_test.yml
 
-inventory-test
 inventory-prod
 .vagrant/
 
