@@ -12,6 +12,7 @@ fhir_home: "/home/fhir"
 
 # Hosting
 use_secure_http: false
+http_protocol: "{{'https' if use_secure_http else 'http'}}"
 certificate_crt_filename: "self-signed-certificate.crt"
 certificate_key_filename: "self-signed-certificate.key"
 
@@ -35,13 +36,30 @@ api_stu3_server_sandbox: "hspc{{api_stu3_schema_version}}"
 api_stu3_server_database: "hspc_{{api_stu3_schema_version}}_{{api_stu3_server_sandbox}}"
 
 # API_STU3 Host
-api_stu3_server_host: "localhost"
-api_stu3_server_port: "8074"
+api_stu3_server_internal_host: "localhost"
+api_stu3_server_internal_port: "8074"
 api_stu3_server_external_host: "localhost"
 api_stu3_server_external_port: "9074"
 api_stu3_server_initial_memory: 128M
 api_stu3_server_max_memory: 256M
 
+# Auth Host
+auth_server_internal_host: "localhost"
+auth_server_internal_port: "8060"
+auth_server_external_host: "localhost"
+auth_server_external_port: "9060"
+auth_server_initial_memory: 128M
+auth_server_max_memory: 256M
+
+# Messaging Host
+messaging_server_internal_host: "localhost"
+messaging_server_internal_port: "8060"
+messaging_server_external_host: "localhost"
+messaging_server_external_port: "9060"
+messaging_server_initial_memory: 128M
+messaging_server_max_memory: 256M
+
 # Service Dependencies
-auth_server_url: "https://localhost:9060"
-messaging_server_url: "https://localhost:9091"
+api_stu3_server_url: "{{http_protocol}}://{{api_stu3_server_external_host}}:{{api_stu3_server_external_port}}"
+auth_server_url: "{{http_protocol}}://{{auth_server_external_host}}:{{auth_server_external_port}}"
+messaging_server_url: "{{http_protocol}}://{{messaging_server_external_host}}:{{messaging_server_external_port}}"

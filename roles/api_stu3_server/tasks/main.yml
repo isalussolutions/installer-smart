@@ -58,8 +58,8 @@
 - name: "verify api_stu3 is available internally"
   become_user: "{{hosting_username}}"
   wait_for:
-    host: "{{api_stu3_server_host}}"
-    port: "{{api_stu3_server_port}}"
+    host: "{{api_stu3_server_internal_host}}"
+    port: "{{api_stu3_server_internal_port}}"
 
 - name: "configure nginx (api_stu3)"
   template:
