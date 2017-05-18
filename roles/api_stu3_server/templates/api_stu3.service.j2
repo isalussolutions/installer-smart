@@ -10,9 +10,9 @@ ExecStart={{java_home}}/bin/java \
  -Xms{{api_stu3_server_initial_memory}} \
  -Xmx{{api_stu3_server_max_memory}} \
  -Dserver.port={{api_stu3_server_port}} \
- -Dhspc.platform.api.fhir.db.host={{mysql_host}} \
- -Dhspc.platform.api.fhir.db.username={{mysql_username}} \
- -Dhspc.platform.api.fhir.db.password={{mysql_password}} \
+ -Dhspc.platform.api.fhir.db.host={{api_stu3_mysql_host}} \
+ -Dhspc.platform.api.fhir.db.username={{api_stu3_mysql_username}} \
+ -Dhspc.platform.api.fhir.db.password={{api_stu3_mysql_password}} \
  -Dhspc.platform.authorization.url={{auth_server_url}}/ \
  -Dhspc.platform.messaging.url={{messaging_server_url}}/ \
 {% if use_secure_http %}

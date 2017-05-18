@@ -1,14 +1,14 @@
 ---
-- hosts: databases
-  become: yes
-  vars_files:
-    - settings.yml
-  roles:
-    - api_stu3_database
-
-- hosts: appservers
+- hosts: all:!prod-app-servers
   become: yes
   vars_files:
     - settings.yml
   roles:
     - api_stu3_server
+
+- hosts: prod-app-servers
+  become: yes
+  vars_files:
+    - settings.yml
+  roles:
+    - { role: api_stu3_server, skip-tags: ["drop-database"] }

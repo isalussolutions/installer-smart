@@ -1,5 +1,5 @@
 [databases]
-localhost
+test.hspconsortium.org
 
 [databases:vars]
 
