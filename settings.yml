@@ -27,7 +27,7 @@ mysql_connect_host: "%"
 # API_STU3 Artifact
 api_stu3_server_artifact_group_id: "org.hspconsortium.reference"
 api_stu3_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
-api_stu3_server_artifact_version: "1.5.2-SNAPSHOT"
+api_stu3_server_artifact_version: "1.5.2"
 api_stu3_server_artifact_packaging: "jar"
 api_stu3_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{api_stu3_server_artifact_artifact_id}}/{{api_stu3_server_artifact_version}}/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
 
