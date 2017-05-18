@@ -62,7 +62,7 @@ messaging_server_internal_host: "localhost"
 messaging_server_internal_port: "8060"
 messaging_server_external_host: "localhost"
 messaging_server_external_port: "9060"
-messaging_server_url: "{{http_protocol}}://{{messaging_external_host}}:{{messaging_external_port}}"
+messaging_server_url: "{{http_protocol}}://{{messaging_server_external_host}}:{{messaging_server_external_port}}"
 messaging_server_initial_memory: 128M
 messaging_server_max_memory: 256M
 
