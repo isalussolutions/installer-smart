@@ -1,5 +1,5 @@
 [databases]
-localhost ansible_connection=local mysql_host=localhost mysql_username=fhir mysql_password=password
+localhost ansible_connection=local ansible_user=vagrant mysql_host=localhost mysql_username=fhir mysql_password=password
 
 [databases:vars]
 

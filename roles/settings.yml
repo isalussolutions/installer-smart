@@ -1,9 +1,5 @@
 ---
 # Machine
-installer_user: "vagrant"
-installer_user_home: "/home/{{installer_user}}"
-#installer_home: "{{installer_user_home}}/installer"
-
 hosting_username: "hspc"
 hosting_userpass: "nopass"
 hosting_user_home: "/home/{{hosting_username}}"
