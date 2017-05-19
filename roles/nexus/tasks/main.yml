@@ -7,8 +7,7 @@
 
 - name: "install nexus"
   become_user: "{{hosting_username}}"
-  shell:
-    cd {{hosting_user_home}}/nexus
-    wget http://download.sonatype.com/nexus/3/latest-unix.tar.gz
-    tar -zxvf *.tar.gz
+  shell: cd {{hosting_user_home}}/nexus
+         wget http://download.sonatype.com/nexus/3/latest-unix.tar.gz
+         tar -zxvf *.tar.gz
 
