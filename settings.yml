@@ -8,6 +8,7 @@ jetty_download_url: "http://central.maven.org/maven2/org/eclipse/jetty/jetty-run
 max_upload_size: "5M"
 nginx_home: "/etc/nginx"
 fhir_home: "/home/fhir"
+certificate_truststore_alias: "hspc"
 
 # Hosting
 http_protocol: "{{'https' if use_secure_http else 'http'}}"
