@@ -13,6 +13,8 @@ fhir_home: "/home/fhir"
 # Hosting
 use_secure_http: false
 http_protocol: "{{'https' if use_secure_http else 'http'}}"
+use_custom_ssl_certificates: false
+custom_ssl_certificates_path: "~"
 certificate_crt_filename: "self-signed-certificate.crt"
 certificate_key_filename: "self-signed-certificate.key"
 
