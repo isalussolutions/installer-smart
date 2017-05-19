@@ -2,35 +2,54 @@
 localhost ansible_connection=local
 
 [targets:vars]
-use_secure_http=false
-use_custom_ssl_certificates=false
-custom_ssl_certificates_path=
-certificate_crt_filename=
-certificate_key_filename=
-keystore_password=
+ansible_user=ubuntu
+
+use_secure_http=true
+use_custom_ssl_certificates=true
+custom_ssl_certificates_path=/home/ubuntu
+certificate_crt_filename=nginx_bundle.crt
+certificate_key_filename=hspconsortium-org-private-key.pem
+keystore_password=FH!R4a11
+hspc_platform_jwt_ke=aZzGERZNzPP2fjEsiNY9mjEcK6dNTB7fML8zzgPTRVrMxWivKsvavM8KnCYH4Ke6
 
 mysql_host=localhost
+mysql_port=3306
 mysql_username=fhir
 mysql_password=password
 
 api_stu3_server_external_host=localhost
 api_stu3_server_external_port=9074
-api_stu3_server_url=http://localhost:9074
+api_stu3_server_external_url=http://localhost:9074
 api_stu3_server_initial_memory=128M
 api_stu3_server_max_memory=256M
 api_stu3_mysql_host=localhost
 api_stu3_mysql_username=fhir
 api_stu3_mysql_password=password
-api_stu3_musql_reset_database=true
+api_stu3_mysql_reset_database=true
 
 auth_server_external_host=localhost
-auth_server_url=http://localhost:9060
 auth_server_external_port=9060
+auth_server_external_url=http://localhost:9060
 auth_server_initial_memory=128M
 auth_server_max_memory=256M
+auth_server_persona_cookie_domain=localhost
+auth_mysql_reset_database=true
 
 messaging_server_external_host=localhost
 messaging_server_url=http://localhost:9091
 messaging_server_external_port=9091
 messaging_server_initial_memory=128M
 messaging_server_max_memory=256M
+
+patient_picker_server_external_host=localhost
+patient_picker_server_external_port=9094
+patient_picker_server_external_url=http://localhost:9094
+
+sandman_server_external_host=localhost
+sandman_server_external_port=9080
+sandman_server_external_url=http://localhost:9080
+
+account_server_external_host=localhost
+account_server_external_port=9065
+account_server_external_url=http://{{account_server_external_host}}:{{account_server_external_port}}
+account_firebase_database_url=https://hspc-tst.firebaseio.com

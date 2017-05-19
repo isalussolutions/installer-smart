@@ -92,9 +92,6 @@ hspc_repo_base: "https://bitbucket.org/hspconsortium"
 app_server_host: "{{services_host}}"
 app_server_port: "9093"
 
-# Platform
-hspc_platform_jwt_key: "aZzGERZNzPP2fjEsiNY9mjEcK6dNTB7fML8zzgPTRVrMxWivKsvavM8KnCYH4Ke6"
-
 # Account
 account_server_host: "localhost"
 account_server_port: "8065"

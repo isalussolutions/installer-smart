@@ -24,8 +24,8 @@ hs_err_pid*
 ops/
 ansible/lucenefiles/
 
-inventory-prod
-inventory-test
+inventory-prod*
+inventory-test*
 .vagrant/
 
 provisioning/inventory_prod

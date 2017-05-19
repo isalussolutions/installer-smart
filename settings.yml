@@ -18,14 +18,16 @@ http_protocol: "{{'https' if use_secure_http else 'http'}}"
 mysql_privilage: "*.*:ALL,GRANT"
 mysql_connect_host: "%"
 
+snapshot_repository_url: "https://oss.sonatype.org/content/repositories/snapshots"
+release_repository_url: "https://repo1.maven.org/maven2/"
+
 # API_STU3 Artifact
 api_stu3_server_artifact_group_id: "org.hspconsortium.reference"
 api_stu3_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
 api_stu3_server_artifact_version: "1.5.2"
 api_stu3_server_artifact_packaging: "jar"
-api_stu3_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{api_stu3_server_artifact_artifact_id}}/{{api_stu3_server_artifact_version}}/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
 #api_stu3_server_artifact_repository_url: "https://oss.sonatype.org/content/repositories/snapshots"
-api_stu3_server_artifact_repository_url: "https://repo1.maven.org/maven2/"
+api_stu3_server_artifact_repository_url: "{{release_repository_url}}"
 
 # API_STU3 Database
 api_stu3_schema_version: 4
@@ -36,6 +38,16 @@ api_stu3_server_database: "hspc_{{api_stu3_schema_version}}_{{api_stu3_server_sa
 api_stu3_server_internal_host: "localhost"
 api_stu3_server_internal_port: "8074"
 
+# Auth Artifact
+auth_server_artifact_group_id: "org.hspconsortium.reference"
+auth_server_artifact_artifact_id: "hspc-reference-auth-server-firebase-webapp"
+auth_server_artifact_version: "1.6-SNAPSHOT"
+auth_server_artifact_packaging: "war"
+auth_server_artifact_repository_url: "{{snapshot_repository_url}}"
+
+# Auth Database
+auth_server_database: "oic"
+
 # Auth Host
 auth_server_internal_host: "localhost"
 auth_server_internal_port: "8060"
@@ -44,3 +56,8 @@ auth_server_internal_port: "8060"
 messaging_server_internal_host: "localhost"
 messaging_server_internal_port: "8060"
 
+# Account
+account_server_internal_host: "localhost"
+account_server_internal_port: "8065"
+account_accountLoginPage: "{{account_server_external_url}}"
+account_accountLogoutPage: "{{account_server_external_url}}/logout"
