@@ -25,10 +25,6 @@ ExecStart={{java_home}}/bin/java \
  -Dhspc.platform.firebase.databaseUrl={{account_firebase_database_url}} \
  -Dhspc.platform.accountLoginPage={{account_accountLoginPage}} \
  -Dhspc.platform.accountLogoutPage={{account_accountLogoutPage}} \
-{% if use_secure_http and not use_custom_ssl_certificates %}
- -Djavax.net.ssl.trustStore={{hosting_user_home}}/keystore \
- -Djavax.net.ssl.trustStorePassword={{keystore_password}} \
-{% endif %}
  -jar {{hosting_user_home}}/jetty-runner.jar \
  --config {{hosting_user_home}}/jetty.xml \
  {{auth_server_artifact_artifact_id}}-{{auth_server_artifact_version}}.war

@@ -16,11 +16,7 @@ server {
       proxy_set_header X-NginX-Proxy true;
 
       access_log /var/log/nginx/auth_access.log;
-{% if use_secure_http %}
-      proxy_pass https://auth;
-{% else %}
       proxy_pass http://auth;
-{% endif %}
       proxy_redirect off;
     }
 
