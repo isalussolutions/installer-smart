@@ -9,6 +9,6 @@
   become_user: "{{hosting_username}}"
   unarchive:
     src: "http://download.sonatype.com/nexus/3/latest-unix.tar.gz"
-    dest: "{{install_dir}}"
-    creates: "{{hosting_user_home}}/nexus/nexus-3.3.1-01"
+    dest: "{{hosting_user_home}}/nexus"
+    creates: "nexus-3.3.1-01"
 
