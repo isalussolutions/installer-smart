@@ -1,5 +1,19 @@
 ---
-- hosts: all
+- hosts: localhost
+  become: yes
+  vars_files:
+    - settings.yml
+  roles:
+    - linux
+
+- hosts: test.hspconsortium.org
+  become: yes
+  vars_files:
+    - settings.yml
+  roles:
+    - linux
+
+- hosts: prod.hspconsortium.org
   become: yes
   vars_files:
     - settings.yml
