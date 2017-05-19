@@ -1,0 +1,67 @@
+---
+- name: "create the service directory"
+  become_user: "{{hosting_username}}"
+  file: "path={{item}} state=directory"
+  with_items:
+    - "{{hosting_user_home}}/messaging"
+
+- name: "download the messaging webapp"
+  become_user: "{{hosting_username}}"
+  maven_artifact:
+    group_id: "{{messaging_server_artifact_group_id}}"
+    artifact_id: "{{messaging_server_artifact_artifact_id}}"
+    version: "{{messaging_server_artifact_version}}"
+    extension: "{{messaging_server_artifact_packaging}}"
+    repository_url: "{{messaging_server_artifact_repository_url}}"
+    dest: "{{hosting_user_home}}/messaging/{{messaging_server_artifact_artifact_id}}-{{messaging_server_artifact_version}}.{{messaging_server_artifact_packaging}}"
+
+- name: "stop messaging"
+  service:
+    name: "messaging"
+    state: "stopped"
+  ignore_errors: yes
+
+- name: "configure messaging service"
+  template:
+    src: "messaging.service.j2"
+    dest: "/etc/systemd/system/messaging.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "enable messaging service"
+  shell: "systemctl enable messaging.service"
+
+- name: "reload systemd daemon"
+  shell: "systemctl daemon-reload"
+
+- name: "start messaging"
+  service:
+    name: "messaging"
+    state: "started"
+
+- name: "verify messaging is available internally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{messaging_server_internal_host}}"
+    port: "{{messaging_server_internal_port}}"
+
+- name: "configure nginx (messaging)"
+  template:
+    src: "messaging.j2"
+    dest: "/etc/nginx/sites-enabled/messaging"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
+
+- name: "verify messaging is available externally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{messaging_server_external_host}}"
+    port: "{{messaging_server_external_port}}"
+
