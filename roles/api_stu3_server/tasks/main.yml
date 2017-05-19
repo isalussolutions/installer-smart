@@ -38,14 +38,14 @@
   ignore_errors: yes
 
 - name: "drop the api_stu3 database"
-  tags: [drop-database]
+  when: api_stu3_musql_reset_database
   mysql_db:
     name: "{{api_stu3_server_database}}"
     state: absent
   ignore_errors: yes
 
 - name: "create the {{api_stu3_server_database}} database"
-  tags: [drop-database]
+  when: api_stu3_musql_reset_database
   mysql_db:
     name: "{{api_stu3_server_database}}"
     state: present
