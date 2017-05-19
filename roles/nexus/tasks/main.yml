@@ -5,9 +5,18 @@
   with_items:
     - "{{hosting_user_home}}/nexus"
 
-- name: "install nexus"
+- name: "download nexus"
   become_user: "{{hosting_username}}"
-  shell: cd {{hosting_user_home}}/nexus
-         wget http://download.sonatype.com/nexus/3/latest-unix.tar.gz
-         tar -zxvf *.tar.gz
+  shell: wget http://download.sonatype.com/nexus/3/latest-unix.tar.gz
+
+- name: "copy to the service directory"
+  become_user: "{{hosting_username}}"
+  copy:
+    src: "*.tar.gz"
+    dest: "{{hosting_user_home}}/nexus"
+    remote_src: true
+
+- name: "unpack nexus"
+  become_user: "{{hosting_username}}"
+  shell: tar -zxvf {{hosting_user_home}}/nexus/*.tar.gz
 
