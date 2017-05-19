@@ -32,8 +32,8 @@ api_stu3_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
 api_stu3_server_artifact_version: "1.5.2"
 api_stu3_server_artifact_packaging: "jar"
 api_stu3_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{api_stu3_server_artifact_artifact_id}}/{{api_stu3_server_artifact_version}}/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
-#api_stu3_server_artifact_repository_url: "{https://oss.sonatype.org/content/repositories/snapshots}"
-api_stu3_server_artifact_repository_url: "{https://repo1.maven.org/maven2/}"
+#api_stu3_server_artifact_repository_url: "https://oss.sonatype.org/content/repositories/snapshots"
+api_stu3_server_artifact_repository_url: "https://repo1.maven.org/maven2/"
 
 # API_STU3 Database
 api_stu3_schema_version: 4
