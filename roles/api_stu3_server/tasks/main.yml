@@ -21,7 +21,7 @@
     artifact_id: "{{api_stu3_server_artifact_artifact_id}}"
     version: "{{api_stu3_server_artifact_version}}"
     extension: "{{api_stu3_server_artifact_packaging}}"
-    repository_url: "https://oss.sonatype.org/content/repositories/snapshots"
+    repository_url: "{{api_stu3_server_artifact_repository_url}}"
     dest: "{{hosting_user_home}}/api_stu3/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
 
 #- name: "copy to the service directory"
