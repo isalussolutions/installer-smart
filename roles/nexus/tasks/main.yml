@@ -10,5 +10,10 @@
   unarchive:
     src: "http://download.sonatype.com/nexus/3/latest-unix.tar.gz"
     dest: "{{hosting_user_home}}/nexus"
-    creates: "nexus-3.3.1-01"
 
+
+- name: download jetty-runner
+  become_user: "{{hosting_username}}"
+  get_url:
+          url={{jetty_download_url}}
+          dest={{hosting_user_home}}/jetty-runner.jar
