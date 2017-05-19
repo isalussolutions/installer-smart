@@ -83,24 +83,33 @@
   when: use_secure_http and not use_custom_ssl_certificates
   shell: creates=/etc/nginx/ssl/{{certificate_crt_filename}}
          /bin/echo -e "{{self_signed_certificate_ssl_country}}\n{{self_signed_certificate_ssl_province}}\n{{self_signed_certificate_ssl_locality}}\n{{self_signed_certificate_ssl_organization}}\n{{self_signed_certificate_ssl_division}}\n{{domain_name}}\n{{self_signed_certificate_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/{{certificate_key_filename}} -out /etc/nginx/ssl/{{certificate_crt_filename}}
-  notify:
-        - restart nginx
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
 
 - name: copy custom ssl certificates
   when: use_secure_http and use_custom_ssl_certificates
   copy: src="{{custom_ssl_certificates_path}}/{{certificate_crt_filename}}"
         dest=/etc/nginx/ssl/{{certificate_crt_filename}}
         remote_src=true
-  notify:
-        - restart nginx
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
 
 - name: copy custom ssl keys
   when: use_secure_http and use_custom_ssl_certificates
   copy: src="{{custom_ssl_certificates_path}}/{{certificate_key_filename}}"
         dest=/etc/nginx/ssl/{{certificate_key_filename}}
         remote_src=true
-  notify:
-        - restart nginx
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
 
 - name: remove server certificate from truststore
   ignore_errors: yes
@@ -148,13 +157,19 @@
 
 - name: configure nginx (default)
   template: src=default.j2 dest=/etc/nginx/sites-enabled/default owner=root group=root mode=0644
-  notify:
-    - restart nginx
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
 
 - name: configure nginx (upload.conf)
   template: src=upload.conf.j2 dest=/etc/nginx/conf.d/upload.conf owner=root group=root mode=0644
-  notify:
-    - restart nginx
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
 
 - name: Configure MySQL user
   mysql_user: name={{mysql_username}} host={{mysql_connect_host}} password={{mysql_password}} priv={{mysql_privilage}} state=present
