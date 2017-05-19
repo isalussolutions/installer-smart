@@ -112,7 +112,7 @@
   become_user: "{{hosting_username}}"
   wait_for:
     host: "localhost"
-    port: "{{auth_server_port}}"
+    port: "{{auth_server_internal_port}}"
 
 - name: "configure nginx (auth)"
   template:

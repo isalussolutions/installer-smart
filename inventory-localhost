@@ -10,7 +10,7 @@ custom_ssl_certificates_path=/home/ubuntu
 certificate_crt_filename=nginx_bundle.crt
 certificate_key_filename=hspconsortium-org-private-key.pem
 keystore_password=FH!R4a11
-hspc_platform_jwt_ke=aZzGERZNzPP2fjEsiNY9mjEcK6dNTB7fML8zzgPTRVrMxWivKsvavM8KnCYH4Ke6
+hspc_platform_jwt_key=aZzGERZNzPP2fjEsiNY9mjEcK6dNTB7fML8zzgPTRVrMxWivKsvavM8KnCYH4Ke6
 
 mysql_host=localhost
 mysql_port=3306
