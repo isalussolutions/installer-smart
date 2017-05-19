@@ -1,12 +1,12 @@
 ---
-- hosts: all:!prod-app-servers
+- hosts: all:!prod.hspconsortium.org
   become: yes
   vars_files:
     - settings.yml
   roles:
     - api_stu3_server
 
-- hosts: prod-app-servers
+- hosts: prod.hspconsortium.org
   become: yes
   vars_files:
     - settings.yml
