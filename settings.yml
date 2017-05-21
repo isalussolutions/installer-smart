@@ -62,7 +62,7 @@ messaging_server_artifact_repository_url: "{{snapshot_repository_url}}"
 
 # Messaging Host
 messaging_server_internal_host: "localhost"
-messaging_server_internal_port: "8060"
+messaging_server_internal_port: "8091"
 
 # Account
 account_server_internal_host: "localhost"
