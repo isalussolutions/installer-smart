@@ -11,6 +11,7 @@ ExecStart={{java_home}}/bin/java \
  -Xmx{{sandman_server_max_memory}} \
  -Dspring.datasource.username={{mysql_username}} \
  -Dspring.datasource.password={{mysql_password}} \
+ -Dspring.datasource.url=jdbc:mysql://{{mysql_host}}:{{mysql_port}}/{{sandman_server_database}}?autoReconnect=true \
  -DdefaultServiceUrl={{api_stu3_server_external_url}}\{{api_stu3_server_sandbox}}/data \
  -DenvInfo.active=true \
  -Dhspc.platform.api.version1.baseUrl={{sandman_server_api_v1_url}} \
@@ -27,7 +28,6 @@ ExecStart={{java_home}}/bin/java \
  -DbaseServiceUrl_2={{sandman_server_api_v2_url}}/ \
  -DbaseServiceUrl_1={{sandman_server_api_v1_url}}/ \
  -DpersonaCookieDomain={{auth_server_persona_cookie_domain}} \
- -Dspring.datasource.url=jdbc:mysql://{{mysql_host}}:{{mysql_port}}/sandman?autoReconnect=true \
  -DhspcEnv={{sandman_server_env}} \
  -Dhspc.platform.messaging.baseUrl={{messaging_server_external_url}}/ \
  -Dhspc.platform.defaultSandboxCreatorRoles={{sandman_server_default_sandbox_creator_roles}} \

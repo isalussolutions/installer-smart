@@ -78,6 +78,9 @@ sandman_server_artifact_version: "1.6-SNAPSHOT"
 sandman_server_artifact_packaging: "war"
 sandman_server_artifact_repository_url: "{{snapshot_repository_url}}"
 
+# Sandman Database
+sandman_server_database: "sandman"
+
 # Sandman Host
 sandman_server_internal_host: "localhost"
 sandman_server_internal_port: "8080"

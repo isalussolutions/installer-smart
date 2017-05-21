@@ -21,6 +21,19 @@
     state: "stopped"
   ignore_errors: yes
 
+- name: "drop the sandman database"
+  when: sandman_mysql_reset_database
+  mysql_db:
+    name: "{{sandman_server_database}}"
+    state: absent
+  ignore_errors: yes
+
+- name: "create the {{sandman_server_database}} database"
+  when: sandman_mysql_reset_database
+  mysql_db:
+    name: "{{sandman_server_database}}"
+    state: present
+
 - name: "configure sandman service"
   template:
     src: "sandman.service.j2"
@@ -45,6 +58,24 @@
   wait_for:
     host: "{{sandman_server_internal_host}}"
     port: "{{sandman_server_internal_port}}"
+
+- name: "copy the sandman database scripts"
+  when: sandman_mysql_reset_database
+  copy:
+    src: "{{item}}"
+    dest: "{{hosting_user_home}}/sandman/mysql/{{item}}"
+    mode: "0700"
+  with_items:
+    - "initialize_sandman.sql"
+
+- name: "load the sandman database scripts"
+  when: sandman_mysql_reset_database
+  mysql_db:
+    name: "{{sandman_server_database}}"
+    state: import
+    target: "{{hosting_user_home}}/sandman/mysql/{{item}}"
+  with_items:
+    - "initialize_sandman.sql"
 
 - name: "configure nginx (sandman)"
   template:
