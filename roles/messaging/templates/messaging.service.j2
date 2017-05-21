@@ -10,9 +10,6 @@ ExecStart={{java_home}}/bin/java \
  -Xms{{messaging_server_initial_memory}} \
  -Xmx{{messaging_server_max_memory}} \
  -Dhspc.reference.api.url={{api_server_default_sandbox_url}} \
- -Dspring.profiles.active=production={{messaging_profiles}} \
- -Dmail.server.password=fhir6now={{messaging_mail_server_password}} \
- -Dmail.server.username={{messaging_mail_server_username}} \
  -jar {{messaging_server_artifact_artifact_id}}-{{messaging_server_artifact_version}}.{{messaging_server_artifact_packaging}}
 Restart=always
 
