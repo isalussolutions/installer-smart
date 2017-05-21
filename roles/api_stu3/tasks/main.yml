@@ -5,15 +5,6 @@
   with_items:
     - "{{hosting_user_home}}/api_stu3"
 
-#- name: "download the api_stu3 webapp"
-#  become_user: "{{hosting_username}}"
-#  include: "roles/common/tasks/download-maven-artifact.yml"
-#  vars:
-#    group_id: "{{api_stu3_server_artifact_group_id}}"
-#    artifact_id: "{{api_stu3_server_artifact_artifact_id}}"
-#    version: "{{api_stu3_server_artifact_version}}"
-#    packaging: "{{api_stu3_server_artifact_packaging}}"
-
 - name: "download the api_stu3 webapp"
   become_user: "{{hosting_username}}"
   maven_artifact:
@@ -24,20 +15,13 @@
     repository_url: "{{api_stu3_server_artifact_repository_url}}"
     dest: "{{hosting_user_home}}/api_stu3/{{api_stu3_server_artifact_artifact_id}}-{{api_stu3_server_artifact_version}}.{{api_stu3_server_artifact_packaging}}"
 
-#- name: "copy to the service directory"
-#  become_user: "{{hosting_username}}"
-#  copy:
-#    src: "{{api_stu3_server_artifact_location}}"
-#    dest: "{{hosting_user_home}}/api_stu3"
-#    remote_src: true
-
 - name: "stop api_stu3"
   service:
     name: "api_stu3"
     state: "stopped"
   ignore_errors: yes
 
-- name: "drop the api_stu3 database"
+- name: "drop the {{api_stu3_server_database}} database"
   when: api_stu3_mysql_reset_database
   mysql_db:
     name: "{{api_stu3_server_database}}"
