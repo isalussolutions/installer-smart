@@ -47,6 +47,7 @@ auth_server_artifact_packaging: "war"
 auth_server_artifact_repository_url: "{{snapshot_repository_url}}"
 
 # Auth Database
+auth_server_mysql_host: "localhost"
 auth_server_database: "oic"
 
 # Auth Host

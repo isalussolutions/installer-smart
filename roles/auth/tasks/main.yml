@@ -6,15 +6,6 @@
     - "{{hosting_user_home}}/auth"
     - "{{hosting_user_home}}/auth/mysql"
 
-#- name: "download the auth webapp"
-#  become_user: "{{hosting_username}}"
-#  include: "roles/common/tasks/download-maven-artifact.yml"
-#  vars:
-#    group_id: "{{auth_server_artifact_group_id}}"
-#    artifact_id: "{{auth_server_artifact_artifact_id}}"
-#    version: "{{auth_server_artifact_version}}"
-#    packaging: "{{auth_server_artifact_packaging}}"
-
 - name: "download the auth webapp"
   become_user: "{{hosting_username}}"
   maven_artifact:
@@ -24,13 +15,6 @@
     extension: "{{auth_server_artifact_packaging}}"
     repository_url: "{{auth_server_artifact_repository_url}}"
     dest: "{{hosting_user_home}}/auth/{{auth_server_artifact_artifact_id}}-{{auth_server_artifact_version}}.{{auth_server_artifact_packaging}}"
-
-#- name: "copy to the service directory"
-#  become_user: "{{hosting_username}}"
-#  copy:
-#    src: "{{auth_server_artifact_location}}"
-#    dest: "{{hosting_user_home}}/auth"
-#    remote_src: true
 
 - name: "stop auth"
   service:
