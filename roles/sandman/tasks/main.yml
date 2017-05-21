@@ -1,0 +1,67 @@
+---
+- name: "create the service directory"
+  become_user: "{{hosting_username}}"
+  file: "path={{item}} state=directory"
+  with_items:
+    - "{{hosting_user_home}}/sandman"
+
+- name: "download the sandman webapp"
+  become_user: "{{hosting_username}}"
+  maven_artifact:
+    group_id: "{{sandman_server_artifact_group_id}}"
+    artifact_id: "{{sandman_server_artifact_artifact_id}}"
+    version: "{{sandman_server_artifact_version}}"
+    extension: "{{sandman_server_artifact_packaging}}"
+    repository_url: "{{sandman_server_artifact_repository_url}}"
+    dest: "{{hosting_user_home}}/sandman/{{sandman_server_artifact_artifact_id}}-{{sandman_server_artifact_version}}.{{sandman_server_artifact_packaging}}"
+
+- name: "stop sandman"
+  service:
+    name: "sandman"
+    state: "stopped"
+  ignore_errors: yes
+
+- name: "configure sandman service"
+  template:
+    src: "sandman.service.j2"
+    dest: "/etc/systemd/system/sandman.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "enable sandman service"
+  shell: "systemctl enable sandman.service"
+
+- name: "reload systemd daemon"
+  shell: "systemctl daemon-reload"
+
+- name: "start sandman"
+  service:
+    name: "sandman"
+    state: "started"
+
+- name: "verify sandman is available internally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{sandman_server_internal_host}}"
+    port: "{{sandman_server_internal_port}}"
+
+- name: "configure nginx (sandman)"
+  template:
+    src: "sandman.j2"
+    dest: "/etc/nginx/sites-enabled/sandman"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
+
+- name: "verify sandman is available externally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{sandman_server_external_host}}"
+    port: "{{sandman_server_external_port}}"
+

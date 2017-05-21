@@ -70,3 +70,23 @@ account_server_internal_host: "localhost"
 account_server_internal_port: "8065"
 account_accountLoginPage: "{{account_server_external_url}}"
 account_accountLogoutPage: "{{account_server_external_url}}/logout"
+
+# Sandman Artifact
+sandman_server_artifact_group_id: "org.hspconsortium.sandbox"
+sandman_server_artifact_artifact_id: "hspc-sandbox-manager"
+sandman_server_artifact_version: "1.6-SNAPSHOT"
+sandman_server_artifact_packaging: "war"
+sandman_server_artifact_repository_url: "{{snapshot_repository_url}}"
+
+# Sandman Host
+sandman_server_internal_host: "localhost"
+sandman_server_internal_port: "8080"
+sandman_server_api_v1_url: "{{api_stu3_server_external_url}}"
+sandman_server_api_v2_url: "{{api_stu3_server_external_url}}"
+sandman_server_api_v3_url: "{{api_stu3_server_external_url}}"
+sandman_server_api_v4_url: "{{api_stu3_server_external_url}}"
+sandman_server_default_sandbox_creator_roles: ADMIN,MANAGE_USERS,MANAGE_DATA
+sandman_server_default_system_roles: USER,CREATE_SANDBOX
+sandman_server_default_private_sandbox_roles: USER,MANAGE_USERS,MANAGE_DATA
+sandman_server_default_sandbox_visibility: PRIVATE
+sandman_server_default_public_sandbox_roles: USER
