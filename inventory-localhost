@@ -36,8 +36,8 @@ auth_server_persona_cookie_domain=localhost
 auth_mysql_reset_database=true
 
 messaging_server_external_host=localhost
-messaging_server_url=http://localhost:9091
 messaging_server_external_port=9091
+messaging_server_external_url=http://localhost:9091
 messaging_server_initial_memory=128M
 messaging_server_max_memory=256M
 messaging_profiles: local
@@ -51,6 +51,13 @@ patient_picker_server_external_url=http://localhost:9094
 sandman_server_external_host=localhost
 sandman_server_external_port=9080
 sandman_server_external_url=http://localhost:9080
+sandman_server_initial_memory: 128M
+sandman_server_max_memory: 256M
+sandman_server_env: local
+sandman_server_send_email: false
+sandbox_server_admin_access_client_id: sandman_admin
+sandbox_server_admin_access_client_secret: APkVFd_bcp4vNJmNZGlYiPqnuzmhJ-Pbf4UOvyYIUdb6RrTA5XAphPpE__f-WWDR87sII9U33XEC4dRiMh3v_YQ
+sandman_mysql_reset_database: true
 
 account_server_external_host=localhost
 account_server_external_port=9065

@@ -1,0 +1,74 @@
+---
+- name: "create the service directory"
+  become_user: "{{hosting_username}}"
+  file:
+    path: "{{item}}"
+    state: directory
+  with_items:
+    - "{{hosting_user_home}}/account"
+
+# todo replace this with a release through nexus
+- name: "check out account project"
+  shell: chdir="{{hosting_user_home}}/account"
+         git clone https://bitbucket.org/hspconsortium/account.git
+  ignore_errors: yes
+
+- name: "update the account project"
+  shell: chdir="{{hosting_user_home}}/account/account"
+         git fetch && git pull
+  ignore_errors: yes
+
+- name: "npm install"
+  shell: chdir="{{hosting_user_home}}/account/account"
+         npm install
+
+- name: "stop account"
+  service:
+    name: "account"
+    state: "stopped"
+  ignore_errors: yes
+
+- name: "configure account service"
+  template:
+    src: "account.service.j2"
+    dest: "/etc/systemd/system/account.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "enable account service"
+  shell: "systemctl enable account.service"
+
+- name: "reload systemd daemon"
+  shell: "systemctl daemon-reload"
+
+- name: "start account"
+  service:
+    name: "account"
+    state: "started"
+
+- name: "verify account is available internally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{account_server_internal_host}}"
+    port: "{{account_server_internal_port}}"
+
+- name: "configure nginx (account)"
+  template:
+    src: "account.j2"
+    dest: "/etc/nginx/sites-enabled/account"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
+
+- name: "verify account is available externally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{account_server_external_host}}"
+    port: "{{account_server_external_port}}"
+
