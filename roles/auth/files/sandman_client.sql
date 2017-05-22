@@ -12,9 +12,12 @@ INSERT INTO client_redirect_uri (owner_id, redirect_uri) VALUES
   ((SELECT id from client_details where client_id = 'sand_man'), 'http://localhost:8080'),
   ((SELECT id from client_details where client_id = 'sand_man'), 'http://localhost:9080'),
   ((SELECT id from client_details where client_id = 'sand_man'), 'https://sandbox.hspconsortium.org'),
+  ((SELECT id from client_details where client_id = 'sand_man'), 'https://sandbox-test.hspconsortium.org'),
   ((SELECT id from client_details where client_id = 'sandman_admin'), 'http://localhost:8080'),
   ((SELECT id from client_details where client_id = 'sandman_admin'), 'http://localhost:9080'),
-  ((SELECT id from client_details where client_id = 'sandman_admin'), 'https://sandbox.hspconsortium.org');
+  ((SELECT id from client_details where client_id = 'sandman_admin'), 'https://sandbox.hspconsortium.org'),
+  ((SELECT id from client_details where client_id = 'sandman_admin'), 'https://sandbox-test.hspconsortium.org')
+;
 
 INSERT INTO client_scope (owner_id, scope) VALUES
   ((SELECT id from client_details where client_id = 'sand_man'), 'user/*.*'),
