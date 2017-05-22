@@ -74,7 +74,7 @@ account_accountLogoutPage: "{{account_server_external_url}}/logout"
 # Sandman Artifact
 sandman_server_artifact_group_id: "org.hspconsortium.sandbox"
 sandman_server_artifact_artifact_id: "hspc-sandbox-manager"
-sandman_server_artifact_version: "1.6-SNAPSHOT"
+sandman_server_artifact_version: "1.7.0-SNAPSHOT"
 sandman_server_artifact_packaging: "war"
 sandman_server_artifact_repository_url: "{{snapshot_repository_url}}"
 
