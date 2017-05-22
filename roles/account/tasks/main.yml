@@ -9,16 +9,19 @@
 
 # todo replace this with a release through nexus
 - name: "check out account project"
+  become_user: "{{hosting_username}}"
   shell: chdir="{{hosting_user_home}}/account"
          git clone https://bitbucket.org/hspconsortium/account.git
   ignore_errors: yes
 
 - name: "update the account project"
+  become_user: "{{hosting_username}}"
   shell: chdir="{{hosting_user_home}}/account/account"
          git fetch && git pull
   ignore_errors: yes
 
 - name: "npm install"
+  become_user: "{{hosting_username}}"
   shell: chdir="{{hosting_user_home}}/account/account"
          npm install
 
