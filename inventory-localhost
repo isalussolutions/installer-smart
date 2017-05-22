@@ -10,7 +10,7 @@ custom_ssl_certificates_path=/home/ubuntu
 certificate_crt_filename=nginx_bundle.crt
 certificate_key_filename=hspconsortium-org-private-key.pem
 keystore_password=FH!R4a11
-hspc_platform_jwt_key=aZzGERZNzPP2fjEsiNY9mjEcK6dNTB7fML8zzgPTRVrMxWivKsvavM8KnCYH4Ke6
+hspc_platform_jwt_key=devKeyDoNotUseInProductionShouldBeOverwrittenInProdConfiguration
 
 mysql_host=localhost
 mysql_port=3306
@@ -33,6 +33,7 @@ auth_server_external_url=http://localhost:9060
 auth_server_initial_memory=128M
 auth_server_max_memory=256M
 auth_server_persona_cookie_domain=localhost
+auth_server_firebase_project_name: hspc-tst
 auth_mysql_reset_database=true
 
 messaging_server_external_host=localhost
