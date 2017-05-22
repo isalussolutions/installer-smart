@@ -66,7 +66,7 @@
     dest: "{{hosting_user_home}}/sandman/mysql/{{item}}"
     mode: "0700"
   with_items:
-    - "initialize_sandman.sql"
+    - "initialize.sql"
 
 - name: "load the sandman database scripts"
   when: sandman_mysql_reset_database
