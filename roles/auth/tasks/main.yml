@@ -36,6 +36,7 @@
     state: present
 
 - name: "copy the auth database scripts"
+  when: auth_mysql_reset_database
   copy:
     src: "{{item}}"
     dest: "{{hosting_user_home}}/auth/mysql/{{item}}"
@@ -55,6 +56,7 @@
     - "sandman_client.sql"
 
 - name: "load the auth database scripts"
+  when: auth_mysql_reset_database
   mysql_db:
     name: "{{auth_server_database}}"
     state: import
