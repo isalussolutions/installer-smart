@@ -69,7 +69,7 @@ messaging_server_internal_port: "8091"
 account_server_internal_host: "localhost"
 account_server_internal_port: "8065"
 account_accountLoginPage: "{{account_server_external_url}}"
-account_accountLogoutPage: "{{account_server_external_url}}/logout"
+account_accountLogoutPage: "{{account_server_external_url}}/account/logout"
 
 # Sandman Artifact
 sandman_server_artifact_group_id: "org.hspconsortium.sandbox"
