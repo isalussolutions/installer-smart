@@ -17,6 +17,20 @@ mysql_port=3306
 mysql_username=fhir
 mysql_password=password
 
+api_dstu2_server_external_host=localhost
+api_dstu2_server_external_port=443
+api_dstu2_server_external_url=http://localhost:9071
+api_dstu2_server_initial_memory=128M
+api_dstu2_server_max_memory=256M
+api_dstu2_mysql_host=localhost
+api_dstu2_mysql_username=fhir
+api_dstu2_mysql_password=password
+api_dstu2_mysql_reset_database=true
+
+api_dstu2_v2_server_external_url=http://localhost:9072
+
+api_dstu2_v3_server_external_url=http://localhost:9073
+
 api_stu3_server_external_host=localhost
 api_stu3_server_external_port=9074
 api_stu3_server_external_url=http://localhost:9074
@@ -33,7 +47,8 @@ auth_server_external_url=http://localhost:9060
 auth_server_initial_memory=128M
 auth_server_max_memory=256M
 auth_server_persona_cookie_domain=localhost
-auth_server_firebase_project_namehspc-tst
+auth_server_firebase_project_name=hspc-tst
+auth_server_CONTEXT_FHIR_ENDPOINT="{{api_dstu2_server_external_url}},{{api_dstu2_v2_server_external_url}},{{api_dstu2_v3_server_external_url}},{{api_stu3_server_external_url}}"
 auth_mysql_reset_database=true
 
 messaging_server_external_host=localhost

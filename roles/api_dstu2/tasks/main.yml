@@ -1,0 +1,86 @@
+---
+- name: "create the service directory"
+  become_user: "{{hosting_username}}"
+  file: "path={{item}} state=directory"
+  with_items:
+    - "{{hosting_user_home}}/api_dstu2"
+
+#- name: "download the api_dstu2 webapp"
+#  become_user: "{{hosting_username}}"
+#  maven_artifact:
+#    group_id: "{{api_dstu2_server_artifact_group_id}}"
+#    artifact_id: "{{api_dstu2_server_artifact_artifact_id}}"
+#    version: "{{api_dstu2_server_artifact_version}}"
+#    extension: "{{api_dstu2_server_artifact_packaging}}"
+#    repository_url: "{{api_dstu2_server_artifact_repository_url}}"
+#    dest: "{{hosting_user_home}}/api_dstu2/{{api_dstu2_server_artifact_artifact_id}}-{{api_dstu2_server_artifact_version}}.{{api_dstu2_server_artifact_packaging}}"
+
+- name: "copy the api-v1-beanstalk.war to the service directory"
+  become_user: "{{hosting_username}}"
+  copy:
+    src: "api-v1-beanstalk.war"
+    dest: "{{hosting_user_home}}/api_dstu2"
+
+- name: "stop api_dstu2"
+  service:
+    name: "api_dstu2"
+    state: "stopped"
+  ignore_errors: yes
+
+- name: "drop the {{api_dstu2_server_database}} database"
+  when: api_dstu2_mysql_reset_database
+  mysql_db:
+    name: "{{api_dstu2_server_database}}"
+    state: absent
+  ignore_errors: yes
+
+- name: "create the {{api_dstu2_server_database}} database"
+  when: api_dstu2_mysql_reset_database
+  mysql_db:
+    name: "{{api_dstu2_server_database}}"
+    state: present
+
+- name: "configure api_dstu2 service"
+  template:
+    src: "api_dstu2.service.j2"
+    dest: "/etc/systemd/system/api_dstu2.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "enable api_dstu2 service"
+  shell: "systemctl enable api_dstu2.service"
+
+- name: "reload systemd daemon"
+  shell: "systemctl daemon-reload"
+
+- name: "start api_dstu2"
+  service:
+    name: "api_dstu2"
+    state: "started"
+
+- name: "verify api_dstu2 is available internally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{api_dstu2_server_internal_host}}"
+    port: "{{api_dstu2_server_internal_port}}"
+
+- name: "configure nginx (api_dstu2)"
+  template:
+    src: "api_dstu2.j2"
+    dest: "/etc/nginx/sites-enabled/api_dstu2"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
+
+- name: "verify api_dstu2 is available externally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{api_dstu2_server_external_host}}"
+    port: "{{api_dstu2_server_external_port}}"
+
