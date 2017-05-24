@@ -37,7 +37,40 @@ api_dstu2_server_database: "hspc_{{api_dstu2_schema_version}}_{{api_dstu2_server
 # API_DSTU2 Host
 api_dstu2_server_internal_host: "localhost"
 api_dstu2_server_internal_port: "8071"
-api_server_default_sandbox_url: "{{api_dstu2_server_external_url}}/{{api_dstu2_server_sandbox}}/data"
+
+# API_STU3_V2 Artifact
+#api_stu3_v2_server_artifact_group_id: "org.hspconsortium.reference"
+#api_stu3_v2_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
+#api_stu3_v2_server_artifact_version: "1.5.2"
+#api_stu3_v2_server_artifact_packaging: "jar"
+#api_stu3_v2_server_artifact_repository_url: "https://oss.sonatype.org/content/repositories/snapshots"
+#api_stu3_v2_server_artifact_repository_url: "{{release_repository_url}}"
+
+# API_STU3_V2 Database
+api_stu3_v2_schema_version: 2
+api_stu3_v2_server_sandbox: "hspc{{api_stu3_v2_schema_version}}"
+api_stu3_v2_server_database: "hspc_{{api_stu3_v2_schema_version}}_{{api_stu3_v2_server_sandbox}}"
+
+# API_STU3_V2 Host
+api_stu3_v2_server_internal_host: "localhost"
+api_stu3_v2_server_internal_port: "8072"
+
+# API_STU3_V3 Artifact
+#api_stu3_v3_server_artifact_group_id: "org.hspconsortium.reference"
+#api_stu3_v3_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
+#api_stu3_v3_server_artifact_version: "1.5.2"
+#api_stu3_v3_server_artifact_packaging: "jar"
+#api_stu3_v3_server_artifact_repository_url: "https://oss.sonatype.org/content/repositories/snapshots"
+#api_stu3_v3_server_artifact_repository_url: "{{release_repository_url}}"
+
+# API_STU3_V3 Database
+api_stu3_v3_schema_version: 3
+api_stu3_v3_server_sandbox: "hspc{{api_stu3_v3_schema_version}}"
+api_stu3_v3_server_database: "hspc_{{api_stu3_v3_schema_version}}_{{api_stu3_v3_server_sandbox}}"
+
+# API_STU3_V3 Host
+api_stu3_v3_server_internal_host: "localhost"
+api_stu3_v3_server_internal_port: "8073"
 
 # API_STU3 Artifact
 api_stu3_server_artifact_group_id: "org.hspconsortium.reference"
@@ -55,6 +88,7 @@ api_stu3_server_database: "hspc_{{api_stu3_schema_version}}_{{api_stu3_server_sa
 # API_STU3 Host
 api_stu3_server_internal_host: "localhost"
 api_stu3_server_internal_port: "8074"
+
 api_server_default_sandbox_url: "{{api_stu3_server_external_url}}/{{api_stu3_server_sandbox}}/data"
 
 # Auth Artifact
