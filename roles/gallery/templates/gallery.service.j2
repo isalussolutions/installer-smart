@@ -1,0 +1,33 @@
+[Unit]
+Description=HSPC Gallery Service
+
+[Service]
+User={{hosting_username}}
+TimeoutStartSec=infinity
+WorkingDirectory={{hosting_user_home}}/gallery
+
+ExecStart={{java_home}}/bin/java \
+ -Xms{{gallery_server_initial_memory}} \
+ -Xmx{{gallery_server_max_memory}} \
+ -Djetty.port={{gallery_server_internal_port}} \
+ -Djetty.host={{gallery_server_internal_host}} \
+
+ -DdefaultServiceUrl={{api_server_default_sandbox_url}} \
+ -DuserManagementUrl={{account_server_external_url}} \
+ -DoauthLogoutUrl={{auth_server_external_url}}/logout \
+ -DbaseServiceUrl={{sandman_server_api_v4_url}} \
+ -DhspcEnv={{sandman_server_env}} \
+ -DXRAY_ENABLED=`{ "Fn::GetOptionSetting" : {"Namespace": "aws:elasticbeanstalk:xray", "OptionName": "XRayEnabled", "DefaultValue": "false"} }` \
+ -DoauthPersonaAuthenticationUrl=https://persona-auth.hspconsortium.org/static/auth/index.html \
+ -DsandboxManagerRESTUrl={{sandman_server_external_url}}/REST \
+ -DpersonaCookieDomain={{auth_server_persona_cookie_domain}} \
+ -DpersonaCookieName=hspc-persona-token \
+ -DpersonaCookieTimeout=180000 \
+ -DhspcAccountCookieName=hspc-token \
+ -jar {{hosting_user_home}}/jetty-runner.jar \
+ --config {{hosting_user_home}}/jetty.xml \
+ {{gallery_server_artifact_artifact_id}}-{{gallery_server_artifact_version}}.war
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,68 @@
+---
+- name: "create the service directory"
+  become_user: "{{hosting_username}}"
+  file: "path={{item}} state=directory"
+  with_items:
+    - "{{hosting_user_home}}/gallery"
+    - "{{hosting_user_home}}/gallery/mysql"
+
+- name: "download the gallery webapp"
+  become_user: "{{hosting_username}}"
+  maven_artifact:
+    group_id: "{{gallery_server_artifact_group_id}}"
+    artifact_id: "{{gallery_server_artifact_artifact_id}}"
+    version: "{{gallery_server_artifact_version}}"
+    extension: "{{gallery_server_artifact_packaging}}"
+    repository_url: "{{gallery_server_artifact_repository_url}}"
+    dest: "{{hosting_user_home}}/gallery/{{gallery_server_artifact_artifact_id}}-{{gallery_server_artifact_version}}.{{gallery_server_artifact_packaging}}"
+
+- name: "stop gallery"
+  service:
+    name: "gallery"
+    state: "stopped"
+  ignore_errors: yes
+
+- name: "configure gallery service"
+  template:
+    src: "gallery.service.j2"
+    dest: "/etc/systemd/system/gallery.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "enable gallery service"
+  shell: "systemctl enable gallery.service"
+
+- name: "reload systemd daemon"
+  shell: "systemctl daemon-reload"
+
+- name: "start gallery"
+  service:
+    name: "gallery"
+    state: "started"
+
+- name: "verify gallery is available internally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "localhost"
+    port: "{{gallery_server_internal_port}}"
+
+- name: "configure nginx (gallery)"
+  template:
+    src: "gallery.j2"
+    dest: "/etc/nginx/sites-enabled/gallery"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
+
+- name: "verify gallery is available externally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{gallery_server_external_host}}"
+    port: "{{gallery_server_external_port}}"
+

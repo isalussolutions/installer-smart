@@ -12,7 +12,7 @@ ExecStart={{java_home}}/bin/java \
  -Dspring.datasource.username={{mysql_username}} \
  -Dspring.datasource.password={{mysql_password}} \
  -Dspring.datasource.url=jdbc:mysql://{{mysql_host}}:{{mysql_port}}/{{sandman_server_database}}?autoReconnect=true \
- -DdefaultServiceUrl={{api_stu3_server_external_url}}/{{api_stu3_server_sandbox}}/data \
+ -DdefaultServiceUrl={{api_server_default_sandbox_url}} \
  -DenvInfo.active=true \
  -Dhspc.platform.api.version1.baseUrl={{sandman_server_api_v1_url}} \
  -Dhspc.platform.api.version2.baseUrl={{sandman_server_api_v2_url}} \

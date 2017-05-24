@@ -100,6 +100,13 @@ account_server_external_port=9065
 account_server_external_url=http://{{account_server_external_host}}:{{account_server_external_port}}
 account_firebase_database_url=https://hspc-tst.firebaseio.com
 
+gallery_server_external_host=localhost
+gallery_server_external_port=443
+gallery_server_external_url=https://{{gallery_server_external_host}}:{{gallery_server_external_port}}
+gallery_server_initial_memory=128M
+gallery_server_max_memory=256M
+gallery_server_env=local
+
 patient_picker_server_external_host=patient-picker-test.hspconsortium.org
 patient_picker_server_external_port=443
 patient_picker_server_external_url=https://patient-picker-test.hspconsortium.org

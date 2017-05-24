@@ -142,6 +142,17 @@ sandman_server_default_private_sandbox_roles: USER,MANAGE_USERS,MANAGE_DATA
 sandman_server_default_sandbox_visibility: PRIVATE
 sandman_server_default_public_sandbox_roles: USER
 
+# Gallery Artifact
+gallery_server_artifact_group_id: "org.hspconsortium.gallery"
+gallery_server_artifact_artifact_id: "hspc-gallery"
+gallery_server_artifact_version: "1.2-SNAPSHOT"
+gallery_server_artifact_packaging: "war"
+gallery_server_artifact_repository_url: "{{snapshot_repository_url}}"
+
+# Gallery Host
+gallery_server_internal_host: "localhost"
+gallery_server_internal_port: "8085"
+
 # Patient_Picker Artifact
 patient_picker_server_artifact_group_id: "org.hspconsortium.sandbox"
 patient_picker_server_artifact_artifact_id: "hspc-patient-picker"

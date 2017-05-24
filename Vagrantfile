@@ -23,6 +23,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 # Sandbox Manager
   config.vm.network :forwarded_port, guest: 9080, host: 9080
+# Gallery
+  config.vm.network :forwarded_port, guest: 9085, host: 9085
 
 # Messaging Server
   config.vm.network :forwarded_port, guest: 9091, host: 9091
