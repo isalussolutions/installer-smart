@@ -28,7 +28,7 @@ ExecStart={{java_home}}/bin/java \
  -Dhspc.platform.authorization.url={{auth_server_external_url}} \
  -jar {{hosting_user_home}}/jetty-runner.jar \
  --config {{hosting_user_home}}/jetty.xml \
- api-v1-beanstalk.war
+ api-v3-beanstalk.war
 Restart=always
 
 [Install]

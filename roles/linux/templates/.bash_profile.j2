@@ -9,6 +9,8 @@ alias s='cd $SERVICE_HOME'
 
 # tail services
 alias tapidstu2='sudo journalctl -f -u api_dstu2.service'
+alias tapistu3v2='sudo journalctl -f -u api_stu3_v2.service'
+alias tapistu3v3='sudo journalctl -f -u api_stu3_v3.service'
 alias tapistu3='sudo journalctl -f -u api_stu3.service'
 alias tauth='sudo journalctl -f -u auth.service'
 alias tmsg='sudo journalctl -f -u messaging.service'
@@ -19,6 +21,8 @@ alias tnginx='sudo journalctl -f -u nginx.service'
 
 # view services
 alias vapidstu2='sudo journalctl -u api_dstu2.service'
+alias vapistu3v2='sudo journalctl -u api_stu3_v2.service'
+alias vapistu3v3='sudo journalctl -u api_stu3_v3.service'
 alias vapistu3='sudo journalctl -u api_stu3.service'
 alias vauth='sudo journalctl -u auth.service'
 alias vmsg='sudo journalctl -u messaging.service'
