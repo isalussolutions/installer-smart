@@ -17,7 +17,6 @@ ExecStart={{java_home}}/bin/java \
  -DbaseServiceUrl={{sandman_server_api_v4_url}} \
  -DhspcEnv={{sandman_server_env}} \
  -DXRAY_ENABLED='{ "Fn::GetOptionSetting" : {"Namespace": "aws:elasticbeanstalk:xray", "OptionName": "XRayEnabled", "DefaultValue": "false"} }' \
- -DoauthPersonaAuthenticationUrl=https://persona-auth.hspconsortium.org/static/auth/index.html \
  -DsandboxManagerRESTUrl={{sandman_server_external_url}}/REST \
  -DpersonaCookieDomain={{auth_server_persona_cookie_domain}} \
  -DpersonaCookieName=hspc-persona-token \
