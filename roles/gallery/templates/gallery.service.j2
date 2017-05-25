@@ -11,7 +11,7 @@ ExecStart={{java_home}}/bin/java \
  -Xmx{{gallery_server_max_memory}} \
  -Djetty.port={{gallery_server_internal_port}} \
  -Djetty.host={{gallery_server_internal_host}} \
- -DdefaultServiceUrl={{api_server_default_sandbox_url}} \
+ -DdefaultServiceUrl="{{api_dstu2_server_default_sandbox_url}}" \
  -DuserManagementUrl={{account_server_external_url}} \
  -DoauthLogoutUrl={{auth_server_external_url}}/logout \
  -DbaseServiceUrl={{sandman_server_api_v4_url}} \
