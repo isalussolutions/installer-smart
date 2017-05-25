@@ -1,0 +1,67 @@
+---
+- name: "create the service directory"
+  become_user: "{{hosting_username}}"
+  file: "path={{item}} state=directory"
+  with_items:
+    - "{{hosting_user_home}}/bilirubin_cdshooks"
+
+- name: "download the bilirubin_cdshooks webapp"
+  become_user: "{{hosting_username}}"
+  maven_artifact:
+    group_id: "{{bilirubin_cdshooks_server_artifact_group_id}}"
+    artifact_id: "{{bilirubin_cdshooks_server_artifact_artifact_id}}"
+    version: "{{bilirubin_cdshooks_server_artifact_version}}"
+    extension: "{{bilirubin_cdshooks_server_artifact_packaging}}"
+    repository_url: "{{bilirubin_cdshooks_server_artifact_repository_url}}"
+    dest: "{{hosting_user_home}}/bilirubin_cdshooks/{{bilirubin_cdshooks_server_artifact_artifact_id}}-{{bilirubin_cdshooks_server_artifact_version}}.{{bilirubin_cdshooks_server_artifact_packaging}}"
+
+- name: "stop bilirubin_cdshooks"
+  service:
+    name: "bilirubin_cdshooks"
+    state: "stopped"
+  ignore_errors: yes
+
+- name: "configure bilirubin_cdshooks service"
+  template:
+    src: "bilirubin_cdshooks.service.j2"
+    dest: "/etc/systemd/system/bilirubin_cdshooks.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "enable bilirubin_cdshooks service"
+  shell: "systemctl enable bilirubin_cdshooks.service"
+
+- name: "reload systemd daemon"
+  shell: "systemctl daemon-reload"
+
+- name: "start bilirubin_cdshooks"
+  service:
+    name: "bilirubin_cdshooks"
+    state: "started"
+
+- name: "verify bilirubin_cdshooks is available internally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{bilirubin_cdshooks_server_internal_host}}"
+    port: "{{bilirubin_cdshooks_server_internal_port}}"
+
+- name: "configure nginx (bilirubin_cdshooks)"
+  template:
+    src: "bilirubin_cdshooks.j2"
+    dest: "/etc/nginx/sites-enabled/bilirubin_cdshooks"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
+
+- name: "verify bilirubin_cdshooks is available externally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{bilirubin_cdshooks_server_external_host}}"
+    port: "{{bilirubin_cdshooks_server_external_port}}"
+

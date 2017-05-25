@@ -25,6 +25,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9080, host: 9080
 # Gallery
   config.vm.network :forwarded_port, guest: 9085, host: 9085
+# bilirubin-risk-chart
+  config.vm.network :forwarded_port, guest: 9086, host: 9086
+# bilirubin-monitor
+  config.vm.network :forwarded_port, guest: 9087, host: 9087
+# bilirubin_cds_hooks
+  config.vm.network :forwarded_port, guest: 9088, host: 9088
 
 # Messaging Server
   config.vm.network :forwarded_port, guest: 9091, host: 9091
