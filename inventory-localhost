@@ -108,7 +108,6 @@ gallery_server_env=local
 
 appointment_server_external_host=localhost
 appointment_server_external_port=443
-appointment_server_external_url=http://localhost
 
 patient_picker_server_external_host=patient-picker-test.hspconsortium.org
 patient_picker_server_external_port=443

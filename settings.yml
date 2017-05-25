@@ -156,6 +156,7 @@ gallery_server_internal_host: "localhost"
 gallery_server_internal_port: "8085"
 
 # appointments
+appointments_server_external_url: "{{use_secure_http | ternary('https','http')}}://{{appointments_server_external_host}}{{appointments_server_external_port == 443 | ternary('',':{{appointments_server_external_port}}')}}"
 
 # Patient_Picker Artifact
 patient_picker_server_artifact_group_id: "org.hspconsortium.sandbox"
