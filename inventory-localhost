@@ -4,8 +4,8 @@ localhost ansible_connection=local
 [targets:vars]
 ansible_user=ubuntu
 
-use_secure_http=true
-use_custom_ssl_certificates=true
+use_secure_http=false
+use_custom_ssl_certificates=false
 custom_ssl_certificates_path=/home/ubuntu
 certificate_crt_filename=nginx_bundle.crt
 certificate_key_filename=hspconsortium-org-private-key.pem
@@ -19,7 +19,6 @@ mysql_password=password
 
 api_dstu2_server_external_host=localhost
 api_dstu2_server_external_port=9071
-api_dstu2_server_external_url=http://localhost:9071
 api_dstu2_server_initial_memory=128M
 api_dstu2_server_max_memory=256M
 api_dstu2_mysql_host=localhost

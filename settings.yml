@@ -37,6 +37,7 @@ api_dstu2_server_database: "hspc_{{api_dstu2_schema_version}}_{{api_dstu2_server
 # API_DSTU2 Host
 api_dstu2_server_internal_host: "localhost"
 api_dstu2_server_internal_port: "8071"
+api_dstu2_server_external_url: "{{use_secure_http | ternary('https','http')}}://{{api_dstu2_server_external_host}}{{api_dstu2_server_external_port == 443 | ternary('',':{{api_dstu2_server_external_port}}')}}"
 api_dstu2_server_default_sandbox_url: "{{api_dstu2_server_external_url}}/{{api_dstu2_server_sandbox}}/data"
 
 # API_STU3_V2 Artifact
@@ -154,7 +155,7 @@ gallery_server_artifact_repository_url: "{{snapshot_repository_url}}"
 gallery_server_internal_host: "localhost"
 gallery_server_internal_port: "8085"
 
-# appointment
+# appointments
 
 # Patient_Picker Artifact
 patient_picker_server_artifact_group_id: "org.hspconsortium.sandbox"
