@@ -153,6 +153,8 @@ gallery_server_artifact_repository_url: "{{snapshot_repository_url}}"
 gallery_server_internal_host: "localhost"
 gallery_server_internal_port: "8085"
 
+# appointment
+
 # Patient_Picker Artifact
 patient_picker_server_artifact_group_id: "org.hspconsortium.sandbox"
 patient_picker_server_artifact_artifact_id: "hspc-patient-picker"
@@ -160,3 +162,4 @@ patient_picker_server_artifact_version: "1.1-SNAPSHOT"
 patient_picker_server_artifact_packaging: "war"
 #patient_picker_server_artifact_repository_url: "https://oss.sonatype.org/content/repositories/snapshots"
 patient_picker_server_artifact_repository_url: "{{snapshot_repository_url}}"
+

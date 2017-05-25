@@ -1,0 +1,40 @@
+---
+- name: "create the service directory"
+  become_user: "{{hosting_username}}"
+  file:
+    path: "{{item}}"
+    state: directory
+  with_items:
+    - "{{hosting_user_home}}/appointments"
+
+# todo replace this with a release through nexus
+- name: "check out appointments project"
+  become_user: "{{hosting_username}}"
+  shell: chdir="{{hosting_user_home}}/appointments"
+         git clone https://bitbucket.org/hspconsortium/appointments.git
+  ignore_errors: yes
+
+- name: "update the appointments project"
+  become_user: "{{hosting_username}}"
+  shell: chdir="{{hosting_user_home}}/appointments/appointments"
+         git fetch && git pull
+  ignore_errors: yes
+
+- name: "configure nginx (appointments)"
+  template:
+    src: "appointments.j2"
+    dest: "/etc/nginx/sites-enabled/appointments"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "restart nginx"
+  service:
+    name: "nginx"
+    state: "restarted"
+
+- name: "verify appointments is available externally"
+  become_user: "{{hosting_username}}"
+  wait_for:
+    host: "{{appointments_server_external_host}}"
+    port: "{{appointments_server_external_port}}"
