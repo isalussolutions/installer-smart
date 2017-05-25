@@ -5,7 +5,7 @@ server {
     listen {{appointments_server_external_port}};
 
     location / {
-        root {{hosting_user_home}}/appointments/appointments/src/main/webapp/appointments;
+        root {{hosting_user_home}}/appointments/appointments/src/main/webapp/static/appointments;
         expires 1h;
         add_header Cache-Control "public";
 
