@@ -131,6 +131,7 @@ sandman_server_artifact_artifact_id: "hspc-sandbox-manager"
 sandman_server_artifact_version: "1.7.0-SNAPSHOT"
 sandman_server_artifact_packaging: "war"
 sandman_server_artifact_repository_url: "{{snapshot_repository_url}}"
+sandman_server_external_url: "{{use_secure_http | ternary('https','http')}}://{{sandman_server_external_host}}{{sandman_server_external_port == 443 | ternary('',':{{sandman_server_external_port}}')}}"
 
 # Sandman Database
 sandman_server_database: "sandman"

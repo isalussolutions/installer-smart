@@ -81,7 +81,6 @@ patient_picker_server_external_url=http://localhost:9094
 
 sandman_server_external_host=localhost
 sandman_server_external_port=9080
-sandman_server_external_url=http://localhost:9080
 sandman_server_initial_memory=128M
 sandman_server_max_memory256M
 sandman_server_envlocal
