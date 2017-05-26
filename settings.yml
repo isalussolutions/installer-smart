@@ -163,7 +163,7 @@ appointments_server_external_url: "{{use_secure_http | ternary('https','http')}}
 # bilirubin_cdshooks Artifact
 bilirubin_cdshooks_server_artifact_group_id: "org.hspconsortium.bilirubin"
 bilirubin_cdshooks_server_artifact_artifact_id: "hspc-bilirubin-cdshooks"
-bilirubin_cdshooks_server_artifact_version: "0.2-SNAPSHOT"
+bilirubin_cdshooks_server_artifact_version: "0.2.0-SNAPSHOT"
 bilirubin_cdshooks_server_artifact_packaging: "jar"
 bilirubin_cdshooks_server_artifact_repository_url: "{{snapshot_repository_url}}"
 
