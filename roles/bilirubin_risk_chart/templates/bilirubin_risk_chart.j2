@@ -5,7 +5,7 @@ server {
     listen {{bilirubin_risk_chart_server_external_port}};
 
     location / {
-        root {{hosting_user_home}}/bilirubin_risk_chart/bilirubin_risk_chart/src/main/webapp/static/bilirubin_risk_chart;
+        root {{hosting_user_home}}/bilirubin_risk_chart/bilirubin-risk-chart/src/main/webapp/static/bilirubin-chart;
         expires 1h;
         add_header Cache-Control "public";
 
