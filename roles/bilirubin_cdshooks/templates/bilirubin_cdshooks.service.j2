@@ -9,10 +9,6 @@ WorkingDirectory={{hosting_user_home}}/bilirubin_cdshooks
 ExecStart={{java_home}}/bin/java \
  -Xms{{bilirubin_cdshooks_server_initial_memory}} \
  -Xmx{{bilirubin_cdshooks_server_max_memory}} \
- -Dhspc.reference.api.url={{api_server_default_sandbox_url}} \
- -Dspring.profiles.active={{bilirubin_cdshooks_profiles}} \
- -Dmail.server.password={{bilirubin_cdshooks_mail_server_password}} \
- -Dmail.server.username={{bilirubin_cdshooks_mail_server_username}} \
  -jar {{bilirubin_cdshooks_server_artifact_artifact_id}}-{{bilirubin_cdshooks_server_artifact_version}}.{{bilirubin_cdshooks_server_artifact_packaging}}
 Restart=always
 
