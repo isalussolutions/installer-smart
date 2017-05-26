@@ -172,6 +172,9 @@ bilirubin_cdshooks_server_internal_host: "localhost"
 bilirubin_cdshooks_server_internal_port: "8088"
 bilirubin_cdshooks_server_external_url: "{{use_secure_http | ternary('https','http')}}://{{bilirubin_cdshooks_server_external_host}}{{bilirubin_cdshooks_server_external_port == 443 | ternary('',':{{bilirubin_cdshooks_server_external_port}}')}}"
 
+# bilirubin_risk_chart
+bilirubin_risk_chart_server_external_url: "{{use_secure_http | ternary('https','http')}}://{{bilirubin_risk_chart_server_external_host}}{{bilirubin_risk_chart_server_external_port == 443 | ternary('',':{{bilirubin_risk_chart_server_external_port}}')}}"
+
 # Patient_Picker Artifact
 patient_picker_server_artifact_group_id: "org.hspconsortium.sandbox"
 patient_picker_server_artifact_artifact_id: "hspc-patient-picker"

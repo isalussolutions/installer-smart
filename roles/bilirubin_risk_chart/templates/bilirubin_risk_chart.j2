@@ -1,0 +1,29 @@
+# the nginx server instance
+server {
+    server_name {{bilirubin_risk_chart_server_external_host}};
+
+    listen {{bilirubin_risk_chart_server_external_port}};
+
+    location / {
+        root {{hosting_user_home}}/bilirubin_risk_chart/bilirubin_risk_chart/src/main/webapp/static/bilirubin_risk_chart;
+        expires 1h;
+        add_header Cache-Control "public";
+
+        access_log /var/log/nginx/bilirubin_risk_chart_access.log;
+    }
+
+{% if use_secure_http %}
+    ssl on;
+    ssl_certificate /etc/nginx/ssl/{{certificate_crt_filename}};
+    ssl_certificate_key /etc/nginx/ssl/{{certificate_key_filename}};
+{% endif %}
+}
+
+{% if bilirubin_risk_chart_server_external_port != 80 and use_secure_http %}
+server {
+    server_name {{bilirubin_risk_chart_server_external_host}};
+    listen 80;
+    listen [::]:80;
+    return 301 https://$server_name$request_uri;
+}
+{% endif %}
