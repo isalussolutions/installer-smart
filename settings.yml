@@ -11,7 +11,8 @@ fhir_home: "/home/fhir"
 certificate_truststore_alias: "hspc"
 
 # Hosting
-http_protocol: "{{'https' if use_secure_http else 'http'}}"
+#http_protocol: "{{'https' if use_secure_http else 'http'}}"
+http_protocol: "https"
 
 # Database configuration
 #mysql_host: "{{services_host}}"
