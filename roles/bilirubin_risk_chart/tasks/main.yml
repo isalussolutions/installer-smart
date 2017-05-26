@@ -8,15 +8,16 @@
     - "{{hosting_user_home}}/bilirubin_risk_chart"
 
 # todo replace this with a release through nexus
+# todo change project to be a static webapp
 - name: "check out bilirubin_risk_chart project"
   become_user: "{{hosting_username}}"
   shell: chdir="{{hosting_user_home}}/bilirubin_risk_chart"
-         git clone https://bitbucket.org/hspconsortium/bilirubin_risk_chart.git
+         git clone https://bitbucket.org/hspconsortium/bilirubin-risk-chart.git
   ignore_errors: yes
 
 - name: "update the bilirubin_risk_chart project"
   become_user: "{{hosting_username}}"
-  shell: chdir="{{hosting_user_home}}/bilirubin_risk_chart/bilirubin_risk_chart"
+  shell: chdir="{{hosting_user_home}}/bilirubin_risk_chart/bilirubin-risk-chart"
          git fetch && git pull
   ignore_errors: yes
 
