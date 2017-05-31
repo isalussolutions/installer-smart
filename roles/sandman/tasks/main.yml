@@ -29,10 +29,10 @@
   ignore_errors: yes
 
 - name: "create the {{sandman_server_database}} database"
-  when: sandman_mysql_reset_database
   mysql_db:
     name: "{{sandman_server_database}}"
     state: present
+  ignore_errors: yes
 
 - name: "configure sandman service"
   template:

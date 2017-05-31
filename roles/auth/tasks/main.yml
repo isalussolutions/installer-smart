@@ -30,10 +30,10 @@
   ignore_errors: yes
 
 - name: "create the {{auth_server_database}} database"
-  when: auth_mysql_reset_database
   mysql_db:
     name: "{{auth_server_database}}"
     state: present
+  ignore_errors: yes
 
 - name: "copy the auth database scripts"
   when: auth_mysql_reset_database

@@ -29,10 +29,10 @@
   ignore_errors: yes
 
 - name: "create the {{api_stu3_server_database}} database"
-  when: api_stu3_mysql_reset_database
   mysql_db:
     name: "{{api_stu3_server_database}}"
     state: present
+  ignore_errors: yes
 
 - name: "configure api_stu3 service"
   template:

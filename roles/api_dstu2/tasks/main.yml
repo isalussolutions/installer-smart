@@ -35,10 +35,10 @@
   ignore_errors: yes
 
 - name: "create the {{api_dstu2_server_database}} database"
-  when: api_dstu2_mysql_reset_database
   mysql_db:
     name: "{{api_dstu2_server_database}}"
     state: present
+  ignore_errors: yes
 
 - name: "configure api_dstu2 service"
   template:

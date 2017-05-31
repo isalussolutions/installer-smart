@@ -11,6 +11,8 @@ fhir_home: "/home/fhir"
 certificate_truststore_alias: "hspc"
 
 # Hosting
+
+# this is including "false" in the result
 #http_protocol: "{{'https' if use_secure_http else 'http'}}"
 http_protocol: "https"
 
@@ -18,6 +20,7 @@ http_protocol: "https"
 #mysql_host: "{{services_host}}"
 mysql_privilage: "*.*:ALL,GRANT"
 mysql_connect_host: "%"
+mysql_port: 3306
 
 snapshot_repository_url: "https://oss.sonatype.org/content/repositories/snapshots"
 release_repository_url: "https://repo1.maven.org/maven2/"
@@ -34,11 +37,12 @@ release_repository_url: "https://repo1.maven.org/maven2/"
 api_dstu2_schema_version: 1
 api_dstu2_server_sandbox: "hspc"
 api_dstu2_server_database: "hspc_{{api_dstu2_schema_version}}_{{api_dstu2_server_sandbox}}"
+api_dstu2_mysql_username: "{{mysql_username}}"
+api_dstu2_mysql_password: "{{mysql_password}}"
 
 # API_DSTU2 Host
 api_dstu2_server_internal_host: "localhost"
 api_dstu2_server_internal_port: "8071"
-api_dstu2_server_external_url: "{{http_protocol}}://{{api_dstu2_server_external_host}}"
 api_dstu2_server_default_sandbox_url: "{{api_dstu2_server_external_url}}/{{api_dstu2_server_sandbox}}/data"
 
 # API_STU3_V2 Artifact
@@ -53,6 +57,8 @@ api_dstu2_server_default_sandbox_url: "{{api_dstu2_server_external_url}}/{{api_d
 api_stu3_v2_schema_version: 2
 api_stu3_v2_server_sandbox: "hspc{{api_stu3_v2_schema_version}}"
 api_stu3_v2_server_database: "hspc_{{api_stu3_v2_schema_version}}_{{api_stu3_v2_server_sandbox}}"
+api_stu3_v2_mysql_username: "{{mysql_username}}"
+api_stu3_v2_mysql_password: "{{mysql_password}}"
 
 # API_STU3_V2 Host
 api_stu3_v2_server_internal_host: "localhost"
@@ -70,6 +76,8 @@ api_stu3_v2_server_internal_port: "8072"
 api_stu3_v3_schema_version: 3
 api_stu3_v3_server_sandbox: "hspc{{api_stu3_v3_schema_version}}"
 api_stu3_v3_server_database: "hspc_{{api_stu3_v3_schema_version}}_{{api_stu3_v3_server_sandbox}}"
+api_stu3_v3_mysql_username: "{{mysql_username}}"
+api_stu3_v3_mysql_password: "{{mysql_password}}"
 
 # API_STU3_V3 Host
 api_stu3_v3_server_internal_host: "localhost"
@@ -87,6 +95,8 @@ api_stu3_server_artifact_repository_url: "{{release_repository_url}}"
 api_stu3_schema_version: 4
 api_stu3_server_sandbox: "hspc{{api_stu3_schema_version}}"
 api_stu3_server_database: "hspc_{{api_stu3_schema_version}}_{{api_stu3_server_sandbox}}"
+api_stu3_mysql_username: "{{mysql_username}}"
+api_stu3_mysql_password: "{{mysql_password}}"
 
 # API_STU3 Host
 api_stu3_server_internal_host: "localhost"
@@ -139,7 +149,6 @@ sandman_server_database: "sandman"
 # Sandman Host
 sandman_server_internal_host: "localhost"
 sandman_server_internal_port: "8080"
-sandman_server_external_url: "{{http_protocol}}://{{sandman_server_external_host}}"
 sandman_server_default_sandbox_creator_roles: ADMIN,MANAGE_USERS,MANAGE_DATA
 sandman_server_default_system_roles: USER,CREATE_SANDBOX
 sandman_server_default_private_sandbox_roles: USER,MANAGE_USERS,MANAGE_DATA

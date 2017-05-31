@@ -21,8 +21,8 @@ VALUES
   (13, 0, 'Default_AllergyIntolerance_2', 'AllergyIntolerance?date=>1999-01-01&date=<2011-12-31'),
   (14, 0, 'Default_Condition_3', 'Condition?code:text=diabetes');
 
-INSERT INTO user (id, created_timestamp, sbm_user_id, name)
-VALUES (1, '2017-03-15 16:40:08', 'admin', 'Admin User');
+INSERT INTO user (id, created_timestamp, sbm_user_id, name, email)
+VALUES (1, '2017-03-15 16:40:08', 'admin', 'Admin User', 'admin@example.com');
 
 INSERT INTO system_role (user_id, role)
 VALUES (1, 0), (1, 2);
