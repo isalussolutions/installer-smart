@@ -40,6 +40,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9094, host: 9094
 # Appointments
   config.vm.network :forwarded_port, guest: 9095, host: 9095
+# Patient Data Manager
+  config.vm.network :forwarded_port, guest: 9096, host: 9096
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "HSPC Reference Platform"
