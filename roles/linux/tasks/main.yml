@@ -50,14 +50,6 @@
          - python-lxml
          - nodejs
 
-- name: "Create symlink from node to nodejs"
-  file:
-    src: "/usr/bin/nodejs"
-    dest: "/usr/bin/node"
-    owner: "root"
-    group: "root"
-    state: "link"
-
 - name: upgrade server packages
   apt: upgrade=full
 
@@ -77,15 +69,6 @@
 
 - name: config jetty-runner
   copy: src=jetty.xml dest={{hosting_user_home}}/jetty.xml
-
-- name: install nvm
-  become_user: "{{hosting_username}}"
-  shell: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-
-- name: install node
-  become_user: "{{hosting_username}}"
-  shell: . ~/.bashrc
-         nvm install node
 
 - name: create ssl certificates directory
   when: use_secure_http
