@@ -21,6 +21,9 @@
   retries: 10
   delay: 10
 
+- name: setup apt to pull node 6.x
+  shell: curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+
 - name: install prerequisite packages
   environment:
     DEBIAN_FRONTEND: noninteractive
@@ -46,7 +49,6 @@
          - jq
          - python-lxml
          - nodejs
-         - npm
 
 - name: "Create symlink from node to nodejs"
   file:
