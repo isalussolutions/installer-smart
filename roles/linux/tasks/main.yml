@@ -45,6 +45,8 @@
          - cron
          - jq
          - python-lxml
+         - nodejs
+         - npm
 
 - name: upgrade server packages
   apt: upgrade=full
