@@ -25,6 +25,11 @@
   shell: chdir="{{hosting_user_home}}/account/account"
          npm install
 
+- name: "npm run build"
+  become_user: "{{hosting_username}}"
+  shell: chdir="{{hosting_user_home}}/account/account"
+         npm run build
+
 - name: "stop account"
   service:
     name: "account"
