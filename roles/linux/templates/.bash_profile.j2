@@ -8,6 +8,7 @@ alias n='cd $NGINX_SITES'
 alias s='cd $SERVICE_HOME'
 
 # tail services
+alias taccount='sudo journalctl -f -u account.service'
 alias tapidstu2='sudo journalctl -f -u api_dstu2.service'
 alias tapistu3v2='sudo journalctl -f -u api_stu3_v2.service'
 alias tapistu3v3='sudo journalctl -f -u api_stu3_v3.service'
@@ -23,6 +24,7 @@ alias tbilirubin_risk_chart='sudo journalctl -f -u billirubin_risk_chart.service
 alias tnginx='sudo journalctl -f -u nginx.service'
 
 # view services
+alias vaccount='sudo journalctl -u account.service'
 alias vapidstu2='sudo journalctl -u api_dstu2.service'
 alias vapistu3v2='sudo journalctl -u api_stu3_v2.service'
 alias vapistu3v3='sudo journalctl -u api_stu3_v3.service'
