@@ -1,3 +1,5 @@
+---
+ansible_user: ubuntu
 
 use_secure_http=false
 # todo this is including "false" in the result
@@ -86,8 +88,8 @@ sandman_server_api_v4_url="{{api_stu3_server_external_url}}"
 
 account_server_external_host=localhost
 account_server_external_port=9065
-account_server_external_url="http://{{account_server_external_host}}:{{account_server_external_port}}"
 account_firebase_database_url=https://hspc-tst.firebaseio.com
+account_build_command=build-tst
 
 gallery_server_external_host=localhost
 gallery_server_external_port=443

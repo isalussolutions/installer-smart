@@ -36,6 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9091, host: 9091
 # Apps Server
   config.vm.network :forwarded_port, guest: 9093, host: 9093
+
 # Patient Picker Server
   config.vm.network :forwarded_port, guest: 9094, host: 9094
 # Appointments
@@ -45,7 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "HSPC Reference Platform"
-    vb.memory = "5120"
+    vb.memory = "4096"
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
@@ -56,10 +57,72 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
   end
 
-#  config.vm.provision "ansible" do |ansible|
-#    ansible.verbose="vvvv"
-#    ansible.playbook = "provisioning/site.yml"
-#  end
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose=""
+    ansible.playbook = "site.yml"
+    # append to the auto-generated inventory file
+    ansible.extra_vars = {
+      installer_user: "vagrant",
+      services_host: "localhost",
+      use_secure_http: false,
+      use_custom_ssl_certificates: false,
+      certificate_crt_filename: "self-signed-certificate.crt",
+      certificate_key_filename: "self-signed-certificate.key",
+      keystore_password: "changeme",
+      hspc_platform_jwt_key: "changeme",
+      aws_output_format: "json",
+      aws_region: "changeme",
+      aws_access_key_id: "changeme",
+      aws_secret_access_key: "changeme",
+      aws_ec2_volume_id: "changeme",
+      mysql_password: "password",
+      account_server_external_host: "localhost",
+      account_server_external_port: "9065",
+      account_firebase_database_url: "https://hspc-tst.firebaseio.com",
+      account_build_command: "build-tst",
+      auth_server_external_host: "{{services_host}}",
+      auth_server_external_port: "9060",
+      auth_server_initial_memory: "32M",
+      auth_server_max_memory: "128M",
+      auth_server_newUserUrl: "",
+      auth_server_forgotPasswordUrl: "",
+      auth_server_admin_password: "password",
+      auth_mysql_reset_database: true,
+      api_server_oauth2_clientId: "hspc_resource_server",
+      api_server_oauth2_clientSecret: "secret",
+      api_dstu2_server_external_host: "{{services_host}}",
+      api_dstu2_server_external_port: "9071",
+      api_dstu2_server_initial_memory: "32M",
+      api_dstu2_server_max_memory: "128M",
+      api_dstu2_mysql_reset_database: true,
+      api_dstu2_sample_patients_limit: "20",
+      api_stu3_server_external_host: "{{services_host}}",
+      api_stu3_server_external_port: "9074",
+      api_stu3_server_initial_memory: "32M",
+      api_stu3_server_max_memory: "128M",
+      api_stu3_mysql_reset_database: true,
+      sandman_mysql_reset_database: true,
+      enable_backup_restore_jobs: false,
+      enable_aws_snapshot: false,
+      enable_api_sample_data: true,
+      enable_mock_endpoints: false,
+      messaging_server_external_host: "localhost",
+      messaging_server_external_port: "8091",
+      messaging_server_initial_memory: "1M",
+      messaging_server_max_memory: "32M",
+      messaging_profiles: "test",
+      sandman_server_external_host: "{{services_host}}",
+      sandman_server_external_port: "9080",
+      sandman_server_initial_memory: "16M",
+      sandman_server_max_memory: "128M",
+      sandman_server_send_email: false,
+      sandbox_server_admin_access_client_secret: "changeme",
+      apps_server_external_host: "{{services_host}}",
+      apps_server_external_port: "9093",
+      patient_picker_server_external_host: "{{apps_server_external_host}}",
+      patient_picker_server_external_port: "{{apps_server_external_port}}"
+    }
+  end
 
   # If you are running the build on a Windows host, please comment out the
   # "ansible" provisioner above and use this "shell" provisioner:
