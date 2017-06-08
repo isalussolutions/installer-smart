@@ -1,67 +1,28 @@
 ---
 - name: "create the service directory"
   become_user: "{{hosting_username}}"
-  file: "path={{item}} state=directory"
+  file:
+    path: "{{item}}"
+    state: directory
   with_items:
-    - "{{hosting_user_home}}/patient_picker"
+    - "{{hosting_user_home}}/{{patient_picker_project_name}}"
 
-- name: "download the patient_picker webapp"
+- name: "check out {{patient_picker_name}} project"
   become_user: "{{hosting_username}}"
-  maven_artifact:
-    group_id: "{{patient_picker_server_artifact_group_id}}"
-    artifact_id: "{{patient_picker_server_artifact_artifact_id}}"
-    version: "{{patient_picker_server_artifact_version}}"
-    extension: "{{patient_picker_server_artifact_packaging}}"
-    repository_url: "{{patient_picker_server_artifact_repository_url}}"
-    dest: "{{hosting_user_home}}/patient_picker/{{patient_picker_server_artifact_artifact_id}}-{{patient_picker_server_artifact_version}}.{{patient_picker_server_artifact_packaging}}"
+  git: repo={{hspc_repo_base}}/{{patient_picker_project_name}}.git
+       version={{patient_picker_project_version}}
+       dest={{patient_picker_project_home}}
+       update={{update_repositories}}
+       force=yes
 
-- name: "stop patient_picker"
-  service:
-    name: "patient_picker"
-    state: "stopped"
-  ignore_errors: yes
-
-- name: "configure patient_picker service"
-  template:
-    src: "patient_picker.service.j2"
-    dest: "/etc/systemd/system/patient_picker.service"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "enable patient_picker service"
-  shell: "systemctl enable patient_picker.service"
-
-- name: "reload systemd daemon"
-  shell: "systemctl daemon-reload"
-
-- name: "start patient_picker"
-  service:
-    name: "patient_picker"
-    state: "started"
-
-- name: "verify patient_picker is available internally"
-  become_user: "{{hosting_username}}"
-  wait_for:
-    host: "{{patient_picker_server_internal_host}}"
-    port: "{{patient_picker_server_internal_port}}"
-
-- name: "configure nginx (patient_picker)"
-  template:
-    src: "patient_picker.j2"
-    dest: "/etc/nginx/sites-enabled/patient_picker"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "restart nginx"
-  service:
-    name: "nginx"
-    state: "restarted"
-
-- name: "verify patient_picker is available externally"
-  become_user: "{{hosting_username}}"
-  wait_for:
-    host: "{{patient_picker_server_external_host}}"
-    port: "{{patient_picker_server_external_port}}"
-
+- name: "install system"
+  include: "roles/common/tasks/service_template.yml"
+  vars:
+    service_name: "{{patient_picker_name}}"
+    service_definition_file: "{{common_service_template}}"
+    service_start_command: "{{patient_picker_server_start_command}}"
+    service_working_dir: "{{patient_picker_project_home}}"
+    gateway_definition_file: "{{common_nginx_gateway_template}}"
+    internal_port: "{{patient_picker_server_internal_port}}"
+    external_host: "{{patient_picker_server_external_host}}"
+    external_port: "{{patient_picker_server_external_port}}"

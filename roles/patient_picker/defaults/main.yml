@@ -1,0 +1,15 @@
+---
+# metadata
+patient_picker_name: "patient_picker"
+
+# vcs project info
+patient_picker_project_name: "patient-picker"
+patient_picker_project_version: "1.2.1"
+patient_picker_project_home: "{{hosting_user_home}}/{{patient_picker_project_name}}/project"
+
+# artifact info
+
+# hosting info
+patient_picker_server_internal_port: "8065"
+patient_picker_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{patient_picker_server_external_host}}{{(':'+patient_picker_server_external_port|string) if patient_picker_server_external_port|int not in (80,443) else ''}}"
+patient_picker_server_start_command: "/usr/bin/http-server src -p {{patient_picker_server_internal_port}}"
