@@ -11,7 +11,7 @@
   become_user: "{{hosting_username}}"
   git: repo={{hspc_repo_base}}/account.git
        version={{account_project_version}}
-       dest={{hosting_user_home}}/account/account
+       dest={{account_project_home}}
        update={{update_repositories}}
        force=yes
 
