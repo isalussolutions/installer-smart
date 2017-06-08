@@ -5,3 +5,4 @@ account_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{acc
 account_accountLoginPage: "{{account_server_external_url}}"
 account_accountLogoutPage: "{{account_server_external_url}}/account/logout"
 
+account_project_home: "{{hosting_user_home}}/account/account-project"

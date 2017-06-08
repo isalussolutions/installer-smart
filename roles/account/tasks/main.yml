@@ -17,12 +17,12 @@
 
 - name: "npm install"
   become_user: "{{hosting_username}}"
-  shell: chdir="{{hosting_user_home}}/account/account"
+  shell: chdir="{{account_project_home}}"
          npm install
 
 - name: "npm run build"
   become_user: "{{hosting_username}}"
-  shell: chdir="{{hosting_user_home}}/account/account"
+  shell: chdir="{{account_project_home}}"
          npm run {{account_build_command}}
 
 - name: "install account system"

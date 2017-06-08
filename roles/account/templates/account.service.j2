@@ -4,7 +4,7 @@ Description=HSPC Account Server
 [Service]
 User={{hosting_username}}
 TimeoutStartSec=infinity
-WorkingDirectory={{hosting_user_home}}/account/account
+WorkingDirectory={{account_project_home}}
 
 ExecStart=/usr/bin/npm run start-server
 Restart=always
