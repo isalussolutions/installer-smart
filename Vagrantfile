@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 # Apps Server
   config.vm.network :forwarded_port, guest: 9093, host: 9093
 
-# Patient Picker Server
+# Patient_Picker Server
   config.vm.network :forwarded_port, guest: 9094, host: 9094
 # Appointments
   config.vm.network :forwarded_port, guest: 9095, host: 9095
@@ -119,8 +119,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       sandbox_server_admin_access_client_secret: "changeme",
       apps_server_external_host: "{{services_host}}",
       apps_server_external_port: "9093",
-      patient_picker_server_external_host: "{{apps_server_external_host}}",
-      patient_picker_server_external_port: "{{apps_server_external_port}}"
+      patient_picker_server_external_host: "localhost",
+      patient_picker_server_external_port: 9094
     }
   end
 
