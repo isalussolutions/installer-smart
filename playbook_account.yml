@@ -2,6 +2,6 @@
 - hosts: all
   become: yes
   vars_files:
-    - settings.yml
+    - roles/linux/defaults/main.yml
   roles:
     - account
