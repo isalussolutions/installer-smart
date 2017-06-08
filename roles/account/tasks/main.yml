@@ -7,18 +7,13 @@
   with_items:
     - "{{hosting_user_home}}/account"
 
-# todo replace this with a release through nexus
 - name: "check out account project"
   become_user: "{{hosting_username}}"
-  shell: chdir="{{hosting_user_home}}/account"
-         git clone https://bitbucket.org/hspconsortium/account.git
-  ignore_errors: yes
-
-- name: "update the account project"
-  become_user: "{{hosting_username}}"
-  shell: chdir="{{hosting_user_home}}/account/account"
-         git fetch && git pull
-  ignore_errors: yes
+  git: repo={{hspc_repo_base}}/account.git
+       version={{account_project_version}}
+       dest={{hosting_user_home}}/account/account
+       update={{update_repositories}}
+       force=yes
 
 - name: "npm install"
   become_user: "{{hosting_username}}"
@@ -30,53 +25,12 @@
   shell: chdir="{{hosting_user_home}}/account/account"
          npm run {{account_build_command}}
 
-- name: "stop account"
-  service:
-    name: "account"
-    state: "stopped"
-  ignore_errors: yes
-
-- name: "configure account service"
-  template:
-    src: "account.service.j2"
-    dest: "/etc/systemd/system/account.service"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "enable account service"
-  shell: "systemctl enable account.service"
-
-- name: "reload systemd daemon"
-  shell: "systemctl daemon-reload"
-
-- name: "start account"
-  service:
-    name: "account"
-    state: "started"
-
-- name: "verify account is available internally"
-  become_user: "{{hosting_username}}"
-  wait_for:
-    host: "{{account_server_internal_host}}"
-    port: "{{account_server_internal_port}}"
-
-- name: "configure nginx (account)"
-  template:
-    src: "account.j2"
-    dest: "/etc/nginx/sites-enabled/account"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "restart nginx"
-  service:
-    name: "nginx"
-    state: "restarted"
-
-- name: "verify account is available externally"
-  become_user: "{{hosting_username}}"
-  wait_for:
-    host: "{{account_server_external_host}}"
-    port: "{{account_server_external_port}}"
-
+- name: "install account system"
+  include: "roles/common/tasks/service_template.yml"
+  vars:
+    service_name: "account"
+    service_definition_file: "roles/account/templates/account.service.j2"
+    gateway_definition_file: "roles/account/templates/account.j2"
+    internal_port: "{{account_server_internal_port}}"
+    external_host: "{{account_server_external_host}}"
+    external_port: "{{account_server_external_port}}"

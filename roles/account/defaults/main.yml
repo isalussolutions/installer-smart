@@ -1,0 +1,7 @@
+---
+account_project_version: "1.1.0"
+account_server_internal_port: "8065"
+account_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{account_server_external_host}}{{(':'+account_server_external_port|string) if account_server_external_port|int not in (80,443) else ''}}"
+account_accountLoginPage: "{{account_server_external_url}}"
+account_accountLogoutPage: "{{account_server_external_url}}/account/logout"
+
