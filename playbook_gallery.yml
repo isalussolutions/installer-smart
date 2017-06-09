@@ -2,6 +2,12 @@
 - hosts: all
   become: yes
   vars_files:
-    - settings.yml
+    - roles/common/defaults/main.yml
+    - roles/linux/defaults/main.yml
+    - roles/auth/defaults/main.yml
+    - roles/api_dstu2/defaults/main.yml
+    - roles/api_stu3/defaults/main.yml
+    - roles/account/defaults/main.yml
+    - roles/sandman/defaults/main.yml
   roles:
     - gallery

@@ -133,7 +133,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             bilirubin_risk_chart_server_external_host: "bilirubin-risk-chart.hspconsortium.org",
             bilirubin_risk_chart_server_external_port: "443",
             apps_server_external_host: "apps.hspconsortium.org",
-            apps_server_external_port: "443"
+            apps_server_external_port: "443",
+            gallery_server_external_host: "gallery.hspconsortium.org",
+            gallery_server_external_port: "443",
+            gallery_apps_template: "gallery-apps-prod.json.j2"
         }
     end
 
