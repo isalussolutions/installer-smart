@@ -6,7 +6,7 @@ After=syslog.target
 User={{hosting_username}}
 {% if environment_file and environment_file != "none"  %}
 EnvironmentFile={{environment_file}}
-{% endfor %}
+{% endif %}
 WorkingDirectory={{system_working_dir}}
 ExecStart={{system_start_command}}
 TimeoutStartSec=infinity
