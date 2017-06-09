@@ -4,8 +4,8 @@ After=syslog.target
 
 [Service]
 User={{hosting_username}}
-{% if environment_file and environment_file != "none"  %}
-EnvironmentFile={{environment_file}}
+{% if system_environment_template_provided %}
+EnvironmentFile={{service_working_dir}}/{{service_name}}.conf
 {% endif %}
 WorkingDirectory={{system_working_dir}}
 ExecStart={{system_start_command}}

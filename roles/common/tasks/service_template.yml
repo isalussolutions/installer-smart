@@ -57,7 +57,7 @@
     system_name: "{{service_name}}"
     system_start_command: "{{service_start_command}}"
     system_success_status: "{{service_success_status | default('143')}}"
-    system_environment_file: "{{service_environment_vars | default('none')}}"
+    system_environment_template_provided: "{{service_environment_template is defined}}"
     system_working_dir: "{{service_working_dir}}"
 
 - name: "enable {{service_name}} service"
