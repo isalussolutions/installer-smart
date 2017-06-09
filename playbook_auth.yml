@@ -2,6 +2,15 @@
 - hosts: all
   become: yes
   vars_files:
-    - settings.yml
+    - roles/common/defaults/main.yml
+    - roles/linux/defaults/main.yml
+    - roles/account/defaults/main.yml
+    - roles/patient_picker/defaults/main.yml
+    - roles/api_dstu2/defaults/main.yml
+    - roles/api_stu3_v2/defaults/main.yml
+    - roles/api_stu3_v3/defaults/main.yml
+    - roles/api_stu3/defaults/main.yml
+#    - roles/apps/defaults/main.yml
+    - roles/sandman/defaults/main.yml
   roles:
     - auth
