@@ -1,0 +1,10 @@
+---
+# api_dstu2
+api_dstu2_schema_version: 1
+api_dstu2_server_sandbox: "hspc"
+api_dstu2_server_database: "hspc_{{api_dstu2_schema_version}}_{{api_dstu2_server_sandbox}}"
+api_dstu2_mysql_username: "{{mysql_username}}"
+api_dstu2_mysql_password: "{{mysql_password}}"
+
+api_dstu2_server_internal_port: "8071"
+api_dstu2_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{api_dstu2_server_external_host}}{{(':'+api_dstu2_server_external_port|string) if api_dstu2_server_external_port|int not in (80,443) else ''}}"
