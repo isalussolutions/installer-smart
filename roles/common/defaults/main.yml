@@ -1,0 +1,3 @@
+---
+common_service_template: "roles/common/templates/service_template.service.j2"
+common_nginx_gateway_template: "roles/common/templates/nginx_gateway_template.j2"

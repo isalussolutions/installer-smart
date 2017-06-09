@@ -5,11 +5,15 @@
 #   database: schema associated with the service
 #   database_reset: true to reset the database, false otherwise
 #   service_definition_file: service definition file
+#   service_start_command: systemd ExecStart command
+#   service_success_status: optional, default 143 (SIGTERM)
+#   service_environment_template: optional, systemd environment template file, to be stored in the working directory
+#   service_working_dir: service working directory
 #   gateway_definition_file: nginx gateway definition file
-#   internal_host: internal hostname
 #   internal_port: internal port
 #   external_host: external hostname
 #   external_port: external port
+#   health_check_url: optional health_check url
 
 - name: "stop {{service_name}}"
   service:
@@ -31,39 +35,65 @@
     state: present
   ignore_errors: yes
 
+- name: "configure the {{service_name}} environment file"
+  when: service_environment_template is defined
+  template:
+    src: "{{service_environment_template}}"
+    dest: "{{service_working_dir}}/{{service_name}}.conf"
+    owner: "root"
+    group: "root"
+    # may contain sensitive info
+    mode: "0600"
+
 - name: "configure {{service_name}} service"
+  when: service_definition_file is defined
   template:
     src: "{{service_definition_file}}"
     dest: "/etc/systemd/system/{{service_name}}.service"
     owner: "root"
     group: "root"
     mode: "0644"
+  vars:
+    system_name: "{{service_name}}"
+    system_start_command: "{{service_start_command}}"
+    system_success_status: "{{service_success_status | default('143')}}"
+    system_environment_file: "{{service_environment_vars | default('none')}}"
+    system_working_dir: "{{service_working_dir}}"
 
 - name: "enable {{service_name}} service"
+  when: service_definition_file is defined
   shell: "systemctl enable {{service_name}}.service"
 
 - name: "reload systemd daemon"
+  when: service_definition_file is defined
   shell: "systemctl daemon-reload"
 
 - name: "start {{service_name}}"
+  when: service_definition_file is defined
   service:
     name: "{{service_name}}"
     state: "started"
 
-- name: "verify {{service_name}} is available internally"
+- name: "verify {{service_name}} is available internally at localhost:{{internal_port}}"
+  when: service_definition_file is defined
   become_user: "{{hosting_username}}"
   wait_for:
-    host: "{{internal_host}}"
+    host: "localhost"
     port: "{{internal_port}}"
 
 - name: "configure nginx ({{service_name}})"
   when: gateway_definition_file is defined
   template:
     src: "{{gateway_definition_file}}"
-    dest: "/etc/nginx/sites-enabled/{{service_name}}"
+    dest: "{{nginx_home}}/sites-enabled/{{service_name}}"
     owner: "root"
     group: "root"
     mode: "0644"
+  vars:
+    system_name: "{{service_name}}"
+    system_external_host: "{{external_host}}"
+    system_external_port: "{{external_port}}"
+    system_internal_port: "{{internal_port}}"
 
 - name: "restart nginx"
   when: gateway_definition_file is defined
@@ -71,10 +101,18 @@
     name: "nginx"
     state: "restarted"
 
-- name: "verify {{service_name}} is available externally"
-  when: gateway_definition_file is defined
+- name: "verify {{service_name}} is available externally at {{external_host}}:{{external_port}}"
+  when: health_check_url is undefined
   become_user: "{{hosting_username}}"
   wait_for:
     host: "{{external_host}}"
     port: "{{external_port}}"
 
+- name: "verify {{service_name}} is available externally at {{health_check_url}}"
+  when: health_check_url is defined
+  command: "curl --silent {{health_check_url}}"
+  register: result
+  until: result.stdout.find("OK") != -1
+  retries: 60
+  delay: 1
+  changed_when: false

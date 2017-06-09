@@ -1,0 +1,16 @@
+[Unit]
+Description={{system_name}}
+After=syslog.target
+
+[Service]
+User={{hosting_username}}
+{% if environment_file and environment_file != "none"  %}
+EnvironmentFile={{environment_file}}
+{% endfor %}
+WorkingDirectory={{system_working_dir}}
+ExecStart={{system_start_command}}
+TimeoutStartSec=infinity
+SuccessExitStatus={{system_success_status | default('143')}}
+
+[Install]
+WantedBy=multi-user.target
