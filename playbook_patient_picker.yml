@@ -4,8 +4,6 @@
   vars_files:
     - roles/common/defaults/main.yml
     - roles/linux/defaults/main.yml
-    - roles/api_dstu2/defaults/main.yml
-    - roles/api_stu3/defaults/main.yml
   roles:
     - common
     - patient_picker
