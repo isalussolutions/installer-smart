@@ -1,0 +1,22 @@
+---
+# metadata
+auth_name: "auth"
+
+# vcs project info
+
+# artifact info
+auth_server_artifact_group_id: "org.hspconsortium.reference"
+auth_server_artifact_artifact_id: "hspc-reference-auth-server-firebase-webapp"
+auth_server_artifact_version: "1.6.2"
+auth_server_artifact_packaging: "war"
+auth_server_artifact_repository_url: "{{release_repository_url}}"
+
+# hosting info
+auth_server_internal_port: "8060"
+auth_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{auth_server_external_host}}{{(':'+auth_server_external_port|string) if auth_server_external_port|int not in (80,443) else ''}}"
+auth_server_start_command: "{{java_home}}/bin/java -Xms{{auth_server_initial_memory}} -Xmx{{auth_server_max_memory}} -jar {{hosting_user_home}}/{{jetty_runner_artifact_artifact_id}}-{{jetty_runner_artifact_version}}.{{jetty_runner_artifact_packaging}} --config {{hosting_user_home}}/jetty.xml {{auth_server_artifact_artifact_id}}-{{auth_server_artifact_version}}.war"
+auth_server_environment_template: "roles/auth/templates/auth.conf.j2"
+
+# app settings
+auth_server_mysql_host: "localhost"
+auth_server_database: "oic"

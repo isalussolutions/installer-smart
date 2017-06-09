@@ -1,12 +1,14 @@
 ---
 - name: "create the service directory"
   become_user: "{{hosting_username}}"
-  file: "path={{item}} state=directory"
+  file:
+    path: "{{item}}"
+    state: directory
   with_items:
-    - "{{hosting_user_home}}/auth"
-    - "{{hosting_user_home}}/auth/mysql"
+    - "{{hosting_user_home}}/{{auth_name}}"
+    - "{{hosting_user_home}}/{{auth_name}}/mysql"
 
-- name: "download the auth webapp"
+- name: "download the {{auth_name}} webapp"
   become_user: "{{hosting_username}}"
   maven_artifact:
     group_id: "{{auth_server_artifact_group_id}}"
@@ -14,108 +16,21 @@
     version: "{{auth_server_artifact_version}}"
     extension: "{{auth_server_artifact_packaging}}"
     repository_url: "{{auth_server_artifact_repository_url}}"
-    dest: "{{hosting_user_home}}/auth/{{auth_server_artifact_artifact_id}}-{{auth_server_artifact_version}}.{{auth_server_artifact_packaging}}"
+    dest: "{{hosting_user_home}}/{{auth_name}}/{{auth_server_artifact_artifact_id}}-{{auth_server_artifact_version}}.{{auth_server_artifact_packaging}}"
 
-- name: "stop auth"
-  service:
-    name: "auth"
-    state: "stopped"
-  ignore_errors: yes
+- name: "install auth system"
+  include: "roles/common/tasks/service_template.yml"
+  vars:
+    service_name: "{{auth_name}}"
+    database: "{{auth_server_database}}"
+    database_reset: "{{auth_mysql_reset_database}}"
+    service_definition_file: "{{common_service_template}}"
+    service_start_command: "{{auth_server_start_command}}"
+    service_working_dir: "{{hosting_user_home}}/{{auth_name}}"
+    service_environment_template: "{{auth_server_environment_template}}"
+    gateway_definition_file: "{{common_nginx_gateway_template}}"
+    internal_port: "{{auth_server_internal_port}}"
+    external_host: "{{auth_server_external_host}}"
+    external_port: "{{auth_server_external_port}}"
 
-- name: "drop the auth database"
-  when: auth_mysql_reset_database
-  mysql_db:
-    name: "{{auth_server_database}}"
-    state: absent
-  ignore_errors: yes
-
-- name: "create the {{auth_server_database}} database"
-  mysql_db:
-    name: "{{auth_server_database}}"
-    state: present
-  ignore_errors: yes
-
-- name: "copy the auth database scripts"
-  when: auth_mysql_reset_database
-  template:
-    src: "{{item}}"
-    dest: "{{hosting_user_home}}/auth/mysql/{{item}}"
-    mode: "0700"
-  with_items:
-    - "mysql_database_tables.sql"
-    - "mysql_users.sql"
-    - "mysql_system_scopes.sql"
-    - "mysql_clients.sql"
-    - "mysql_index_tuning.sql"
-    - "bilirubin_chart_client.sql"
-    - "gallery_client.sql"
-    - "messaging_client.sql"
-    - "patient_data_manager_client.sql"
-    - "patient_picker_client.sql"
-    - "reference_api_client.sql"
-    - "sandman_client.sql"
-
-- name: "load the auth database scripts"
-  when: auth_mysql_reset_database
-  mysql_db:
-    name: "{{auth_server_database}}"
-    state: import
-    target: "{{hosting_user_home}}/auth/mysql/{{item}}"
-  with_items:
-    - "mysql_database_tables.sql"
-    - "mysql_users.sql"
-    - "mysql_system_scopes.sql"
-    - "mysql_clients.sql"
-    - "mysql_index_tuning.sql"
-    - "bilirubin_chart_client.sql"
-    - "gallery_client.sql"
-    - "messaging_client.sql"
-    - "patient_data_manager_client.sql"
-    - "patient_picker_client.sql"
-    - "reference_api_client.sql"
-    - "sandman_client.sql"
-
-- name: "configure auth service"
-  template:
-    src: "auth.service.j2"
-    dest: "/etc/systemd/system/auth.service"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "enable auth service"
-  shell: "systemctl enable auth.service"
-
-- name: "reload systemd daemon"
-  shell: "systemctl daemon-reload"
-
-- name: "start auth"
-  service:
-    name: "auth"
-    state: "started"
-
-- name: "verify auth is available internally"
-  become_user: "{{hosting_username}}"
-  wait_for:
-    host: "localhost"
-    port: "{{auth_server_internal_port}}"
-
-- name: "configure nginx (auth)"
-  template:
-    src: "auth.j2"
-    dest: "/etc/nginx/sites-enabled/auth"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "restart nginx"
-  service:
-    name: "nginx"
-    state: "restarted"
-
-- name: "verify auth is available externally"
-  become_user: "{{hosting_username}}"
-  wait_for:
-    host: "{{auth_server_external_host}}"
-    port: "{{auth_server_external_port}}"
-
+- include: "data.yml"

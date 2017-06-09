@@ -10,7 +10,8 @@ ExecStart={{java_home}}/bin/java \
  -Xms{{auth_server_initial_memory}} \
  -Xmx{{auth_server_max_memory}} \
  -Djetty.port={{auth_server_internal_port}} \
- -Djetty.host={{auth_server_internal_host}} \
+ -Djetty.host=localhost \
+ -Dspring.profiles.active=production \
  -Doidc.datasource.mysql.url=jdbc:mysql://{{auth_server_mysql_host}}:{{mysql_port}}/{{auth_server_database}} \
  -Doidc.datasource.mysql.username={{mysql_username}} \
  -Doidc.datasource.mysql.password={{mysql_password}} \
@@ -25,7 +26,7 @@ ExecStart={{java_home}}/bin/java \
  -Dhspc.platform.firebase.databaseUrl={{account_firebase_database_url}} \
  -Dhspc.platform.accountLoginPage={{account_accountLoginPage}} \
  -Dhspc.platform.accountLogoutPage={{account_accountLogoutPage}} \
- -jar {{hosting_user_home}}/jetty-runner.jar \
+  -jar {{hosting_user_home}}/{{jetty_runner_artifact_artifact_id}}-{{jetty_runner_artifact_version}}.{{jetty_runner_artifact_packaging}} \
  --config {{hosting_user_home}}/jetty.xml \
  {{auth_server_artifact_artifact_id}}-{{auth_server_artifact_version}}.war
 Restart=always
