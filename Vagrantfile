@@ -131,7 +131,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             patient_picker_server_external_host: "localhost",
             patient_picker_server_external_port: "9094",
             bilirubin_risk_chart_server_external_host: "bilirubin-risk-chart.hspconsortium.org",
-            bilirubin_risk_chart_server_external_port: "443"
+            bilirubin_risk_chart_server_external_port: "443",
+            apps_server_external_host: "apps.hspconsortium.org",
+            apps_server_external_port: "443"
         }
     end
 
