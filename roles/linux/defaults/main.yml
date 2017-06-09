@@ -6,6 +6,8 @@
 
 installer_user_home: "/home/{{installer_user}}"
 
+#nginx_build_home: "/usr/local"
+#nginx_home: "{{nginx_build_home}}/nginx"
 nginx_home: "/etc/nginx"
 
 # The user account that will host the servers. If a user account of this name
@@ -70,8 +72,6 @@ self_signed_certificate_ssl_division: "support"
 self_signed_certificate_ssl_email: "support@{{domain_name}}"
 
 # database configuration
-mysql_username: "fhir"
-mysql_host: "localhost"
 mysql_port: 3306
 mysql_privilage: "*.*:ALL,GRANT"
 mysql_connect_host: "%"

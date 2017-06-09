@@ -27,7 +27,6 @@
     service_definition_file: "{{common_service_template}}"
     service_start_command: "{{auth_server_start_command}}"
     service_working_dir: "{{hosting_user_home}}/{{auth_name}}"
-    service_environment_template: "{{auth_server_environment_template}}"
     gateway_definition_file: "{{common_nginx_gateway_template}}"
     internal_port: "{{auth_server_internal_port}}"
     external_host: "{{auth_server_external_host}}"

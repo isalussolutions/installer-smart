@@ -3,7 +3,7 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 
 INSERT IGNORE INTO client_details (id, client_id, client_secret, client_name, dynamically_registered, refresh_token_validity_seconds, access_token_validity_seconds, id_token_validity_seconds, allow_introspection, token_endpoint_auth_method, subject_type, logo_uri) VALUES
-    (1, '{{auth_server_test_client}}', '{{auth_server_test_password}}', 'Test Client', false, null, 3600, 600, true, null, null, null),
+    (1, 'client', 'secret', 'Test Client', false, null, 3600, 600, true, null, null, null),
     (2, 'fhir_starter', NULL, 'FHIR Starter', false, null, 3600, 600, true, "NONE", "PUBLIC", "{{apps_server_external_url}}/images/apps/fhir.png"),
     (3, 'my_web_app', NULL, 'My Web App', false, null, 3600, 600, true, "NONE", "PUBLIC", "{{apps_server_external_url}}/images/apps/my.png"),
     (4, 'bp_centiles', NULL, 'BP Centiles', false, null, 3600, 600, true, "NONE", "PUBLIC", "https://content.hspconsortium.org/images/bp-centiles/bpc2.png"),

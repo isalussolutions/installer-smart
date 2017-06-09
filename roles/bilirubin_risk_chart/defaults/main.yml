@@ -1,0 +1,4 @@
+---
+bilirubin_risk_chart_project_version: "1.0.0"
+bilirubin_risk_chart_server_internal_port: "8086"
+bilirubin_risk_chart_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{bilirubin_risk_chart_server_external_host}}{{(':'+bilirubin_risk_chart_server_external_port|string) if bilirubin_risk_chart_server_external_port|int not in (80,443) else ''}}"

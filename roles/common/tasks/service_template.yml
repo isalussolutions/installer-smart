@@ -7,7 +7,6 @@
 #   service_definition_file: service definition file
 #   service_start_command: systemd ExecStart command
 #   service_success_status: optional, default 143 (SIGTERM)
-#   service_environment_template: optional, systemd environment template file, to be stored in the working directory
 #   service_working_dir: service working directory
 #   gateway_definition_file: nginx gateway definition file
 #   internal_port: internal port
@@ -35,16 +34,6 @@
     state: present
   ignore_errors: yes
 
-- name: "configure the {{service_name}} environment file"
-  when: service_environment_template is defined
-  template:
-    src: "{{service_environment_template}}"
-    dest: "{{service_working_dir}}/{{service_name}}.conf"
-    owner: "root"
-    group: "root"
-    # may contain sensitive info
-    mode: "0600"
-
 - name: "configure {{service_name}} service"
   when: service_definition_file is defined
   template:
@@ -57,7 +46,6 @@
     system_name: "{{service_name}}"
     system_start_command: "{{service_start_command}}"
     system_success_status: "{{service_success_status | default('143')}}"
-    system_environment_template_provided: "{{service_environment_template is defined}}"
     system_working_dir: "{{service_working_dir}}"
 
 - name: "enable {{service_name}} service"
