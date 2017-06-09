@@ -1,0 +1,10 @@
+---
+# API_STU3_V3 Database
+api_stu3_v3_schema_version: 3
+api_stu3_v3_server_sandbox: "hspc{{api_stu3_v3_schema_version}}"
+api_stu3_v3_server_database: "hspc_{{api_stu3_v3_schema_version}}_{{api_stu3_v3_server_sandbox}}"
+api_stu3_v3_mysql_username: "{{mysql_username}}"
+api_stu3_v3_mysql_password: "{{mysql_password}}"
+
+api_stu3_v3_server_internal_port: "8073"
+api_stu3_v3_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{api_dstu2_server_external_host}}{{(':'+api_dstu2_server_external_port|string) if api_dstu2_server_external_port|int not in (80,443) else ''}}"
