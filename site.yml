@@ -1,4 +1,36 @@
 ---
 - include: playbook_linux.yml
 
-- include: playbook_api_stu3.yml
+- include: playbook_account.yml
+
+- include: playbook_patient_picker.yml
+
+- include: playbook_auth.yml
+
+#- include: playbook_api_stu3.yml
+#
+#- include: playbook_api_stu3_v3.yml
+#
+#- include: playbook_api_stu3_v2.yml
+#
+#- include: playbook_api_dstu2.yml
+#
+#- include: playbook_messaging.yml
+#
+#- include: playbook_sandman.yml
+#
+#- include: playbook_bilirubin_risk_chart.yml
+#
+#- include: playbook_bilirubin_cdshooks.yml
+#
+#- include: playbook_appointments.yml
+#
+#- include: playbook_gallery.yml
+
+# not sure what to do about these legacy apps,
+# think we would like to delete this collection and
+# host them individually
+# - or -
+# just defer this to the SMART gallery
+
+#- include: playbook_apps.yml
