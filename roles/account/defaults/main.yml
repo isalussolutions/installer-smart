@@ -13,6 +13,7 @@ account_project_home: "{{hosting_user_home}}/{{account_project_name}}/project"
 account_server_internal_port: "8065"
 account_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{account_server_external_host}}{{(':'+account_server_external_port|string) if account_server_external_port|int not in (80,443) else ''}}"
 account_server_start_command: "/usr/bin/npm run start-server"
+account_firebase_database_url: "https://{{account_projectId}}.firebaseio.com"
 
 # app settings
 account_accountLoginPage: "{{account_server_external_url}}"

@@ -1,0 +1,15 @@
+let firebase = {
+    apiKey: "{{account_apiKey}}",
+    authDomain: "{{account_projectId}}.firebaseapp.com",
+    databaseURL: "https://{{account_projectId}}.firebaseapp.com",
+    projectId: "{{account_projectId}}",
+    storageBucket: "{{account_projectId}}.appspot.com",
+    messagingSenderId: "{{account_messagingSenderId}}"
+};
+
+let app = {
+    personaAuthEndpoint: "{{sandman_server_external_url}}/REST/userPersona/authenticate",
+    authActionFrameBaseUrl: "https://{{account_projectId}}.firebaseapp.com/__/auth/action"
+};
+
+export default {firebase, app}
