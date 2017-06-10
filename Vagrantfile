@@ -8,22 +8,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.hostname = "hspc-reference-platform"
     config.vm.box = "bento/ubuntu-16.04"
 
-    # MYSQL Database
+    # mysql_database
     config.vm.network :forwarded_port, guest: 3306, host: 3307
 
-    # Auth Server
+    # auth
     config.vm.network :forwarded_port, guest: 9060, host: 9060
-    # Account Server
+    # account
     config.vm.network :forwarded_port, guest: 9065, host: 9065
 
-    # API_DSTU2 Server
+    # api_dstu2
     config.vm.network :forwarded_port, guest: 9071, host: 9071
-    # API_STU3 Server
+    # api_stu3_v2
+    config.vm.network :forwarded_port, guest: 9072, host: 9072
+    # api_stu3_v3
+    config.vm.network :forwarded_port, guest: 9073, host: 9073
+    # api_stu3
     config.vm.network :forwarded_port, guest: 9074, host: 9074
 
-    # Sandbox Manager
+    # sandbox_manager
     config.vm.network :forwarded_port, guest: 9080, host: 9080
-    # Gallery
+    # gallery
     config.vm.network :forwarded_port, guest: 9085, host: 9085
     # bilirubin-risk-chart
     config.vm.network :forwarded_port, guest: 9086, host: 9086
@@ -32,16 +36,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # bilirubin_cds_hooks
     config.vm.network :forwarded_port, guest: 9088, host: 9088
 
-    # Messaging Server
+    # messaging
     config.vm.network :forwarded_port, guest: 9091, host: 9091
-    # Apps Server
+    # apps
     config.vm.network :forwarded_port, guest: 9093, host: 9093
 
-    # Patient_Picker Server
+    # patient_picker
     config.vm.network :forwarded_port, guest: 9094, host: 9094
-    # Appointments
+    # appointments
     config.vm.network :forwarded_port, guest: 9095, host: 9095
-    # Patient Data Manager
+    # patient_data_manager
     config.vm.network :forwarded_port, guest: 9096, host: 9096
 
     config.vm.provider "virtualbox" do |vb|
@@ -80,8 +84,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             mysql_password: "password",
             account_server_external_host: "localhost",
             account_server_external_port: "9065",
-            account_firebase_database_url: "https://hspc-tst.firebaseio.com",
-            account_build_command: "build-tst",
+            account_apiKey: "AIzaSyBHmAKCRdpSMtP53TY7qXjoXPgCniG5T4c",
+            account_projectId: "hspc-tst",
+            account_messagingSenderId: "462717146607",
             auth_server_external_host: "{{services_host}}",
             auth_server_external_port: "9060",
             auth_server_initial_memory: "32M",
