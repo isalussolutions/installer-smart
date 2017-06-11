@@ -45,9 +45,9 @@
     mode: "0644"
   vars:
     system_name: "{{service_name}}"
-    system_start_command: "{{service_start_command}}"
+    system_start_command: "{{service_start_command | default('fixme')}}"
     system_success_status: "{{service_success_status | default('143')}}"
-    system_working_dir: "{{service_working_dir}}"
+    system_working_dir: "{{service_working_dir | default('fixme')}}"
 
 - name: "enable {{service_name}} service"
   when: service_definition_file is defined
