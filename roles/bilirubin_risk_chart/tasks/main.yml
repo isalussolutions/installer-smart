@@ -40,3 +40,4 @@
     internal_port: "{{bilirubin_risk_chart_server_internal_port}}"
     external_host: "{{bilirubin_risk_chart_server_external_host}}"
     external_port: "{{bilirubin_risk_chart_server_external_port}}"
+    with_cors_headers: "{{bilirubin_risk_chart_server_include_cors_headers}}"
