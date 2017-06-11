@@ -83,7 +83,7 @@
     system_external_host: "{{external_host}}"
     system_external_port: "{{external_port}}"
     system_internal_port: "{{internal_port}}"
-    with_cors_headers: "{{with_cors_headers | default(false)}}"
+#    with_cors_headers: "{{with_cors_headers | default(false)}}"
 
 - name: "restart nginx"
   when: gateway_definition_file is defined
