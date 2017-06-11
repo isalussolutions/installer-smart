@@ -27,7 +27,7 @@
   become_user: "{{hosting_username}}"
   template:
     src: "manifest.json.j2"
-    dest: "{{bilirubin_risk_chart_project_home}}/src/well-known/smart/manifest.json"
+    dest: "{{bilirubin_risk_chart_project_home}}/src/.well-known/smart/manifest.json"
 
 - name: "install system"
   include: "roles/common/tasks/service_template.yml"
