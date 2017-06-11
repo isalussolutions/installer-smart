@@ -1,0 +1,28 @@
+---
+- name: "create the service directory"
+  become_user: "{{hosting_username}}"
+  file: "path={{item}} state=directory"
+  with_items:
+    - "{{hosting_user_home}}/api_dstu2_2_4"
+
+- name: "download the api webapp"
+  become_user: "{{hosting_username}}"
+  maven_artifact:
+    group_id: "{{api_server_artifact_group_id}}"
+    artifact_id: "{{api_server_artifact_artifact_id}}"
+    version: "{{api_server_artifact_version}}"
+    extension: "{{api_server_artifact_packaging}}"
+    repository_url: "{{api_server_artifact_repository_url}}"
+    dest: "{{hosting_user_home}}/api/{{api_server_artifact_artifact_id}}-{{api_server_artifact_version}}.{{api_server_artifact_packaging}}"
+
+- name: "install api_dstu2_2_4 system"
+  include: "roles/common/tasks/service_template.yml"
+  vars:
+    service_name: "api_dstu2_2_4"
+    database: "{{api_dstu2_2_4_server_database}}"
+    database_reset: "{{api_dstu2_2_4_mysql_reset_database}}"
+    service_definition_file: "roles/api_dstu2_2_4/templates/api_dstu2_2_4.service.j2"
+    gateway_definition_file: "roles/api_dstu2_2_4/templates/api_dstu2_2_4.j2"
+    internal_port: "{{api_dstu2_2_4_server_internal_port}}"
+    external_host: "{{api_dstu2_2_4_server_external_host}}"
+    external_port: "{{api_dstu2_2_4_server_external_port}}"
