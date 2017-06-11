@@ -13,6 +13,7 @@
 #   external_host: external hostname
 #   external_port: external port
 #   health_check_url: optional health_check url
+#   with_cors_headers: optional include cors headers
 
 - name: "stop {{service_name}}"
   service:
@@ -82,6 +83,7 @@
     system_external_host: "{{external_host}}"
     system_external_port: "{{external_port}}"
     system_internal_port: "{{internal_port}}"
+    with_cors_headers: "{{with_cors_headers | default(false)}}"
 
 - name: "restart nginx"
   when: gateway_definition_file is defined
