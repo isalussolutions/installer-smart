@@ -5,37 +5,24 @@
     path: "{{item}}"
     state: directory
   with_items:
-    - "{{hosting_user_home}}/bilirubin_risk_chart"
+    - "{{hosting_user_home}}/{{bilirubin_risk_chart_project_name}}"
 
-# todo replace this with a release through nexus
-# todo change project to be a static webapp
-- name: "check out bilirubin_risk_chart project"
+- name: "check out {{bilirubin_risk_chart_name}} project"
   become_user: "{{hosting_username}}"
-  shell: chdir="{{hosting_user_home}}/bilirubin_risk_chart"
-         git clone https://bitbucket.org/hspconsortium/bilirubin-risk-chart.git
-  ignore_errors: yes
+  git: repo={{hspc_repo_base}}/{{bilirubin_risk_chart_project_name}}.git
+       version={{bilirubin_risk_chart_project_version}}
+       dest={{bilirubin_risk_chart_project_home}}
+       update={{update_repositories}}
+       force=yes
 
-- name: "update the bilirubin_risk_chart project"
-  become_user: "{{hosting_username}}"
-  shell: chdir="{{hosting_user_home}}/bilirubin_risk_chart/bilirubin-risk-chart"
-         git fetch && git pull
-  ignore_errors: yes
-
-- name: "configure nginx (bilirubin_risk_chart)"
-  template:
-    src: "bilirubin_risk_chart.j2"
-    dest: "/etc/nginx/sites-enabled/bilirubin_risk_chart"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "restart nginx"
-  service:
-    name: "nginx"
-    state: "restarted"
-
-- name: "verify bilirubin_risk_chart is available externally"
-  become_user: "{{hosting_username}}"
-  wait_for:
-    host: "{{bilirubin_risk_chart_server_external_host}}"
-    port: "{{bilirubin_risk_chart_server_external_port}}"
+- name: "install system"
+  include: "roles/common/tasks/service_template.yml"
+  vars:
+    service_name: "{{bilirubin_risk_chart_name}}"
+    service_definition_file: "{{common_service_template}}"
+    service_start_command: "{{bilirubin_risk_chart_server_start_command}}"
+    service_working_dir: "{{bilirubin_risk_chart_project_home}}"
+    gateway_definition_file: "{{common_nginx_gateway_template}}"
+    internal_port: "{{bilirubin_risk_chart_server_internal_port}}"
+    external_host: "{{bilirubin_risk_chart_server_external_host}}"
+    external_port: "{{bilirubin_risk_chart_server_external_port}}"

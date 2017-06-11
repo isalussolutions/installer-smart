@@ -1,4 +1,15 @@
 ---
+# metadata
+bilirubin_risk_chart_name: "bilirubin_risk_chart"
+
+# vcs project info
+bilirubin_risk_chart_project_name: "bilirubin-risk-chart"
 bilirubin_risk_chart_project_version: "1.0.0"
+bilirubin_risk_chart_project_home: "{{hosting_user_home}}/{{bilirubin_risk_chart_project_name}}/project"
+
+# artifact info
+
+# hosting info
 bilirubin_risk_chart_server_internal_port: "8086"
 bilirubin_risk_chart_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{bilirubin_risk_chart_server_external_host}}{{(':'+bilirubin_risk_chart_server_external_port|string) if bilirubin_risk_chart_server_external_port|int not in (80,443) else ''}}"
+bilirubin_risk_chart_server_start_command: "/usr/bin/http-server src -p {{bilirubin_risk_chart_server_internal_port}}"
