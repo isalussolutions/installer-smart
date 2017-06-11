@@ -17,7 +17,7 @@ ExecStart={{java_home}}/bin/java \
  -Dhspc.platform.messaging.subscriptionSupport.enabled=false \
  -Dspring.jpa.show-sql=false \
  -Dhspc.platform.api.sandbox.useHspcStarterData=true \
- -Dhspc.platform.api.security.mode=secured \
+ -Dhspc.platform.api.security.mode=open \
  -Dhspc.platform.api.fhir.db.username={{api_dstu2_mysql_username}} \
  -Dhspc.platform.api.fhir.db.password={{api_dstu2_mysql_password}} \
  -Dspring.jpa.hibernate.ddl-auto=update \
@@ -28,7 +28,7 @@ ExecStart={{java_home}}/bin/java \
  -Dspring.datasource.maxActive=10 \
  -Dspring.datasource.initialSize=1 \
  -Dhspc.platform.authorization.url={{auth_server_external_url}} \
- -jar {{hosting_user_home}}/jetty-runner.jar \
+ -jar {{hosting_user_home}}/jetty-runner-9.3.6.v20151106.jar \
  --config {{hosting_user_home}}/jetty.xml \
  api-v1-beanstalk.war
 Restart=always
