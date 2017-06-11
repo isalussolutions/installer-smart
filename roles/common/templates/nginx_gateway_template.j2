@@ -22,7 +22,7 @@ server {
       proxy_set_header X-NginX-Proxy true;
 
 {% if with_cors_headers %}
-      import nginx_open_cors.conf;
+      include {{nginx_home}}/nginx_open_cors.conf;
 {% endif %}
 
       access_log /var/log/nginx/{{system_name}}_access.log;
