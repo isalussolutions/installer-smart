@@ -2,6 +2,9 @@
 - hosts: all
   become: yes
   vars_files:
-    - settings.yml
+    - roles/common/defaults/main.yml
+    - roles/linux/defaults/main.yml
+    - roles/auth/defaults/main.yml
+    - roles/messaging/defaults/main.yml
   roles:
     - api_dstu2
