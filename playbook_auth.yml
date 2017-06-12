@@ -13,5 +13,6 @@
     - roles/apps/defaults/main.yml
     - roles/bilirubin_risk_chart/defaults/main.yml
     - roles/sandman/defaults/main.yml
+    - roles/gallery/defaults/main.yml
   roles:
     - auth
