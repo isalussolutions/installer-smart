@@ -4,7 +4,7 @@ gallery_name: "gallery"
 
 # vcs project info
 gallery_project_name: "{{gallery_name}}"
-gallery_project_version: "1.0.1"
+gallery_project_version: "1.0.2"
 gallery_project_home: "{{hosting_user_home}}/{{gallery_project_name}}/project"
 
 # artifact info
