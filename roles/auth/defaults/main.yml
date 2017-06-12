@@ -31,7 +31,7 @@ auth_server_start_command: |
   -Dhspc.platform.jwt.key={{hspc_platform_jwt_key}} \
   -Dhspc.platform.sandbox.host={{sandman_server_external_url}} \
   -Dhspc.platform.persona.cookieDomain={{auth_server_persona_cookie_domain}} \
-  -Dhspc.platform.firebase.projectName={{auth_server_firebase_project_name}} \
+  -Dhspc.platform.firebase.projectName={{account_projectId}} \
   -Dhspc.platform.firebase.databaseUrl={{account_firebase_database_url}} \
   -Dhspc.platform.accountLoginPage={{account_accountLoginPage}} \
   -Dhspc.platform.accountLogoutPage={{account_accountLogoutPage}} \
