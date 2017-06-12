@@ -31,12 +31,14 @@
     dest: "{{gallery_project_home}}/src/js/config/app-gallery.json"
 
 - name: "patch the gallery-apps.json database"
+  when: gallery_apps_template is defined
   become_user: "{{hosting_username}}"
   template:
     src: "{{gallery_apps_template}}"
     dest: "{{gallery_project_home}}/src/js/config/gallery-apps.json"
 
 - name: "patch the gallery-app-details.json database"
+  when: gallery_app_details_template is defined
   become_user: "{{hosting_username}}"
   template:
     src: "{{gallery_app_details_template}}"
