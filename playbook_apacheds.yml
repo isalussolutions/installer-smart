@@ -1,0 +1,7 @@
+---
+- hosts: all
+  become: yes
+  vars_files:
+    - roles/linux/defaults/main.yml
+  roles:
+    - apacheds

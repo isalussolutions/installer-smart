@@ -1,7 +1,7 @@
 ---
-# *** Main configuration file for the HSPC Installer ***
+# *** Main configuration file for the installer ***
 
-# To customize the HSPC stack, you can either edit the settings directly in
+# To customize the stack, you can either edit the settings directly in
 # this file or set up custom settings overrides (such as custom_settings.yml)
 
 installer_user_home: "/home/{{installer_user}}"
@@ -72,6 +72,8 @@ self_signed_certificate_ssl_division: "support"
 self_signed_certificate_ssl_email: "support@{{domain_name}}"
 
 # database configuration
+mysql_username: "fhir"
+mysql_host: "localhost"
 mysql_port: 3306
 mysql_privilage: "*.*:ALL,GRANT"
 mysql_connect_host: "%"

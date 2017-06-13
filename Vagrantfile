@@ -13,44 +13,41 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # auth
     config.vm.network :forwarded_port, guest: 9060, host: 9060
-    # account
-    config.vm.network :forwarded_port, guest: 9065, host: 9065
+
+    # apache_ds
+    config.vm.network :forwarded_port, guest: 10389, host: 10389
 
     # api_dstu2
     config.vm.network :forwarded_port, guest: 9071, host: 9071
-    # api_stu3_v2
-    config.vm.network :forwarded_port, guest: 9072, host: 9072
-    # api_stu3_v3
-    config.vm.network :forwarded_port, guest: 9073, host: 9073
+    # mock api_dstu2
+    config.vm.network :forwarded_port, guest: 9271, host: 9271
     # api_stu3
     config.vm.network :forwarded_port, guest: 9074, host: 9074
+    # mock api_stu3
+    config.vm.network :forwarded_port, guest: 9274, host: 9274
+
 
     # sandbox_manager
     config.vm.network :forwarded_port, guest: 9080, host: 9080
-    # gallery
-    config.vm.network :forwarded_port, guest: 9085, host: 9085
-    # bilirubin-risk-chart
-    config.vm.network :forwarded_port, guest: 9086, host: 9086
-    # bilirubin-monitor
-    config.vm.network :forwarded_port, guest: 9087, host: 9087
-    # bilirubin_cds_hooks
-    config.vm.network :forwarded_port, guest: 9088, host: 9088
 
     # messaging
     config.vm.network :forwarded_port, guest: 9091, host: 9091
+
+    #pwm server
+    config.vm.network :forwarded_port, guest: 9092, host: 9092
+
     # apps
     config.vm.network :forwarded_port, guest: 9093, host: 9093
 
     # patient_picker
-    config.vm.network :forwarded_port, guest: 9094, host: 9094
-    # appointments
-    config.vm.network :forwarded_port, guest: 9095, host: 9095
+    #config.vm.network :forwarded_port, guest: 9094, host: 9094
+
     # patient_data_manager
     config.vm.network :forwarded_port, guest: 9096, host: 9096
 
     config.vm.provider "virtualbox" do |vb|
-        vb.name = "HSPC Reference Platform"
-        vb.memory = "4096"
+        vb.name = "SMART on FHIR Platform"
+        vb.memory = "6144"
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
         vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
         vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
@@ -82,17 +79,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             mysql_host: "localhost",
             mysql_username: "hspc",
             mysql_password: "password",
-            account_server_external_host: "localhost",
-            account_server_external_port: "9065",
-            account_apiKey: "AIzaSyBHmAKCRdpSMtP53TY7qXjoXPgCniG5T4c",
-            account_projectId: "hspc-tst",
-            account_messagingSenderId: "462717146607",
+            enable_pwm: false,
+            pwm_server_external_host: "{{services_host}}",
+            pwm_server_external_port: "9092",
+            apacheds_server_external_host: "{{services_host}}",
+            apacheds_server_system_admin_password: "secret",
+            apacheds_server_sandbox_admin_password: "password",
+            apacheds_server_installer_enabled: true,
             auth_server_external_host: "{{services_host}}",
             auth_server_external_port: "9060",
             auth_server_initial_memory: "32M",
             auth_server_max_memory: "128M",
-            auth_server_persona_cookie_domain: "localhost",
-            auth_server_CONTEXT_FHIR_ENDPOINT: "{{api_dstu2_server_external_url}},{{api_stu3_server_external_url}}",
             auth_server_newUserUrl: "",
             auth_server_forgotPasswordUrl: "",
             auth_server_admin_password: "password",
@@ -108,21 +105,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             api_dstu2_server_initial_memory: "128M",
             api_dstu2_server_max_memory: "256M",
             api_dstu2_mysql_reset_database: true,
+            mock_api_dstu2_server_external_host: "{{services_host}}",
+            mock_api_dstu2_server_external_port: "9271",
+            mock_api_dstu2_server_initial_memory: "128M",
+            mock_api_dstu2_server_max_memory: "256M",
+            api_dstu2_sample_patients_limit: "20",
             api_stu3_server_external_host: "{{services_host}}",
             api_stu3_server_external_port: "9074",
             api_stu3_server_initial_memory: "128M",
             api_stu3_server_max_memory: "256M",
             api_stu3_mysql_reset_database: true,
-            api_stu3_v2_server_external_host: "{{services_host}}",
-            api_stu3_v2_server_external_port: "9072",
-            api_stu3_v2_server_initial_memory: "128M",
-            api_stu3_v2_server_max_memory: "256M",
-            api_stu3_v2_mysql_reset_database: true,
-            api_stu3_v3_server_external_host: "{{services_host}}",
-            api_stu3_v3_server_external_port: "9073",
-            api_stu3_v3_server_initial_memory: "128M",
-            api_stu3_v3_server_max_memory: "256M",
-            api_stu3_v3_mysql_reset_database: true,
+            mock_api_stu3_server_external_host: "{{services_host}}",
+            mock_api_stu3_server_external_port: "9274",
+            mock_api_stu3_server_initial_memory: "128M",
+            mock_api_stu3_server_max_memory: "256M",
             sandman_mysql_reset_database: true,
             enable_backup_restore_jobs: false,
             enable_aws_snapshot: false,
@@ -142,11 +138,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             apps_server_external_host: "{{services_host}}",
             apps_server_external_port: "9093",
             patient_picker_server_external_host: "localhost",
-            patient_picker_server_external_port: "9094",
-            bilirubin_risk_chart_server_external_host: "bilirubin-risk-chart.hspconsortium.org",
-            bilirubin_risk_chart_server_external_port: "443",
-            gallery_server_external_host: "gallery.hspconsortium.org",
-            gallery_server_external_port: "443"
+            patient_picker_server_external_port: "9093",
         }
     end
 
