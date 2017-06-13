@@ -92,7 +92,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             auth_server_initial_memory: "32M",
             auth_server_max_memory: "128M",
             auth_server_persona_cookie_domain: "localhost",
-            auth_server_firebase_project_name: "hspc-tst",
             auth_server_CONTEXT_FHIR_ENDPOINT: "{{api_dstu2_server_external_url}},{{api_stu3_server_external_url}}",
             auth_server_newUserUrl: "",
             auth_server_forgotPasswordUrl: "",
@@ -109,12 +108,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             api_dstu2_server_initial_memory: "128M",
             api_dstu2_server_max_memory: "256M",
             api_dstu2_mysql_reset_database: true,
-            api_dstu2_sample_patients_limit: "20",
             api_stu3_server_external_host: "{{services_host}}",
             api_stu3_server_external_port: "9074",
             api_stu3_server_initial_memory: "128M",
             api_stu3_server_max_memory: "256M",
             api_stu3_mysql_reset_database: true,
+            api_stu3_v2_server_external_host: "{{services_host}}",
+            api_stu3_v2_server_external_port: "9072",
+            api_stu3_v2_server_initial_memory: "128M",
+            api_stu3_v2_server_max_memory: "256M",
+            api_stu3_v2_mysql_reset_database: true,
+            api_stu3_v3_server_external_host: "{{services_host}}",
+            api_stu3_v3_server_external_port: "9073",
+            api_stu3_v3_server_initial_memory: "128M",
+            api_stu3_v3_server_max_memory: "256M",
+            api_stu3_v3_mysql_reset_database: true,
             sandman_mysql_reset_database: true,
             enable_backup_restore_jobs: false,
             enable_aws_snapshot: false,
@@ -137,11 +145,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             patient_picker_server_external_port: "9094",
             bilirubin_risk_chart_server_external_host: "bilirubin-risk-chart.hspconsortium.org",
             bilirubin_risk_chart_server_external_port: "443",
-            apps_server_external_host: "apps.hspconsortium.org",
-            apps_server_external_port: "443",
             gallery_server_external_host: "gallery.hspconsortium.org",
-            gallery_server_external_port: "443",
-            gallery_apps_template: "gallery-apps-prod.json.j2"
+            gallery_server_external_port: "443"
         }
     end
 
