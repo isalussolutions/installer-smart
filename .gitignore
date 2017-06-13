@@ -24,9 +24,10 @@ hs_err_pid*
 ops/
 ansible/lucenefiles/
 
-inventory-nexus.yml
-inventory-prod.yml
-inventory-test.yml
+inventory_prod_group_vars.yml
+inventory_test_group_vars.yml
+inventory_sandbox_upgrade_group_vars.yml
+
 .vagrant/
 
 provisioning/inventory_prod
