@@ -6,9 +6,6 @@ api_stu3_name: "api_stu3"
 
 # artifact info
 
-# common hosting info
-api_server_default_sandbox_url: "{{api_stu3_server_external_url}}/{{api_stu3_server_sandbox}}/data"
-
 # stu3 hosting info
 api_stu3_server_internal_port: "8074"
 api_stu3_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{api_stu3_server_external_host}}{{(':'+api_stu3_server_external_port|string) if api_stu3_server_external_port|int not in (80,443) else ''}}"
