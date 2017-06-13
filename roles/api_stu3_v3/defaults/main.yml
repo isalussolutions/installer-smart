@@ -34,7 +34,7 @@ api_stu3_v3_server_start_command: |
   -Dhspc.platform.authorization.url={{auth_server_external_url}} \
   -jar {{hosting_user_home}}/jetty-runner-9.3.6.v20151106.jar \
   --config {{hosting_user_home}}/jetty.xml \
-  api-v2-beanstalk.war
+  api-v3-beanstalk.war
 
 # app settings
 api_stu3_v3_schema_version: 3
