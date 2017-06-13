@@ -2,13 +2,25 @@
 
 Welcome to the HSPC Reference Platform Installer!
 
+## SMART Version
+This is the SMART version of the HPSC Reference Platform Installer.  This repository is a fork of the 
+  [hspconsortium/installer](https://bitbucket.org/hspconsortium/installer).  The forked version is maintained on
+  [bitbucket](https://bitbucket.org/isalus/installer-smart) in order to take advantage of the features Bitbucket provides
+  for syncing between forked repositories.  The repository is mirrored to [github](https://github.com/isalussolutions/installer-smart)
+  so as to be available along with the rest of the SMART artifacts, however **the github version of the repo should be 
+  considered read-only**.
+  
+The mirroring between Bitbucket and GitHub happens automatically, triggered on each commit to `isalussolutions/installer-smart` and 
+  utilizing Bitbucket Pipelines.
+
+
 ## Destination Environment
 
 Systems will be installed in the target environment by the HSPC Installer (localhost, vm, hspc-test, hspc-prod, etc) follows
 
 ### Host Machine Setup
 
-````
+`````
 sudo apt-get update && \
 sudo apt-get -y install curl git python-pycurl python-pip python-yaml python-paramiko python-jinja2 && \
 sudo pip install ansible==2.1.0 && \
