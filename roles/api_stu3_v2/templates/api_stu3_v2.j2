@@ -6,7 +6,17 @@ upstream api_stu3_v2 {
 server {
     server_name {{api_stu3_v2_server_external_host}};
 
+{% if use_secure_http %}
+    listen {{api_stu3_v2_server_external_port}} ssl;
+    ssl_certificate {{nginx_home}}/ssl/{{certificate_crt_filename}};
+    ssl_certificate_key {{nginx_home}}/ssl/{{certificate_key_filename}};
+{% else %}
     listen {{api_stu3_v2_server_external_port}};
+{% endif %}
+
+    location /api2/ {
+        rewrite ^/api2(.*)$ $1 last;
+    }
 
     location / {
       proxy_set_header X-Real-IP $remote_addr;
@@ -19,12 +29,6 @@ server {
       proxy_pass http://api_stu3_v2;
       proxy_redirect off;
     }
-
-{% if use_secure_http %}
-    ssl on;
-    ssl_certificate /etc/nginx/ssl/{{certificate_crt_filename}};
-    ssl_certificate_key /etc/nginx/ssl/{{certificate_key_filename}};
-{% endif %}
 }
 
 {% if api_stu3_v2_server_external_port != 80 and use_secure_http %}

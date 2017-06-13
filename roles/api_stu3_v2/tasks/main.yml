@@ -1,86 +1,40 @@
 ---
 - name: "create the service directory"
   become_user: "{{hosting_username}}"
-  file: "path={{item}} state=directory"
+  file:
+    path: "{{item}}"
+    state: directory
   with_items:
-    - "{{hosting_user_home}}/api_stu3_v2"
+    - "{{hosting_user_home}}/{{api_stu3_v2_name}}"
 
-#- name: "download the api_stu3_v2 webapp"
+# when migrated to the HSPC_4 schema
+#- name: "download the api webapp"
 #  become_user: "{{hosting_username}}"
 #  maven_artifact:
-#    group_id: "{{api_stu3_v2_server_artifact_group_id}}"
-#    artifact_id: "{{api_stu3_v2_server_artifact_artifact_id}}"
-#    version: "{{api_stu3_v2_server_artifact_version}}"
-#    extension: "{{api_stu3_v2_server_artifact_packaging}}"
-#    repository_url: "{{api_stu3_v2_server_artifact_repository_url}}"
-#    dest: "{{hosting_user_home}}/api_stu3_v2/{{api_stu3_v2_server_artifact_artifact_id}}-{{api_stu3_v2_server_artifact_version}}.{{api_stu3_v2_server_artifact_packaging}}"
+#    group_id: "{{api_server_artifact_group_id}}"
+#    artifact_id: "{{api_server_artifact_artifact_id}}"
+#    version: "{{api_server_artifact_version}}"
+#    extension: "{{api_server_artifact_packaging}}"
+#    repository_url: "{{api_server_artifact_repository_url}}"
+#    dest: "{{hosting_user_home}}/api/{{api_server_artifact_artifact_id}}-{{api_server_artifact_version}}.{{api_server_artifact_packaging}}"
 
+# workaround due to the HSPC v2 schema
 - name: "copy the api-v2-beanstalk.war to the service directory"
   become_user: "{{hosting_username}}"
   copy:
     src: "api-v2-beanstalk.war"
-    dest: "{{hosting_user_home}}/api_stu3_v2"
+    dest: "{{hosting_user_home}}/{{api_stu3_v2_name}}"
 
-- name: "stop api_stu3_v2"
-  service:
-    name: "api_stu3_v2"
-    state: "stopped"
-  ignore_errors: yes
-
-- name: "drop the {{api_stu3_v2_server_database}} database"
-  when: api_stu3_v2_mysql_reset_database
-  mysql_db:
-    name: "{{api_stu3_v2_server_database}}"
-    state: absent
-  ignore_errors: yes
-
-- name: "create the {{api_stu3_v2_server_database}} database"
-  mysql_db:
-    name: "{{api_stu3_v2_server_database}}"
-    state: present
-  ignore_errors: yes
-
-- name: "configure api_stu3_v2 service"
-  template:
-    src: "api_stu3_v2.service.j2"
-    dest: "/etc/systemd/system/api_stu3_v2.service"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "enable api_stu3_v2 service"
-  shell: "systemctl enable api_stu3_v2.service"
-
-- name: "reload systemd daemon"
-  shell: "systemctl daemon-reload"
-
-- name: "start api_stu3_v2"
-  service:
-    name: "api_stu3_v2"
-    state: "started"
-
-- name: "verify api_stu3_v2 is available internally"
-  become_user: "{{hosting_username}}"
-  wait_for:
-    host: "{{api_stu3_v2_server_internal_host}}"
-    port: "{{api_stu3_v2_server_internal_port}}"
-
-- name: "configure nginx (api_stu3_v2)"
-  template:
-    src: "api_stu3_v2.j2"
-    dest: "/etc/nginx/sites-enabled/api_stu3_v2"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-
-- name: "restart nginx"
-  service:
-    name: "nginx"
-    state: "restarted"
-
-- name: "verify api_stu3_v2 is available externally"
-  become_user: "{{hosting_username}}"
-  wait_for:
-    host: "{{api_stu3_v2_server_external_host}}"
-    port: "{{api_stu3_v2_server_external_port}}"
-
+- name: "install {{api_stu3_v2_name}} system"
+  include: "roles/common/tasks/service_template.yml"
+  vars:
+    service_name: "{{api_stu3_v2_name}}"
+    database: "{{api_stu3_v2_server_database}}"
+    database_reset: "{{api_stu3_v2_mysql_reset_database}}"
+    service_definition_file: "{{common_service_template}}"
+    service_start_command: "{{api_stu3_v2_server_start_command}}"
+    service_working_dir: "{{hosting_user_home}}/{{api_stu3_v2_name}}"
+    gateway_definition_file: "{{common_nginx_gateway_template}}"
+    internal_port: "{{api_stu3_v2_server_internal_port}}"
+    external_host: "{{api_stu3_v2_server_external_host}}"
+    external_port: "{{api_stu3_v2_server_external_port}}"

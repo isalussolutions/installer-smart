@@ -1,9 +1,11 @@
 ---
 - name: "create the service directory"
   become_user: "{{hosting_username}}"
-  file: "path={{item}} state=directory"
+  file:
+    path: "{{item}}"
+    state: directory
   with_items:
-    - "{{hosting_user_home}}/api_dstu2"
+    - "{{hosting_user_home}}/{{api_dstu2_name}}"
 
 # when migrated to the HSPC_4 schema
 #- name: "download the api webapp"
@@ -21,16 +23,18 @@
   become_user: "{{hosting_username}}"
   copy:
     src: "api-v1-beanstalk.war"
-    dest: "{{hosting_user_home}}/api_dstu2"
+    dest: "{{hosting_user_home}}/{{api_dstu2_name}}"
 
-- name: "install api_dstu2 system"
+- name: "install {{api_dstu2_name}} system"
   include: "roles/common/tasks/service_template.yml"
   vars:
-    service_name: "api_dstu2"
+    service_name: "{{api_dstu2_name}}"
     database: "{{api_dstu2_server_database}}"
-    database_reset: "api_dstu2_mysql_reset_database"
-    service_definition_file: "roles/api_dstu2/templates/api_dstu2.service.j2"
-    gateway_definition_file: "roles/api_dstu2/templates/api_dstu2.j2"
+    database_reset: "{{api_dstu2_mysql_reset_database}}"
+    service_definition_file: "{{common_service_template}}"
+    service_start_command: "{{api_dstu2_server_start_command}}"
+    service_working_dir: "{{hosting_user_home}}/{{api_dstu2_name}}"
+    gateway_definition_file: "{{common_nginx_gateway_template}}"
     internal_port: "{{api_dstu2_server_internal_port}}"
     external_host: "{{api_dstu2_server_external_host}}"
     external_port: "{{api_dstu2_server_external_port}}"

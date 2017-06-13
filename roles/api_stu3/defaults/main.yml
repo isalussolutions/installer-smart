@@ -1,22 +1,33 @@
 ---
-# todo when all api servers are on a single artifact, the roles can be consolidated
+# metadata
+api_stu3_name: "api_stu3"
 
-# api common properties
-api_server_artifact_group_id: "org.hspconsortium.reference"
-api_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
-api_server_artifact_version: "1.5.3"
-api_server_artifact_packaging: "jar"
-api_server_artifact_repository_url: "{{release_repository_url}}"
-api_server_artifact_location: "{{m2_repo_folder}}/org/hspconsortium/reference/{{api_server_artifact_artifact_id}}/{{api_server_artifact_version}}/{{api_server_artifact_artifact_id}}-{{api_server_artifact_version}}.{{api_server_artifact_packaging}}"
-api_mysql_host: "{{mysql_host}}"
-api_mysql_username: "{{mysql_username}}"
-api_mysql_password: "{{mysql_password}}"
-api_schema_version: 4
-api_baseline_snapshot: "default"
+# vcs project info
+
+# artifact info
+
+# common hosting info
 api_server_default_sandbox_url: "{{api_stu3_server_external_url}}/{{api_stu3_server_sandbox}}/data"
 
-# api_stu3
+# stu3 hosting info
 api_stu3_server_internal_port: "8074"
 api_stu3_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{api_stu3_server_external_host}}{{(':'+api_stu3_server_external_port|string) if api_stu3_server_external_port|int not in (80,443) else ''}}"
-api_stu3_server_sandbox: "smartstu3"
+api_stu3_server_sandbox: "hspc4"
 api_stu3_server_database: "hspc_{{api_schema_version}}_{{api_stu3_server_sandbox}}"
+api_stu3_server_start_command: |
+  {{java_home}}/bin/java \
+  -Xms{{api_stu3_server_initial_memory}} \
+  -Xmx{{api_stu3_server_max_memory}} \
+  -Dserver.port={{api_stu3_server_internal_port}} \
+  -Dhspc.platform.api.fhir.db.host={{api_mysql_host}} \
+  -Dhspc.platform.api.fhir.db.username={{api_mysql_username}} \
+  -Dhspc.platform.api.fhir.db.password={{api_mysql_password}} \
+  -Dhspc.platform.api.sandbox.name={{api_stu3_server_sandbox}} \
+  -Dhspc.platform.api.sandbox.useHspcStarterData=false \
+  -Dhspc.platform.authorization.url={{auth_server_external_url}} \
+  -Dhspc.platform.messaging.url={{messaging_server_external_url}} \
+  -Dspring.profiles.active=stu3,multitenant \
+  -Dhibernate.search.default.indexBase=lucenefiles \
+  -jar {{hosting_user_home}}/api/{{api_server_artifact_artifact_id}}-{{api_server_artifact_version}}.{{api_server_artifact_packaging}}
+
+# app settings

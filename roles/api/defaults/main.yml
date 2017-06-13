@@ -1,0 +1,18 @@
+---
+# metadata
+api_name: "api"
+
+# vcs project info
+
+# artifact info
+api_server_artifact_group_id: "org.hspconsortium.reference"
+api_server_artifact_artifact_id: "hspc-reference-api-webapp-multitenant"
+api_server_artifact_version: "1.5.3"
+api_server_artifact_packaging: "jar"
+api_server_artifact_repository_url: "{{release_repository_url}}"
+
+# app settings
+api_mysql_host: "{{mysql_host}}"
+api_mysql_username: "{{mysql_username}}"
+api_mysql_password: "{{mysql_password}}"
+api_schema_version: 4

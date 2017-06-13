@@ -6,11 +6,13 @@ User={{hosting_username}}
 TimeoutStartSec=infinity
 WorkingDirectory={{hosting_user_home}}/api_stu3_v2
 
+# legacy deployment to support hspc v2 schema
+
 ExecStart={{java_home}}/bin/java \
  -Xms{{api_stu3_v2_server_initial_memory}} \
  -Xmx{{api_stu3_v2_server_max_memory}} \
  -Djetty.port={{api_stu3_v2_server_internal_port}} \
- -Djetty.host={{api_stu3_v2_server_internal_host}} \
+ -Djetty.host=localhost \
  -Dhspc.platform.api.fhir.db.host={{api_stu3_v2_mysql_host}} \
  -Dhspc.platform.messaging.subscriptionSupport.enabled=false \
  -Dspring.jpa.show-sql=false \

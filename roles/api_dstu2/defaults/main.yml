@@ -1,10 +1,40 @@
 ---
-# api_dstu2
-api_dstu2_schema_version: 1
-api_dstu2_server_sandbox: "hspc"
-api_dstu2_server_database: "hspc_{{api_dstu2_schema_version}}_{{api_dstu2_server_sandbox}}"
-api_dstu2_mysql_username: "{{mysql_username}}"
-api_dstu2_mysql_password: "{{mysql_password}}"
+# metadata
+api_dstu2_name: "api_dstu2"
 
+# vcs project info
+
+# artifact info
+
+# dstu2 hosting info
 api_dstu2_server_internal_port: "8071"
 api_dstu2_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{api_dstu2_server_external_host}}{{(':'+api_dstu2_server_external_port|string) if api_dstu2_server_external_port|int not in (80,443) else ''}}"
+api_dstu2_server_sandbox: "hspc"
+api_dstu2_server_database: "hspc_{{api_dstu2_schema_version}}_{{api_dstu2_server_sandbox}}"
+api_dstu2_server_start_command: |
+  {{java_home}}/bin/java \
+  -Xms{{api_dstu2_server_initial_memory}} \
+  -Xmx{{api_dstu2_server_max_memory}} \
+  -Djetty.port={{api_dstu2_server_internal_port}} \
+  -Djetty.host=localhost \
+  -Dhspc.platform.api.fhir.db.host={{api_mysql_host}} \
+  -Dhspc.platform.messaging.subscriptionSupport.enabled=false \
+  -Dspring.jpa.show-sql=false \
+  -Dhspc.platform.api.sandbox.useHspcStarterData=true \
+  -Dhspc.platform.api.security.mode=open \
+  -Dhspc.platform.api.fhir.db.username={{api_mysql_username}} \
+  -Dhspc.platform.api.fhir.db.password={{api_mysql_password}} \
+  -Dspring.jpa.hibernate.ddl-auto=update \
+  -Dspring.profiles.active=multitenant,production \
+  -Dhspc.platform.messaging.url={{messaging_server_external_url}}/ \
+  -Dhibernate.search.default.indexBase=lucenefiles \
+  -Dhspc.platform.api.fhir.datasource.cache.size=5 \
+  -Dspring.datasource.maxActive=10 \
+  -Dspring.datasource.initialSize=1 \
+  -Dhspc.platform.authorization.url={{auth_server_external_url}} \
+  -jar {{hosting_user_home}}/jetty-runner-9.3.6.v20151106.jar \
+  --config {{hosting_user_home}}/jetty.xml \
+  api-v1-beanstalk.war
+
+# app settings
+api_dstu2_schema_version: 1
