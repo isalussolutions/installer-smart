@@ -31,5 +31,6 @@ sudo pip install --upgrade pip
 | Bili Monitor  |          8087 |          9087 |
 | Bili CDS Hks  |          8088 |          9088 |
 | Messaging     |          8091 |          9091 |
+| PWM           |          8092 |          9092 |
 | Apps          |          8093 |          9093 |
 | Patient Pckr  |          8096 |          9096 |
