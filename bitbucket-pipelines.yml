@@ -9,4 +9,4 @@ pipelines:
   default:
     - step:
         script:
-          - git clone --mirror https://bitbucket.org/isalus/installer-smart.git
+          - git clone --mirror https://bitbucket.org/isalus/installer-smart.git installer-hspc-mirror
