@@ -11,5 +11,5 @@ pipelines:
         script:
           - git clone --mirror https://bitbucket.org/isalus/installer-smart.git installer-hspc-mirror
           - cd installer-hspc-mirror
-          - git remote set-url --push origin git@github.com/isalussolutions/installer-smart.git
+          - git remote set-url --push origin git@github.com:isalussolutions/installer-smart.git
           - git push --mirror
