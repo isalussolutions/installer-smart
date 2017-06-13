@@ -16,8 +16,8 @@ auth_server_internal_port: "8060"
 auth_server_external_url: "{{'https' if use_secure_http else 'http'}}://{{auth_server_external_host}}{{(':'+auth_server_external_port|string) if auth_server_external_port|int not in (80,443) else ''}}"
 auth_server_start_command: |
   {{java_home}}/bin/java \
-  -DXms{{auth_server_initial_memory}} \
-  -DXmx{{auth_server_max_memory}} \
+  -Xms{{auth_server_initial_memory}} \
+  -Xmx{{auth_server_max_memory}} \
   -Djetty.port={{auth_server_internal_port}} \
   -Djetty.host=localhost \
   -Dspring.profiles.active=production \
