@@ -2,6 +2,8 @@
 
 Welcome to the HSPC Reference Platform Installer!
 
+*This is a sample edit to test the forking options with Bitbucket.*
+
 ## Destination Environment
 
 Systems will be installed in the target environment by the HSPC Installer (localhost, vm, hspc-test, hspc-prod, etc) follows
