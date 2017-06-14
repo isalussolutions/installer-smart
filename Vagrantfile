@@ -79,7 +79,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             mysql_host: "localhost",
             mysql_username: "hspc",
             mysql_password: "password",
-            enable_pwm: false,
+            enable_pwm: true,
             pwm_server_external_host: "{{services_host}}",
             pwm_server_external_port: "9092",
             apacheds_server_external_host: "{{services_host}}",
